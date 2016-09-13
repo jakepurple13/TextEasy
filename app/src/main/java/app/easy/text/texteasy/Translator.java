@@ -19,7 +19,6 @@ public class Translator {
 
     }
 
-
     public String translate(String words) {
 
 
