@@ -14,8 +14,11 @@ public class Translator {
     public Translator() {
 
         hm = new LinkedHashMap<>();
-
-
+        /**
+         *
+         * Put all words into hashmap here
+         *
+         */
 
     }
 

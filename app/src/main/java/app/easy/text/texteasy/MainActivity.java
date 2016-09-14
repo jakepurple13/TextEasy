@@ -46,10 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     String TAG = "MAIN";
 
+    Translator translate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        translate = new Translator();
 
         /**Ask User for Location Premisson and Accounts**/
         AskPermission();
