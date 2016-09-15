@@ -16,7 +16,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
 
@@ -32,10 +31,20 @@
 
         <!-- BroadcastReceiver that listens for incoming SMS messages -->
         <receiver
-            android:name=".SmsReceiver"
+            android:name=".Receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter>
+            <intent-filter android:priority="200">
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+
+                <!--
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+                -->
             </intent-filter>
         </receiver>
 
@@ -67,7 +76,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Splash"
+        <activity
+            android:name=".Splash"
             android:icon="@mipmap/ic_launcher"
             android:label="TextEasy">
             <intent-filter>
@@ -76,6 +86,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ContactList.Contacts"
+            android:label="@string/title_activity_contacts"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

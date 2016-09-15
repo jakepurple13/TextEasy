@@ -20,6 +20,10 @@ public class Translator {
          *
          */
 
+        hm.put("brb", "be right back");
+        hm.put("hi", "hello world");
+        hm.put("Good", "Amazing");
+
     }
 
     public String translate(String words) {

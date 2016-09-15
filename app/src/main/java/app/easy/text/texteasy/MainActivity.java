@@ -4,35 +4,42 @@ import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
+
+import app.easy.text.texteasy.Receiver.SmsReceiver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<TextInfo> al = new ArrayList<>();
-
+    String phoneNumber;
     Button send;
     EditText message;
 
@@ -48,15 +55,48 @@ public class MainActivity extends AppCompatActivity {
 
     Translator translate;
 
+    private SmsReceiver smsReceiver;
+    final IntentFilter smsFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+    private static MainActivity inst;
+
+    public static MainActivity instance() {
+        return inst;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        inst = this;
+    }
+
+
+    @Override
+    protected void onStop()
+    {
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(smsReceiver);
+        //unregisterReceiver(smsReceiver);
+        super.onStop();
+    }
+
+    private static final int DAY_MILLISECONDS = 24 * 60 * 60 * 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        phoneNumber = getIntent().getStringExtra("Number");
+        Log.w("Number", phoneNumber);
+        //phoneNumber = phoneNumber.replaceAll("(", " ");
+        phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
+        //phoneNumber = phoneNumber.replaceAll("\\^([0-9]+)", "");
+        Log.w("Number", phoneNumber);
+
+
         translate = new Translator();
 
-        /**Ask User for Location Premisson and Accounts**/
-        AskPermission();
+
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -68,33 +108,75 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        Calendar cal = Calendar.getInstance();
 
-        Cursor cursor = getContentResolver().query(Uri.parse("content://sms/"), null, null, null, null);
+        Uri smsUri = Uri.parse("content://sms/");
+        //Uri smsUri = Uri.parse("content://sms/outbox");
+        String[] projection = {"address", "body"};
+        //String whereAddress = "address = ?";
+        String whereAddress = "address = '" + phoneNumber + "'";
 
+
+        String whereDate = "date BETWEEN " + cal.getTimeInMillis() +
+                " AND " + (cal.getTimeInMillis() + DAY_MILLISECONDS);
+        String where = DatabaseUtils.concatenateWhere(whereAddress, whereDate);
+
+        Cursor cursor = getContentResolver().query(smsUri, null, whereAddress, null, null); //"date desc limit 3"
+        System.out.println(cursor.getCount() + "");
         String msgData = "";
         if (cursor.moveToFirst()) { // must check the result to prevent exception
+
+            System.out.println(cursor.getCount() + "");
+
             do {
 
-                /*for(int idx=0;idx<cursor.getColumnCount();idx++)
-                {
+                /*for(int idx=0;idx<cursor.getColumnCount();idx++) {
                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                    Log.e("sms", msgData);
+                    //Log.e("sms", msgData);
                     //al.add(new TextInfo(cursor.getString(2) + ":" + cursor.getString(12)));
-
                 }*/
+
+                msgData+="\n";msgData += " "
+                        + "Address: " + cursor.getString(cursor.getColumnIndex("address")) + ":"
+                        + "Person: " + cursor.getString(cursor.getColumnIndex("person")) + ":"
+                        + "Body: " + cursor.getString(cursor.getColumnIndex("body")) + ":"
+                        + "Type: " + cursor.getString(cursor.getColumnIndex("type"));
+
+                Log.e("sms", msgData);
+
                 //String contactName = getContacts(cursor.getString(2));
                 //al.add(new TextInfo(contactName + ": " + cursor.getString(12)));
-                al.add(new TextInfo(cursor.getString(2) + ": " + cursor.getString(12)));
+                //al.add(new TextInfo(cursor.getString(2) + ": " + cursor.getString(12))); TODO: <--- this one works!
+
+                String typed = cursor.getString(cursor.getColumnIndex("type")); // 1 = SMS Received
+                                                                                // 2 = SMS Sent
+                //Log.e("Type", typed);
+
+                //if(typed.equals("1")) {
+
+                    String text = translate.translate(cursor.getString(12));
+                    //al.add(0,new TextInfo(cursor.getString(2) + ": " + text));
+
+                //}
+                //Log.e("smses", msgData);
+
                 // use msgData
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
         }
 
+        //ScanMMS();
+        ScanSMS();
+
+
         Log.e("smses", msgData);
+
 
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.scrollToPosition(al.size()-1);
 
         send = (Button) findViewById(R.id.button);
         message = (EditText) findViewById(R.id.editText);
@@ -105,96 +187,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                String contact = "2017854423";
-
                 SmsManager sms = SmsManager.getDefault();
-                sms.sendTextMessage(contact, null, message.getText().toString(), null, null);
+                sms.sendTextMessage(phoneNumber, null, message.getText().toString(), null, null);
 
-                al.add(new TextInfo(message.getText().toString()));
-
-                mAdapter = new MessageAdapter(al, MainActivity.this);
-                mRecyclerView.setAdapter(mAdapter);
+                updateList(message.getText().toString());
 
                 message.setText("");
             }
         });
 
 
-
-
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
-
-        switch (permsRequestCode) {
-
-            case 200:
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-                } else
-                    Toast.makeText(this, "For full app functions these premission are needed", Toast.LENGTH_LONG).show();
-                break;
-        }
-
+    public void updateList(String message) {
+        al.add(new TextInfo(message));
+        mAdapter = new MessageAdapter(al, MainActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.scrollToPosition(al.size()-1);
     }
 
 
 
 
-    public void AskPermission() {
-
-        String[] perms = {"android.permission.RECEIVE_SMS","android.permission.WRITE_CONTACTS","android.permission.READ_CONTACTS","android.permission.SEND_SMS","android.permission.READ_SMS"};
-
-        int permsRequestCode = 200;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                    // Show an expanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-
-                } else {
-                    /**If the app does have their Permission  dont ask again**/
-                    requestPermissions(perms, permsRequestCode);
-                }
-
-            }
-
-        }
 
 
-        final String myPackageName = getPackageName();
-        if (!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
-
-            Intent intent =
-                    new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-                    myPackageName);
-            startActivity(intent);
-            // App is not default.
-            // Show the "not currently set as the default SMS app" interface
-
-        } else {
-            // App is the default.
-            // Hide the "not currently set as the default SMS app" interface
-
-        }
-
-    }
 
 
 
@@ -217,8 +233,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        smsFilter.setPriority(1000);
+        smsReceiver = new SmsReceiver();
+        registerReceiver(this.smsReceiver, smsFilter);
 
+    }
 
+    @Override
+    protected void onPause() {
+        unregisterReceiver(smsReceiver);
+        super.onPause();
     }
 
     public String getContactName(Context context, String phoneNumber) {
@@ -287,6 +311,145 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void ScanMMS() {
+        System.out.println("==============================ScanMMS()==============================");
+        //Initialize Box
+        Uri uri = Uri.parse("content://mms");
+        String[] proj = {"*"};
+        ContentResolver cr = getContentResolver();
+        String whereAddress = "address = '" + phoneNumber + "'";
+        Cursor c = cr.query(uri, proj, whereAddress, null, null);
+
+        if(c.moveToFirst()) {
+            do {
+                /*String[] col = c.getColumnNames();
+                String str = "";
+                for(int i = 0; i < col.length; i++) {
+                    str = str + col[i] + ": " + c.getString(i) + ", ";
+                }
+                System.out.println(str);*/
+                //System.out.println("--------------------MMS------------------");
+                Msg msg = new Msg(c.getString(c.getColumnIndex("_id")));
+                msg.setThread(c.getString(c.getColumnIndex("thread_id")));
+                msg.setDate(c.getString(c.getColumnIndex("date")));
+                msg.setAddr(getMmsAddr(msg.getID()));
+
+
+                ParseMMS(msg);
+
+                String text = translate.translate(c.getString(12));
+                updateList(c.getString(2) + ": " + text);
+                //System.out.println(msg);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+    }
+
+
+    public void ParseMMS(Msg msg) {
+        Uri uri = Uri.parse("content://mms/part");
+        String mmsId = "mid = " + msg.getID();
+        Cursor c = getContentResolver().query(uri, null, mmsId, null, null);
+        while(c.moveToNext()) {
+/*          String[] col = c.getColumnNames();
+            String str = "";
+            for(int i = 0; i < col.length; i++) {
+                str = str + col[i] + ": " + c.getString(i) + ", ";
+            }
+            System.out.println(str);*/
+
+            String pid = c.getString(c.getColumnIndex("_id"));
+            String type = c.getString(c.getColumnIndex("ct"));
+            if ("text/plain".equals(type)) {
+                msg.setBody(msg.getBody() + c.getString(c.getColumnIndex("text")));
+            } else if (type.contains("image")) {
+                msg.setImg(getMmsImg(pid));
+            }
+
+
+        }
+        c.close();
+        return;
+    }
+
+    public void ScanSMS() {
+        System.out.println("==============================ScanSMS()==============================");
+        //Initialize Box
+        Uri uri = Uri.parse("content://sms");
+        //Uri uri = Uri.parse("content://mms-sms/complete-conversations");
+
+        String[] proj = {"*"};
+        ContentResolver cr = getContentResolver();
+        String whereAddress = "address = '" + phoneNumber + "'";
+        Cursor c = cr.query(uri,proj,whereAddress,null,null);
+
+        if(c.moveToFirst()) {
+            do {
+                String[] col = c.getColumnNames();
+                String str = "";
+                for(int i = 0; i < col.length; i++) {
+                    str = str + col[i] + ": " + c.getString(i) + ", ";
+                }
+                //System.out.println(str);
+
+                System.out.println("--------------------SMS------------------");
+
+                Msg msg = new Msg(c.getString(c.getColumnIndex("_id")));
+                msg.setDate(c.getString(c.getColumnIndex("date")));
+                msg.setAddr(c.getString(c.getColumnIndex("Address")));
+                msg.setBody(c.getString(c.getColumnIndex("body")));
+                msg.setDirection(c.getString(c.getColumnIndex("type")));
+                msg.setContact(c.getString(c.getColumnIndex("person")));
+                System.out.println(msg);
+                String text = translate.translate(c.getString(12));
+                updateList(c.getString(2) + ": " + text);
+
+            } while (c.moveToNext());
+        }
+        c.close();
+    }
+
+    public Bitmap getMmsImg(String id) {
+        Uri uri = Uri.parse("content://mms/part/" + id);
+        InputStream in = null;
+        Bitmap bitmap = null;
+
+        try {
+            in = getContentResolver().openInputStream(uri);
+            bitmap = BitmapFactory.decodeStream(in);
+            if(in != null)
+                in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    public String getMmsAddr(String id) {
+        String sel = new String("msg_id=" + id);
+        String uriString = MessageFormat.format("content://mms/{0}/addr", id);
+        Uri uri = Uri.parse(uriString);
+        Cursor c = getContentResolver().query(uri, null, sel, null, null);
+        String name = "";
+        while (c.moveToNext()) {
+/*          String[] col = c.getColumnNames();
+            String str = "";
+            for(int i = 0; i < col.length; i++) {
+                str = str + col[i] + ": " + c.getString(i) + ", ";
+            }
+            System.out.println(str);*/
+            String t = c.getString(c.getColumnIndex("address"));
+            if(!(t.contains("insert")))
+                name = name + t + " ";
+        }
+        c.close();
+        return name;
+    }
+
+
 
     public void notification() {
 
@@ -328,6 +491,131 @@ public class MainActivity extends AppCompatActivity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
+
+    }
+
+    public class Msg {
+        private String id;
+        private String t_id;
+        private String date;
+        private String dispDate;
+        private String addr;
+        private String contact;
+        private String direction;
+        private String body;
+        private Bitmap img;
+        private boolean bData;
+        //Date vdat;
+
+        public Msg(String ID) {
+            id = ID;
+            body = "";
+        }
+
+        public void setDate(String d) {
+            date = d;
+            dispDate = msToDate(date);
+        }
+        public void setThread(String d) { t_id = d; }
+
+        public void setAddr(String a) {
+            addr = a;
+        }
+        public void setContact(String c) {
+            if (c==null) {
+                contact = "Unknown";
+            } else {
+                contact = c;
+            }
+        }
+        public void setDirection(String d) {
+            if ("1".equals(d))
+                direction = "FROM: ";
+            else
+                direction = "TO: ";
+
+        }
+        public void setBody(String b) {
+            body = b;
+        }
+        public void setImg(Bitmap bm) {
+            img = bm;
+            if (bm != null)
+                bData = true;
+            else
+                bData = false;
+        }
+
+        public String getDate() {
+            return date;
+        }
+        public String getDispDate() {
+            return dispDate;
+        }
+        public String getThread() { return t_id; }
+        public String getID() { return id; }
+        public String getBody() { return body; }
+        public Bitmap getImg() { return img; }
+        public boolean hasData() { return bData; }
+
+        public String toString() {
+
+            String s = id + ". " + dispDate + " - " + direction + " " + contact + " " + addr + ": "  + body;
+            if (bData)
+                s = s + "\nData: " + img;
+            return s;
+        }
+
+        public String msToDate(String mss) {
+
+            long time = Long.parseLong(mss,10);
+
+            long sec = ( time / 1000 ) % 60;
+            time = time / 60000;
+
+            long min = time % 60;
+            time = time / 60;
+
+            long hour = time % 24 - 5;
+            time = time / 24;
+
+            long day = time % 365;
+            time = time / 365;
+
+            long yr = time + 1970;
+
+            day = day - ( time / 4 );
+            long mo = getMonth(day);
+            day = getDay(day);
+
+            mss = String.valueOf(yr) + "/" + String.valueOf(mo) + "/" + String.valueOf(day) + " " + String.valueOf(hour) + ":" + String.valueOf(min) + ":" + String.valueOf(sec);
+
+            return mss;
+        }
+        public long getMonth(long day) {
+            long[] calendar = {31,28,31,30,31,30,31,31,30,31,30,31};
+            for(int i = 0; i < 12; i++) {
+                if(day < calendar[i]) {
+                    return i + 1;
+                } else {
+                    day = day - calendar[i];
+                }
+            }
+            return 1;
+        }
+        public long getDay(long day) {
+            long[] calendar = {31,28,31,30,31,30,31,31,30,31,30,31};
+            for(int i = 0; i < 12; i++) {
+                if(day < calendar[i]) {
+                    return day;
+                } else {
+                    day = day - calendar[i];
+                }
+            }
+            return day;
+        }
+
+
 
     }
 
