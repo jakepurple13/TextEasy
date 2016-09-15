@@ -368,7 +368,6 @@ public class MainActivity extends AppCompatActivity {
                 msg.setImg(getMmsImg(pid));
             }
 
-
         }
         c.close();
         return;
