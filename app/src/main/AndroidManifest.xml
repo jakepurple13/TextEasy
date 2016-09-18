@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
@@ -30,31 +31,19 @@
         </activity>
 
         <!-- BroadcastReceiver that listens for incoming SMS messages -->
-        <receiver
-            android:name=".Receiver.SmsReceiver"
+        <receiver android:name=".Receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="200">
-                <action android:name="android.intent.action.SCREEN_OFF" />
-                <action android:name="android.intent.action.SCREEN_ON" />
-                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-
-                <!--
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-                -->
+                <action android:name="android.provider.Telephony.SMS_RECEIVED_ACTION" />
             </intent-filter>
         </receiver>
 
         <!-- BroadcastReceiver that listens for incoming MMS messages -->
-        <receiver
-            android:name=".MmsReceiver"
+        <receiver android:name=".Receiver.MmsReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
-
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
@@ -89,7 +78,7 @@
         <activity
             android:name=".ContactList.Contacts"
             android:label="@string/title_activity_contacts"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

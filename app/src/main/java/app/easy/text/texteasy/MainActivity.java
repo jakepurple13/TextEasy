@@ -1,14 +1,19 @@
 package app.easy.text.texteasy;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
@@ -38,6 +43,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import app.easy.text.texteasy.Receiver.SmsReceiver;
 
@@ -71,19 +77,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         //LocalBroadcastManager.getInstance(this).unregisterReceiver(smsReceiver);
         //unregisterReceiver(smsReceiver);
         super.onStop();
     }
 
-    private static final int DAY_MILLISECONDS = 24 * 60 * 60 * 1000;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+       /* Intent intent = new Intent("android.provider.Telephony.SMS_RECEIVED");
+        List<ResolveInfo> infos = getPackageManager().queryBroadcastReceivers(intent, 0);
+        for (ResolveInfo info : infos) {
+            System.out.println("Receiver name:" + info.activityInfo.name + "; priority=" + info.priority);
+        }*/
+
 
         phoneNumber = getIntent().getStringExtra("Number");
         Log.w("Number", phoneNumber);
@@ -92,10 +103,10 @@ public class MainActivity extends AppCompatActivity {
         //phoneNumber = phoneNumber.replaceAll("\\^([0-9]+)", "");
         Log.w("Number", phoneNumber);
 
+        setTitle(getContactName(phoneNumber));
+
 
         translate = new Translator();
-
-
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -108,118 +119,84 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Calendar cal = Calendar.getInstance();
-
-        Uri smsUri = Uri.parse("content://sms/");
-        //Uri smsUri = Uri.parse("content://sms/outbox");
-        String[] projection = {"address", "body"};
-        //String whereAddress = "address = ?";
-        String whereAddress = "address = '" + phoneNumber + "'";
-
-
-        String whereDate = "date BETWEEN " + cal.getTimeInMillis() +
-                " AND " + (cal.getTimeInMillis() + DAY_MILLISECONDS);
-        String where = DatabaseUtils.concatenateWhere(whereAddress, whereDate);
-
-        Cursor cursor = getContentResolver().query(smsUri, null, whereAddress, null, null); //"date desc limit 3"
-        System.out.println(cursor.getCount() + "");
-        String msgData = "";
-        if (cursor.moveToFirst()) { // must check the result to prevent exception
-
-            System.out.println(cursor.getCount() + "");
-
-            do {
-
-                /*for(int idx=0;idx<cursor.getColumnCount();idx++) {
-                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                    //Log.e("sms", msgData);
-                    //al.add(new TextInfo(cursor.getString(2) + ":" + cursor.getString(12)));
-                }*/
-
-                msgData+="\n";msgData += " "
-                        + "Address: " + cursor.getString(cursor.getColumnIndex("address")) + ":"
-                        + "Person: " + cursor.getString(cursor.getColumnIndex("person")) + ":"
-                        + "Body: " + cursor.getString(cursor.getColumnIndex("body")) + ":"
-                        + "Type: " + cursor.getString(cursor.getColumnIndex("type"));
-
-                Log.e("sms", msgData);
-
-                //String contactName = getContacts(cursor.getString(2));
-                //al.add(new TextInfo(contactName + ": " + cursor.getString(12)));
-                //al.add(new TextInfo(cursor.getString(2) + ": " + cursor.getString(12))); TODO: <--- this one works!
-
-                String typed = cursor.getString(cursor.getColumnIndex("type")); // 1 = SMS Received
-                                                                                // 2 = SMS Sent
-                //Log.e("Type", typed);
-
-                //if(typed.equals("1")) {
-
-                    String text = translate.translate(cursor.getString(12));
-                    //al.add(0,new TextInfo(cursor.getString(2) + ": " + text));
-
-                //}
-                //Log.e("smses", msgData);
-
-                // use msgData
-            } while (cursor.moveToNext());
-        } else {
-            // empty box, no SMS
-        }
-
-        //ScanMMS();
         ScanSMS();
-
-
-        Log.e("smses", msgData);
 
 
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.scrollToPosition(al.size()-1);
+        mRecyclerView.scrollToPosition(al.size() - 1);
 
         send = (Button) findViewById(R.id.button);
         message = (EditText) findViewById(R.id.editText);
-
 
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SmsManager sms = SmsManager.getDefault();
-                sms.sendTextMessage(phoneNumber, null, message.getText().toString(), null, null);
+                sendSMS(phoneNumber, message.getText().toString());
 
-                updateList(message.getText().toString());
+                updateList("You: " + message.getText().toString(), 2, true);
 
                 message.setText("");
             }
         });
 
+        enableBroadcastReceiver(send);
 
     }
 
     public void updateList(String message) {
-        al.add(new TextInfo(message));
+        al.add(0, new TextInfo(message));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.scrollToPosition(al.size()-1);
+        mRecyclerView.scrollToPosition(al.size() - 1);
+    }
+
+    public void updateList(String message, int fromTo) {
+        al.add(0, new TextInfo(message, fromTo));
+        mAdapter = new MessageAdapter(al, MainActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.scrollToPosition(al.size() - 1);
     }
 
 
+    public void updateList(String message, int fromTo, boolean sent) {
+        al.add(new TextInfo(message, fromTo));
+        mAdapter = new MessageAdapter(al, MainActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.scrollToPosition(al.size() - 1);
+    }
 
 
+    private int NOTIFICATION = 81237;
 
 
+    public void enableBroadcastReceiver(View view) {
 
+        ComponentName receiver = new ComponentName(this, SmsReceiver.class); //created SMSLog class above!
+        PackageManager pm = this.getPackageManager();
 
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+    }
 
 
     public class TextInfo {
         String text;
+        int fromTo; //1 is from
+        //2 is to
 
         public TextInfo(String text) {
             this.text = text;
+            fromTo = 1;
+        }
+
+        public TextInfo(String text, int fromTo) {
+            this.text = text;
+            this.fromTo = fromTo;
         }
 
         @Override
@@ -233,9 +210,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        smsFilter.setPriority(1000);
-        smsReceiver = new SmsReceiver();
-        registerReceiver(this.smsReceiver, smsFilter);
 
     }
 
@@ -245,12 +219,12 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public String getContactName(Context context, String phoneNumber) {
-        ContentResolver cr = context.getContentResolver();
+    public String getContactName(String phoneNumber) {
+        ContentResolver cr = getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                 Uri.encode(phoneNumber));
         Cursor cursor = cr.query(uri,
-                new String[] { ContactsContract.PhoneLookup.DISPLAY_NAME }, null, null, null);
+                new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
         if (cursor == null) {
             return null;
         }
@@ -266,10 +240,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public String getContacts(String number) {
 
-        if(number.contains("+")) {
+        if (number.contains("+")) {
             number = number.substring(1);
         }
 
@@ -291,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                     Cursor pCur = cr.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
@@ -304,7 +277,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
 
 
         return contact.get(number);
@@ -320,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
         String whereAddress = "address = '" + phoneNumber + "'";
         Cursor c = cr.query(uri, proj, whereAddress, null, null);
 
-        if(c.moveToFirst()) {
+        if (c.moveToFirst()) {
             do {
                 /*String[] col = c.getColumnNames();
                 String str = "";
@@ -352,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = Uri.parse("content://mms/part");
         String mmsId = "mid = " + msg.getID();
         Cursor c = getContentResolver().query(uri, null, mmsId, null, null);
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
 /*          String[] col = c.getColumnNames();
             String str = "";
             for(int i = 0; i < col.length; i++) {
@@ -382,13 +354,13 @@ public class MainActivity extends AppCompatActivity {
         String[] proj = {"*"};
         ContentResolver cr = getContentResolver();
         String whereAddress = "address = '" + phoneNumber + "'";
-        Cursor c = cr.query(uri,proj,whereAddress,null,null);
+        Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 10");
 
-        if(c.moveToFirst()) {
+        if (c.moveToFirst()) {
             do {
                 String[] col = c.getColumnNames();
                 String str = "";
-                for(int i = 0; i < col.length; i++) {
+                for (int i = 0; i < col.length; i++) {
                     str = str + col[i] + ": " + c.getString(i) + ", ";
                 }
                 //System.out.println(str);
@@ -403,7 +375,14 @@ public class MainActivity extends AppCompatActivity {
                 msg.setContact(c.getString(c.getColumnIndex("person")));
                 System.out.println(msg);
                 String text = translate.translate(c.getString(12));
-                updateList(c.getString(2) + ": " + text);
+                String place;
+                if (c.getString(c.getColumnIndex("type")).equals("2")) {
+                    place = "You: " + text;
+                } else {
+                    place = c.getString(2) + ": " + text;
+                }
+
+                updateList(place, Integer.parseInt(c.getString(c.getColumnIndex("type"))));
 
             } while (c.moveToNext());
         }
@@ -418,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             in = getContentResolver().openInputStream(uri);
             bitmap = BitmapFactory.decodeStream(in);
-            if(in != null)
+            if (in != null)
                 in.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -441,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
             }
             System.out.println(str);*/
             String t = c.getString(c.getColumnIndex("address"));
-            if(!(t.contains("insert")))
+            if (!(t.contains("insert")))
                 name = name + t + " ";
         }
         c.close();
@@ -449,47 +428,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void sendSMS(String phoneNumber, String message) {
+        String SENT = "SMS_SENT";
+        String DELIVERED = "SMS_DELIVERED";
 
-    public void notification() {
+        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,
+                new Intent(SENT), 0);
 
-        //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0,
+                new Intent(DELIVERED), 0);
 
-        NotificationCompat.Builder mBuilder =
-                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.myrect);
-        //   if(high == top) {
-        mBuilder.setContentTitle("WE GOT IT!!!");
-        mBuilder.setContentText("CONNECTED BABY!");
-        //mBuilder.setLights(Color.BLUE, 5000, 1);
-        //mBuilder.setLights(Color.MAGENTA, 5000, 1);
-        //mBuilder.setLights(Color.rgb(200, 100, 210), 5000, 1);
-        //v.vibrate(5*100);
-        //    }
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
 
-        mBuilder.setOnlyAlertOnce(true);
-
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this,  MainActivity.class);
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());
 
     }
 
@@ -515,18 +466,23 @@ public class MainActivity extends AppCompatActivity {
             date = d;
             dispDate = msToDate(date);
         }
-        public void setThread(String d) { t_id = d; }
+
+        public void setThread(String d) {
+            t_id = d;
+        }
 
         public void setAddr(String a) {
             addr = a;
         }
+
         public void setContact(String c) {
-            if (c==null) {
+            if (c == null) {
                 contact = "Unknown";
             } else {
                 contact = c;
             }
         }
+
         public void setDirection(String d) {
             if ("1".equals(d))
                 direction = "FROM: ";
@@ -534,9 +490,11 @@ public class MainActivity extends AppCompatActivity {
                 direction = "TO: ";
 
         }
+
         public void setBody(String b) {
             body = b;
         }
+
         public void setImg(Bitmap bm) {
             img = bm;
             if (bm != null)
@@ -548,18 +506,34 @@ public class MainActivity extends AppCompatActivity {
         public String getDate() {
             return date;
         }
+
         public String getDispDate() {
             return dispDate;
         }
-        public String getThread() { return t_id; }
-        public String getID() { return id; }
-        public String getBody() { return body; }
-        public Bitmap getImg() { return img; }
-        public boolean hasData() { return bData; }
+
+        public String getThread() {
+            return t_id;
+        }
+
+        public String getID() {
+            return id;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public Bitmap getImg() {
+            return img;
+        }
+
+        public boolean hasData() {
+            return bData;
+        }
 
         public String toString() {
 
-            String s = id + ". " + dispDate + " - " + direction + " " + contact + " " + addr + ": "  + body;
+            String s = id + ". " + dispDate + " - " + direction + " " + contact + " " + addr + ": " + body;
             if (bData)
                 s = s + "\nData: " + img;
             return s;
@@ -567,9 +541,9 @@ public class MainActivity extends AppCompatActivity {
 
         public String msToDate(String mss) {
 
-            long time = Long.parseLong(mss,10);
+            long time = Long.parseLong(mss, 10);
 
-            long sec = ( time / 1000 ) % 60;
+            long sec = (time / 1000) % 60;
             time = time / 60000;
 
             long min = time % 60;
@@ -583,7 +557,7 @@ public class MainActivity extends AppCompatActivity {
 
             long yr = time + 1970;
 
-            day = day - ( time / 4 );
+            day = day - (time / 4);
             long mo = getMonth(day);
             day = getDay(day);
 
@@ -591,10 +565,11 @@ public class MainActivity extends AppCompatActivity {
 
             return mss;
         }
+
         public long getMonth(long day) {
-            long[] calendar = {31,28,31,30,31,30,31,31,30,31,30,31};
-            for(int i = 0; i < 12; i++) {
-                if(day < calendar[i]) {
+            long[] calendar = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            for (int i = 0; i < 12; i++) {
+                if (day < calendar[i]) {
                     return i + 1;
                 } else {
                     day = day - calendar[i];
@@ -602,10 +577,11 @@ public class MainActivity extends AppCompatActivity {
             }
             return 1;
         }
+
         public long getDay(long day) {
-            long[] calendar = {31,28,31,30,31,30,31,31,30,31,30,31};
-            for(int i = 0; i < 12; i++) {
-                if(day < calendar[i]) {
+            long[] calendar = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            for (int i = 0; i < 12; i++) {
+                if (day < calendar[i]) {
                     return day;
                 } else {
                     day = day - calendar[i];
@@ -613,7 +589,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return day;
         }
-
 
 
     }

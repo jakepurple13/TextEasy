@@ -1,15 +1,24 @@
 package app.easy.text.texteasy.Receiver;
 
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.support.v7.app.NotificationCompat;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
 import app.easy.text.texteasy.MainActivity;
+import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Translator;
 
 /**
  * Created by Jacob on 9/12/16.
@@ -19,6 +28,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     public static final String SMS_BUNDLE = "pdus";
 
+    MainActivity inst;
 
     public SmsReceiver() {
 
@@ -28,89 +38,73 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Get the data (SMS data) bound to intent
-        Log.i("AKSDJL:ASKDJ:ASJ", "ASKLDJHALSKHDJ");
-        Bundle intentExtras = intent.getExtras();
-        if (intentExtras != null) {
-            Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
-            String smsMessageStr = "";
-            for (int i = 0; i < sms.length; ++i) {
-                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
+        Log.i("AKSDJL:ASKDJ:ASJ", "SMS RECEIVER");
 
-                String smsBody = smsMessage.getMessageBody().toString();
-                String address = smsMessage.getOriginatingAddress();
+        Translator t = new Translator();
 
-                smsMessageStr += "SMS From: " + address + "\n";
-                smsMessageStr += smsBody + "\n";
-            }
-            Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
+        SmsMessage[] smsMess = Telephony.Sms.Intents.getMessagesFromIntent(intent);
 
-            //this will update the UI with message
-            MainActivity inst = MainActivity.instance();
-            inst.updateList(smsMessageStr);
-            inst.unregisterReceiver(this);
+        for(int i=0;i<smsMess.length;i++) {
+
+            Log.e(i + smsMess[i].getDisplayOriginatingAddress(), smsMess[i].getDisplayMessageBody());
+
         }
 
+        String from = smsMess[0].getDisplayOriginatingAddress();
+        String message = t.translate(smsMess[0].getDisplayMessageBody());
 
+        notification(from, message, context);
 
+        inst = MainActivity.instance();
 
+        inst.updateList(from + ": " + message, 1, true);
 
-
-           /* if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
-                for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                    String messageBody = smsMessage.getMessageBody();
-                    Log.e(smsMessage.getDisplayOriginatingAddress(), messageBody);
-                    Log.i("Test", "test");
-                }
-                Log.i("TESTING", "GOT IT");
-
-                Object[] pduArray = (Object[]) intent.getExtras().get("pdus");
-                SmsMessage[] messages = new SmsMessage[pduArray.length];
-                for (int i = 0; i < pduArray.length; i++)
-                    messages[i] = SmsMessage.createFromPdu((byte[]) pduArray[i]);
-
-                String SideNumber = messages[0].getDisplayOriginatingAddress();
-                long Timestamp = messages[0].getTimestampMillis();
-
-                StringBuilder bt = new StringBuilder();
-                for (SmsMessage message : messages)
-                    bt.append(message.getMessageBody());
-
-                String Smsbody = bt.toString();
-
-                Log.i(SideNumber, Smsbody);
-
-            }*/
-                    /*Intent i = new Intent(context, MainActivity.class);
-                    PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, 0);
-
-                    String uri = "tel:" + str2;
-                    Intent iph = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
-                    PendingIntent pCall = PendingIntent.getActivity(context, 0, iph, 0);
-
-                    // Build notification
-
-                    Notification noti = new Notification.Builder(context)
-                            .setStyle(new Notification.BigTextStyle().bigText(str))
-                            .setContentTitle("New sms from " + str2)
-                            .setContentText(str)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentIntent(pIntent)
-                            .addAction(R.mipmap.ic_launcher, "Call", pCall)
-                            .addAction(R.mipmap.ic_launcher, "Read", pIntent)
-                            .addAction(R.mipmap.ic_launcher, "Delete", pIntent)
-                            .build();
-
-                    NotificationManager notificationManager = (NotificationManager) context
-                            .getSystemService(context.NOTIFICATION_SERVICE);
-                    // hide the notification after its selected
-                    noti.flags |= Notification.FLAG_AUTO_CANCEL;
-                    // notification
-                    notificationManager.notify(0, noti);
-                */
-
-
-
+        Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
 
     }
+
+    public void notification(String from, String message, Context context) {
+
+        //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        NotificationCompat.Builder mBuilder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.myrect);
+        //   if(high == top) {
+        mBuilder.setContentTitle(from);
+        mBuilder.setContentText(message);
+        //mBuilder.setLights(Color.BLUE, 5000, 1);
+        //mBuilder.setLights(Color.MAGENTA, 5000, 1);
+        //mBuilder.setLights(Color.rgb(200, 100, 210), 5000, 1);
+        //v.vibrate(5*100);
+        //    }
+
+        mBuilder.setOnlyAlertOnce(true);
+
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(context,  MainActivity.class);
+        resultIntent.putExtra("Number", PhoneNumberUtils.normalizeNumber(from));
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(1, mBuilder.build());
+
+    }
+
 
 }
