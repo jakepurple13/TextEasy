@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,8 +73,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             holder.mTextView.setGravity(Gravity.RIGHT);
         }
 
+        setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
         //holder.mTextView.setWidth();
-
 
     }
 
@@ -83,6 +85,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
 
-
+    private void setAnimation(View viewToAnimate, int position, int type) {
+        //right is you
+        //left is friend
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > in.lastPosition) {
+            Animation animation;
+            if(type==1) {
+                animation = AnimationUtils.loadAnimation(in, R.anim.push_left_in);
+            } else {
+                animation = AnimationUtils.loadAnimation(in, R.anim.push_right_in);
+            }
+            viewToAnimate.startAnimation(animation);
+            in.lastPosition = position;
+        }
+    }
 
 }

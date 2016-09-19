@@ -24,7 +24,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.viethoa.RecyclerViewFastScroller;
+import com.viethoa.models.AlphabetItem;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import app.easy.text.texteasy.MessageAdapter;
 import app.easy.text.texteasy.R;
@@ -39,7 +45,7 @@ public class Contacts extends AppCompatActivity {
 
     EditText searchBar;
     String searchKey = "";
-    ArrayList<ContactInfo> searched = new ArrayList<>();
+    ArrayList<ContactInfo> searched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class Contacts extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        searched = new ArrayList<>();
         /**Ask User for Location Premisson and Accounts**/
         AskPermission();
 
@@ -107,6 +114,30 @@ public class Contacts extends AppCompatActivity {
         });
 
 
+
+
+        RecyclerViewFastScroller fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
+
+        // adds in Alphabetical scroller
+        fastScroller.setRecyclerView(mRecyclerView);
+
+        ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
+        List<String> strAlphabets = new ArrayList<>();
+        for (int i = 0; i < al.size(); i++) {
+            String name = al.get(i).name;
+            if (name == null || name.trim().isEmpty())
+                continue;
+
+            String word = name.substring(0, 1);
+            if (!strAlphabets.contains(word)) {
+                strAlphabets.add(word);
+                mAlphabetItems.add(new AlphabetItem(i, word, false));
+            }
+        }
+
+        fastScroller.setUpAlphabet(mAlphabetItems);
+
+
     }
 
 
@@ -141,9 +172,17 @@ public class Contacts extends AppCompatActivity {
             }
         }
 
+
+        Collections.sort(al, new InfoCompare());
         mAdapter = new ContactAdapter(al, this);
         mRecyclerView.setAdapter(mAdapter);
 
+    }
+
+    public class InfoCompare implements Comparator<ContactInfo> {
+        public int compare(ContactInfo e1, ContactInfo e2) {
+            return e1.name.compareTo(e2.name);
+        }
     }
 
     public class ContactInfo {
@@ -152,7 +191,7 @@ public class Contacts extends AppCompatActivity {
         String number;
 
         public ContactInfo(String name, String number, String text) {
-            this.name = getContactName(name);
+            this.name = name;
             this.number = number;
             this.text = text;
         }

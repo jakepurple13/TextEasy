@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.viethoa.RecyclerViewFastScroller;
+
 import java.util.ArrayList;
 
 import app.easy.text.texteasy.MainActivity;
@@ -16,7 +18,7 @@ import app.easy.text.texteasy.R;
 /**
  * Created by Jacob on 9/15/16.
  */
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> implements RecyclerViewFastScroller.BubbleTextGetter  {
     private ArrayList<Contacts.ContactInfo> mDataset;
 
     Contacts in;
@@ -83,6 +85,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         return mDataset.size();
     }
 
+    @Override
+    public String getTextToShowInBubble(int pos) {
+        if (pos < 0 || pos >= mDataset.size())
+            return null;
 
+        String name = mDataset.get(pos).name;
+        if (name == null || name.length() < 1)
+            return null;
+
+        return mDataset.get(pos).name.substring(0, 1);
+    }
 
 }

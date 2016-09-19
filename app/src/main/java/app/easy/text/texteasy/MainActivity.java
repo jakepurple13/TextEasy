@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     final IntentFilter smsFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
     private static MainActivity inst;
 
+    public int lastPosition = 0;
+
     public static MainActivity instance() {
         return inst;
     }
@@ -120,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         ScanSMS();
-
 
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
@@ -240,49 +241,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public String getContacts(String number) {
-
-        if (number.contains("+")) {
-            number = number.substring(1);
-        }
-
-        HashMap<String, String> contact = new HashMap<>();
-
-        ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
-
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(
-                        ContactsContract.Contacts.DISPLAY_NAME));
-
-                if (cur.getInt(cur.getColumnIndex(
-                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-                    Cursor pCur = cr.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        String phoneNo = pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        Log.e("alkdshf ", "Name: " + name + ", Phone No: " + phoneNo);
-
-                        contact.put(phoneNo, name);
-                    }
-                    pCur.close();
-                }
-            }
-        }
-
-
-        return contact.get(number);
-
-    }
-
     public void ScanMMS() {
         System.out.println("==============================ScanMMS()==============================");
         //Initialize Box
@@ -374,12 +332,14 @@ public class MainActivity extends AppCompatActivity {
                 msg.setDirection(c.getString(c.getColumnIndex("type")));
                 msg.setContact(c.getString(c.getColumnIndex("person")));
                 System.out.println(msg);
-                String text = translate.translate(c.getString(12));
+                String text = msg.body;//c.getString(12);
+                Log.w("ASD", text);
+                text = translate.translate(text);
                 String place;
                 if (c.getString(c.getColumnIndex("type")).equals("2")) {
                     place = "You: " + text;
                 } else {
-                    place = c.getString(2) + ": " + text;
+                    place = getContactName(c.getString(2)) + ": " + text;
                 }
 
                 updateList(place, Integer.parseInt(c.getString(c.getColumnIndex("type"))));

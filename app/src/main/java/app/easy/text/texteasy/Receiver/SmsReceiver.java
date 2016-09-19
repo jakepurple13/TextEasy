@@ -5,9 +5,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.v7.app.NotificationCompat;
 import android.telephony.PhoneNumberUtils;
@@ -53,14 +57,34 @@ public class SmsReceiver extends BroadcastReceiver {
         String from = smsMess[0].getDisplayOriginatingAddress();
         String message = t.translate(smsMess[0].getDisplayMessageBody());
 
-        notification(from, message, context);
+        notification(getContactName(context,from), message, context);
 
         inst = MainActivity.instance();
 
-        inst.updateList(from + ": " + message, 1, true);
+        inst.updateList(getContactName(context,from) + ": " + message, 1, true);
 
-        Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
 
+    }
+
+    public String getContactName(Context context, String phoneNumber) {
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(phoneNumber));
+        Cursor cursor = cr.query(uri,
+                new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        String contactName = null;
+        if (cursor.moveToFirst()) {
+            contactName = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return contactName;
     }
 
     public void notification(String from, String message, Context context) {
