@@ -44,27 +44,40 @@ public class SmsReceiver extends BroadcastReceiver {
         // Get the data (SMS data) bound to intent
         Log.i("AKSDJL:ASKDJ:ASJ", "SMS RECEIVER");
 
-        Translator t = new Translator();
+        final String myPackageName = context.getPackageName();
+        if (!Telephony.Sms.getDefaultSmsPackage(context).equals(myPackageName)) {
 
-        SmsMessage[] smsMess = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+            // App is not default.
+            // Show the "not currently set as the default SMS app" interface
 
-        for(int i=0;i<smsMess.length;i++) {
 
-            Log.e(i + smsMess[i].getDisplayOriginatingAddress(), smsMess[i].getDisplayMessageBody());
+
+        } else {
+            // App is the default.
+            // Hide the "not currently set as the default SMS app" interface
+
+            Translator t = new Translator();
+
+            SmsMessage[] smsMess = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+
+            for (int i = 0; i < smsMess.length; i++) {
+
+                Log.e(i + smsMess[i].getDisplayOriginatingAddress(), smsMess[i].getDisplayMessageBody());
+
+            }
+
+            String from = smsMess[0].getDisplayOriginatingAddress();
+            String message = t.translate(smsMess[0].getDisplayMessageBody());
+
+            notification(getContactName(context, from), message, context);
+
+            inst = MainActivity.instance();
+
+            inst.updateList(getContactName(context, from) + ": " + message, 1, true);
+
+            //Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
 
         }
-
-        String from = smsMess[0].getDisplayOriginatingAddress();
-        String message = t.translate(smsMess[0].getDisplayMessageBody());
-
-        notification(getContactName(context,from), message, context);
-
-        inst = MainActivity.instance();
-
-        inst.updateList(getContactName(context,from) + ": " + message, 1, true);
-
-        //Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
-
     }
 
     public String getContactName(Context context, String phoneNumber) {
