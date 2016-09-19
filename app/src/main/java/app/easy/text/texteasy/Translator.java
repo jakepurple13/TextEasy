@@ -28,7 +28,6 @@ public class Translator {
 
     public String translate(String words) {
 
-
         String[] sentence = words.split(" ");
 
         for(int i=0;i<sentence.length;i++) {

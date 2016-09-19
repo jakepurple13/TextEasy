@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -151,10 +152,31 @@ public class Contacts extends AppCompatActivity {
         String number;
 
         public ContactInfo(String name, String number, String text) {
-            this.name = name;
+            this.name = getContactName(name);
             this.number = number;
             this.text = text;
         }
+
+        public String getContactName(String phoneNumber) {
+            ContentResolver cr = getContentResolver();
+            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                    Uri.encode(phoneNumber));
+            Cursor cursor = cr.query(uri,
+                    new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+            if (cursor == null) {
+                return null;
+            }
+            String contactName = null;
+            if (cursor.moveToFirst()) {
+                contactName = cursor.getString(cursor
+                        .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+            }
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+            return contactName;
+        }
+
 
         @Override
         public String toString() {

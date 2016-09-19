@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        unregisterReceiver(smsReceiver);
+        //unregisterReceiver(smsReceiver);
         super.onPause();
     }
 
