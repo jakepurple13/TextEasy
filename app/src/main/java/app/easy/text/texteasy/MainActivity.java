@@ -45,8 +45,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import app.easy.text.texteasy.Receiver.SmsReceiver;
-
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -57,12 +55,8 @@ public class MainActivity extends AppCompatActivity {
     Button send;
     EditText message;
 
-    String TAG = "MAIN";
-
     Translator translate;
 
-    private SmsReceiver smsReceiver;
-    final IntentFilter smsFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
     private static MainActivity inst;
 
     public int lastPosition = 0;
@@ -80,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        //LocalBroadcastManager.getInstance(this).unregisterReceiver(smsReceiver);
-        //unregisterReceiver(smsReceiver);
         super.onStop();
     }
 
@@ -107,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle(getContactName(phoneNumber));
 
-
         translate = new Translator();
-
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -131,20 +121,17 @@ public class MainActivity extends AppCompatActivity {
         send = (Button) findViewById(R.id.button);
         message = (EditText) findViewById(R.id.editText);
 
-
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 sendSMS(phoneNumber, message.getText().toString());
 
-                updateList("You: " + message.getText().toString(), 2, true);
-
                 message.setText("");
             }
         });
 
-        enableBroadcastReceiver(send);
+        //enableBroadcastReceiver(send);
 
     }
 
@@ -171,17 +158,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private int NOTIFICATION = 81237;
-
-
     public void enableBroadcastReceiver(View view) {
 
-        ComponentName receiver = new ComponentName(this, SmsReceiver.class); //created SMSLog class above!
+        /*ComponentName receiver = new ComponentName(this, SmsReceiver.class); //created SMSLog class above!
         PackageManager pm = this.getPackageManager();
 
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+                PackageManager.DONT_KILL_APP);*/
     }
 
 
@@ -216,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        //unregisterReceiver(smsReceiver);
         super.onPause();
     }
 
@@ -312,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
         String[] proj = {"*"};
         ContentResolver cr = getContentResolver();
         String whereAddress = "address = '" + phoneNumber + "'";
-        Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 10");
+        Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 20");
 
         if (c.moveToFirst()) {
             do {
@@ -401,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
 
-
+        updateList("You: " + message, 2, true);
     }
 
     public class Msg {

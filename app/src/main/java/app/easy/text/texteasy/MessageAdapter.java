@@ -3,6 +3,7 @@ package app.easy.text.texteasy;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -66,10 +67,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.mTextView.setText(mDataset.get(position).toString());
 
         if(mDataset.get(position).fromTo==1) { //from
-            holder.mTextView.setBackgroundColor(Color.BLUE);
+            GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
+            bgShape.setColor(Color.rgb(175, 210, 246));
+            //bgShape.setAlpha(50);
+            //holder.mTextView.setBackgroundColor(Color.BLUE);
             holder.mTextView.setGravity(Gravity.LEFT);
         } else { //to
-            holder.mTextView.setBackgroundColor(Color.GRAY);
+            GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
+            bgShape.setColor(Color.rgb(187, 187, 187));
+            //holder.mTextView.setBackgroundColor(Color.GRAY);
             holder.mTextView.setGravity(Gravity.RIGHT);
         }
 

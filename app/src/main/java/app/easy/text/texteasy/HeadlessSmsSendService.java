@@ -28,13 +28,13 @@ public class HeadlessSmsSendService extends Service {
         super.onCreate();
 
         //SMS event receiver
-        mSMSreceiver = new SmsReceiver();
+        /*mSMSreceiver = new SmsReceiver();
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
         registerReceiver(mSMSreceiver, mIntentFilter);
         smsFilter.setPriority(1000);
         this.smsReceiver = new SmsReceiver();
-        this.registerReceiver(this.smsReceiver, smsFilter);
+        this.registerReceiver(this.smsReceiver, smsFilter);*/
 
         Toast.makeText(this, "GOT IT", Toast.LENGTH_LONG).show();
 

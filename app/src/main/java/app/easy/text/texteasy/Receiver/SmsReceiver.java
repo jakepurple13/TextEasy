@@ -9,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -17,6 +18,7 @@ import android.support.v7.app.NotificationCompat;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,15 +44,13 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Get the data (SMS data) bound to intent
-        Log.i("AKSDJL:ASKDJ:ASJ", "SMS RECEIVER");
+        Log.i("Text being received!", "SMS RECEIVER \t" + context.getPackageName());
 
         final String myPackageName = context.getPackageName();
         if (!Telephony.Sms.getDefaultSmsPackage(context).equals(myPackageName)) {
 
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
-
-
 
         } else {
             // App is the default.
@@ -69,11 +69,17 @@ public class SmsReceiver extends BroadcastReceiver {
             String from = smsMess[0].getDisplayOriginatingAddress();
             String message = t.translate(smsMess[0].getDisplayMessageBody());
 
-            notification(getContactName(context, from), message, context);
+            notification(from, message, context);
 
             inst = MainActivity.instance();
 
-            inst.updateList(getContactName(context, from) + ": " + message, 1, true);
+            try {
+
+                inst.updateList(getContactName(context, from) + ": " + message, 1, true);
+
+            } catch (NullPointerException e) {
+
+            }
 
             //Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
 
@@ -102,25 +108,22 @@ public class SmsReceiver extends BroadcastReceiver {
 
     public void notification(String from, String message, Context context) {
 
-        //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.myrect);
-        //   if(high == top) {
-        mBuilder.setContentTitle(from);
+
+        mBuilder.setContentTitle(getContactName(context,from));
         mBuilder.setContentText(message);
-        //mBuilder.setLights(Color.BLUE, 5000, 1);
-        //mBuilder.setLights(Color.MAGENTA, 5000, 1);
-        //mBuilder.setLights(Color.rgb(200, 100, 210), 5000, 1);
-        //v.vibrate(5*100);
-        //    }
 
         mBuilder.setOnlyAlertOnce(true);
+        mBuilder.setLights(Color.BLUE, 5000, 500);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context,  MainActivity.class);
-        resultIntent.putExtra("Number", PhoneNumberUtils.normalizeNumber(from));
+        Log.e("NUMBERS", from + "\t" + message);
+        resultIntent.putExtra("Number", from);
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
         // This ensures that navigating backward from the Activity leads out of

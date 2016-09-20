@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import app.easy.text.texteasy.MessageAdapter;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Translator;
 
 public class Contacts extends AppCompatActivity {
 
@@ -42,7 +44,7 @@ public class Contacts extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<ContactInfo> al = new ArrayList<>();
-
+    Translator translate = new Translator();
     EditText searchBar;
     String searchKey = "";
     ArrayList<ContactInfo> searched;
@@ -53,6 +55,8 @@ public class Contacts extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         searched = new ArrayList<>();
         /**Ask User for Location Premisson and Accounts**/
@@ -77,10 +81,6 @@ public class Contacts extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-
-        //mAdapter = new ContactAdapter(al, Contacts.this);
-        //mRecyclerView.setAdapter(mAdapter);
 
         readContacts();
 
@@ -140,12 +140,15 @@ public class Contacts extends AppCompatActivity {
 
     }
 
-
     public void readContacts() {
 
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
+        Uri uri = Uri.parse("content://sms");
+        String[] proj = {"*"};
+
+
 
         if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
@@ -165,13 +168,26 @@ public class Contacts extends AppCompatActivity {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                         Log.e("alkdshf ", "Name: " + name + ", Phone No: " + phoneNo);
-                        al.add(new ContactInfo(name, phoneNo, "Hello"));
+
+                        String whereAddress = "address = '" + phoneNo + "'";
+                        Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 1");
+                        String text = "Hello";
+                        if (c.moveToFirst()) {
+                            do {
+
+                            text = c.getString(c.getColumnIndex("body"));//c.getString(12);
+                            Log.w("ASD", text);
+                            text = translate.translate(text);
+                            } while (c.moveToNext());
+                        }
+
+                        al.add(new ContactInfo(name, phoneNo, text));
+                        c.close();
                     }
                     pCur.close();
                 }
             }
         }
-
 
         Collections.sort(al, new InfoCompare());
         mAdapter = new ContactAdapter(al, this);
@@ -192,7 +208,7 @@ public class Contacts extends AppCompatActivity {
 
         public ContactInfo(String name, String number, String text) {
             this.name = name;
-            this.number = number;
+            this.number = PhoneNumberUtils.normalizeNumber(number);
             this.text = text;
         }
 
