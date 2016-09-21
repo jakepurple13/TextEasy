@@ -46,6 +46,32 @@ public class SmsReceiver extends BroadcastReceiver {
         // Get the data (SMS data) bound to intent
         Log.i("Text being received!", "SMS RECEIVER \t" + context.getPackageName());
 
+        Translator t = new Translator();
+
+        SmsMessage[] smsMess = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+
+        for (int i = 0; i < smsMess.length; i++) {
+
+            Log.e(i + smsMess[i].getDisplayOriginatingAddress(), smsMess[i].getDisplayMessageBody());
+
+        }
+
+        String from = smsMess[0].getDisplayOriginatingAddress();
+        String message = t.translate(smsMess[0].getDisplayMessageBody());
+
+        inst = MainActivity.instance();
+
+        try {
+
+            if(!inst.isDestroyed()) {
+                inst.updateList(getContactName(context, from) + ": " + message, 1, true);
+            }
+
+        } catch (NullPointerException e) {
+            Log.e("Null point on line 70", e.toString());
+        }
+
+
         final String myPackageName = context.getPackageName();
         if (!Telephony.Sms.getDefaultSmsPackage(context).equals(myPackageName)) {
 
@@ -56,32 +82,7 @@ public class SmsReceiver extends BroadcastReceiver {
             // App is the default.
             // Hide the "not currently set as the default SMS app" interface
 
-            Translator t = new Translator();
-
-            SmsMessage[] smsMess = Telephony.Sms.Intents.getMessagesFromIntent(intent);
-
-            for (int i = 0; i < smsMess.length; i++) {
-
-                Log.e(i + smsMess[i].getDisplayOriginatingAddress(), smsMess[i].getDisplayMessageBody());
-
-            }
-
-            String from = smsMess[0].getDisplayOriginatingAddress();
-            String message = t.translate(smsMess[0].getDisplayMessageBody());
-
             notification(from, message, context);
-
-            inst = MainActivity.instance();
-
-            try {
-
-                inst.updateList(getContactName(context, from) + ": " + message, 1, true);
-
-            } catch (NullPointerException e) {
-
-            }
-
-            //Toast.makeText(context, from + ": " + t.translate(message), Toast.LENGTH_SHORT).show();
 
         }
     }

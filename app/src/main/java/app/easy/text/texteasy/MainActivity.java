@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Receiver name:" + info.activityInfo.name + "; priority=" + info.priority);
         }*/
 
-
         phoneNumber = getIntent().getStringExtra("Number");
         Log.w("Number", phoneNumber);
         //phoneNumber = phoneNumber.replaceAll("(", " ");
@@ -131,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //enableBroadcastReceiver(send);
-
     }
 
     public void updateList(String message) {
@@ -157,18 +154,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.scrollToPosition(al.size() - 1);
     }
 
-
-    public void enableBroadcastReceiver(View view) {
-
-        /*ComponentName receiver = new ComponentName(this, SmsReceiver.class); //created SMSLog class above!
-        PackageManager pm = this.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);*/
-    }
-
-
     public class TextInfo {
         String text;
         int fromTo; //1 is from
@@ -191,11 +176,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.from_contacts, R.anim.back_to_contacts);
     }
 
     @Override
@@ -290,7 +280,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("==============================ScanSMS()==============================");
         //Initialize Box
         Uri uri = Uri.parse("content://sms");
-        //Uri uri = Uri.parse("content://mms-sms/complete-conversations");
 
         String[] proj = {"*"};
         ContentResolver cr = getContentResolver();

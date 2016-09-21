@@ -69,18 +69,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             bgShape.setColor(Color.rgb(175, 210, 246));
-            //bgShape.setAlpha(50);
-            //holder.mTextView.setBackgroundColor(Color.BLUE);
             holder.mTextView.setGravity(Gravity.LEFT);
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             bgShape.setColor(Color.rgb(187, 187, 187));
-            //holder.mTextView.setBackgroundColor(Color.GRAY);
             holder.mTextView.setGravity(Gravity.RIGHT);
         }
 
         setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
-        //holder.mTextView.setWidth();
 
     }
 

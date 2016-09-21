@@ -1,7 +1,9 @@
 package app.easy.text.texteasy.ContactList;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +72,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(in, MainActivity.class);
                 intent.putExtra("Number", mDataset.get(position).number);
-                in.startActivity(intent);
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(in.getApplicationContext(), R.anim.back_to_contacts,R.anim.from_contacts).toBundle();
+                in.startActivity(intent, bndlanimation);
+                //in.overridePendingTransition(R.anim.push_right_out, R.anim.push_right_in);
             }
         };
 

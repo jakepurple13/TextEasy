@@ -57,7 +57,6 @@ public class Contacts extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
         searched = new ArrayList<>();
         /**Ask User for Location Premisson and Accounts**/
         AskPermission();
@@ -82,7 +81,7 @@ public class Contacts extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        readContacts();
+
 
         searchBar = (EditText) findViewById(R.id.search);
 
@@ -97,8 +96,8 @@ public class Contacts extends AppCompatActivity {
                 searched.clear();
                 searchKey = s.toString();
                 System.out.println(searchKey);
-                for(int i=0;i<al.size();i++) {
-                    if(al.get(i).name.toUpperCase().contains(searchKey.toUpperCase())) {
+                for (int i = 0; i < al.size(); i++) {
+                    if (al.get(i).name.toUpperCase().contains(searchKey.toUpperCase())) {
                         searched.add(al.get(i));
                     }
                 }
@@ -114,7 +113,7 @@ public class Contacts extends AppCompatActivity {
         });
 
 
-
+        /*readContacts();
 
         RecyclerViewFastScroller fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
 
@@ -135,7 +134,7 @@ public class Contacts extends AppCompatActivity {
             }
         }
 
-        fastScroller.setUpAlphabet(mAlphabetItems);
+        fastScroller.setUpAlphabet(mAlphabetItems);*/
 
 
     }
@@ -147,7 +146,6 @@ public class Contacts extends AppCompatActivity {
                 null, null, null, null);
         Uri uri = Uri.parse("content://sms");
         String[] proj = {"*"};
-
 
 
         if (cur.getCount() > 0) {
@@ -162,7 +160,7 @@ public class Contacts extends AppCompatActivity {
                     Cursor pCur = cr.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
@@ -174,10 +172,9 @@ public class Contacts extends AppCompatActivity {
                         String text = "Hello";
                         if (c.moveToFirst()) {
                             do {
-
-                            text = c.getString(c.getColumnIndex("body"));//c.getString(12);
-                            Log.w("ASD", text);
-                            text = translate.translate(text);
+                                text = c.getString(c.getColumnIndex("body"));
+                                Log.w("ASD", text);
+                                text = translate.translate(text);
                             } while (c.moveToNext());
                         }
 
@@ -252,6 +249,28 @@ public class Contacts extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                    readContacts();
+
+                    RecyclerViewFastScroller fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
+
+                    // adds in Alphabetical scroller
+                    fastScroller.setRecyclerView(mRecyclerView);
+
+                    ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
+                    List<String> strAlphabets = new ArrayList<>();
+                    for (int i = 0; i < al.size(); i++) {
+                        String name = al.get(i).name;
+                        if (name == null || name.trim().isEmpty())
+                            continue;
+
+                        String word = name.substring(0, 1);
+                        if (!strAlphabets.contains(word)) {
+                            strAlphabets.add(word);
+                            mAlphabetItems.add(new AlphabetItem(i, word, false));
+                        }
+                    }
+
+                    fastScroller.setUpAlphabet(mAlphabetItems);
 
                 } else
                     Toast.makeText(this, "For full app functions these premission are needed", Toast.LENGTH_LONG).show();
@@ -262,7 +281,7 @@ public class Contacts extends AppCompatActivity {
 
     public void AskPermission() {
 
-        String[] perms = {"android.permission.RECEIVE_SMS","android.permission.WRITE_CONTACTS","android.permission.READ_CONTACTS","android.permission.SEND_SMS","android.permission.READ_SMS"};
+        String[] perms = {"android.permission.RECEIVE_SMS", "android.permission.WRITE_CONTACTS", "android.permission.READ_CONTACTS", "android.permission.SEND_SMS", "android.permission.READ_SMS"};
 
         int permsRequestCode = 200;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
