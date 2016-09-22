@@ -87,6 +87,9 @@ public class Contacts extends AppCompatActivity {
         firstTimeSearch = load.getBoolean("search", false);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,8 +115,8 @@ public class Contacts extends AppCompatActivity {
                     intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                     startActivity(intent);
 
-                    al.clear();
-                    readContacts();
+                    //al.clear();
+                    //readContacts();
                     Collections.sort(al, new InfoCompare());
                     mAdapter = new ContactAdapter(al, Contacts.this);
                     mRecyclerView.setAdapter(mAdapter);
@@ -286,11 +289,11 @@ public class Contacts extends AppCompatActivity {
     public void setTutorial(String title, String description, View v) {
         new TapTargetView.Builder(Contacts.this) // The activity that hosts this view
                 .title(title) // Specify the title text
-                .description(description) // Specify the description text
+                .description(description + "\nPress and hold to bring up again") // Specify the description text
                 .cancelable(true)
                 .drawShadow(true)
-                .outerCircleColor(R.color.bleu_de_france)
-                .targetCircleColor(R.color.sea_pink)
+                .outerCircleColor(R.color.lavender_indigo)
+                .targetCircleColor(R.color.paris_daisy)
                 .listener(new TapTargetView.Listener() {
                     @Override
                     public void onTargetClick(TapTargetView view) {
@@ -342,10 +345,10 @@ public class Contacts extends AppCompatActivity {
             ProgressBar mProgress = (ProgressBar) dialog.findViewById(R.id.load_and_wait);
 
             int[] colors = {
-                    Color.rgb(229, 134, 58),
-                    Color.RED,
-                    Color.YELLOW,
-                    Color.rgb(90, 49, 157)
+                    Color.rgb(255, 238, 85),
+                    Color.rgb(242, 157, 58),
+                    Color.rgb(198, 62, 62),
+                    Color.rgb(159, 83, 242)
             };
 
             mProgress.setIndeterminateDrawable(new FoldingCirclesDrawable.Builder(Contacts.this)

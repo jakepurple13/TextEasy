@@ -5,4 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bleu_de_france">#468DF0</color>
     <color name="sea_pink">#E6897C</color>
+
+
+    <color name="lavender_indigo">#9F53F2</color>
+    <color name="dull_red">#C63E3E</color>
+    <color name="yellow_sea">#F29D3A</color>
+    <color name="paris_daisy">#FFEE55</color>
+
 </resources>

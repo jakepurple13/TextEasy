@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -30,11 +31,9 @@ import app.easy.text.texteasy.Translator;
  * Created by Jacob on 9/12/16.
  */
 public class SmsReceiver extends BroadcastReceiver {
-    private String TAG = SmsReceiver.class.getSimpleName();
-
-    public static final String SMS_BUNDLE = "pdus";
 
     MainActivity inst;
+    static byte[] received;
 
     public SmsReceiver() {
 
@@ -58,8 +57,24 @@ public class SmsReceiver extends BroadcastReceiver {
 
         String from = smsMess[0].getDisplayOriginatingAddress();
         String message = t.translate(smsMess[0].getDisplayMessageBody());
+        long timestamp = smsMess[0].getTimestampMillis();
+        int q = smsMess[0].getProtocolIdentifier();
+        String a = smsMess[0].getServiceCenterAddress();
+        byte[] b = smsMess[0].getPdu();
+
+        received = b;
+
+
+
+        Log.e("askdjfhl", timestamp + "|" + q + "|" + a + "|" + b);
+
 
         inst = MainActivity.instance();
+
+        /*SharedPreferences enter = context.getSharedPreferences("Received", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = enter.edit();
+        editor.putBoolean("add contact", true);
+        editor.apply();*/
 
         try {
 
@@ -69,6 +84,11 @@ public class SmsReceiver extends BroadcastReceiver {
 
         } catch (NullPointerException e) {
             Log.e("Null point on line 70", e.toString());
+
+            if(!inst.isDestroyed()) {
+                inst.updateList((from) + ": " + message, 1, true);
+            }
+
         }
 
 
