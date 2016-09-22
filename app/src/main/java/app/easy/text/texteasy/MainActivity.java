@@ -1,17 +1,20 @@
 package app.easy.text.texteasy;
 
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!(message.getText().toString().length()<1)) {
+                if (!(message.getText().toString().length() < 1)) {
 
                     SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
                     int num = load.getInt("DotNum", 0);
@@ -141,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
         send.setOnLongClickListener(new View.OnLongClickListener() {
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("dak;sfj", "amount: " + amount);
 
-        if(num==1) {
+        if (num == 1) {
             builder.setTitle("Congrats!");
             builder.setMessage("You just sent your first text! Celebrate!");
             builder.setNegativeButton("OK", null);
@@ -210,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
             dialog.show();
 
-        } else if(amount%(tens/10)==0) {
+        } else if (amount % (tens / 10) == 0) {
 
 
             builder.setTitle("Milestone Reached!");
@@ -221,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
             //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
             dialog.show();
         }
-
 
 
     }
@@ -309,6 +310,16 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + phoneNumber));
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return true;
+                }
                 startActivity(callIntent);
 
                 return true;
