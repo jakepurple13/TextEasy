@@ -75,7 +75,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(in.getApplicationContext(), R.anim.back_to_contacts,R.anim.from_contacts).toBundle();
                 in.startActivity(intent, bndlanimation);
-                //in.overridePendingTransition(R.anim.push_right_out, R.anim.push_right_in);
             }
         };
 

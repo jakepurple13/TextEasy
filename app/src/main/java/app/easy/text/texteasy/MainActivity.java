@@ -1,49 +1,39 @@
 package app.easy.text.texteasy;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
+
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.ContactsContract;
-import android.provider.Telephony;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
+import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+
+import xyz.hanks.library.SmallBang;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     String phoneNumber;
     Button send;
     EditText message;
+    SmallBang mSmallBang;
 
     Translator translate;
 
@@ -120,15 +111,118 @@ public class MainActivity extends AppCompatActivity {
         send = (Button) findViewById(R.id.button);
         message = (EditText) findViewById(R.id.editText);
 
+        mSmallBang = SmallBang.attach2Window(this);
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                sendSMS(phoneNumber, message.getText().toString());
+                if(!(message.getText().toString().length()<1)) {
 
-                message.setText("");
+                    SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
+                    int num = load.getInt("DotNum", 0);
+
+                    mSmallBang.setDotNumber(num);
+                    mSmallBang.bang(send);
+
+                    sendSMS(phoneNumber, message.getText().toString());
+
+                    message.setText("");
+
+                    num++;
+
+                    achievements(num);
+
+                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = enter.edit();
+                    editor.putInt("DotNum", num);
+                    editor.apply();
+
+                }
             }
         });
+
+
+
+        send.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+
+                new TapTargetView.Builder(MainActivity.this) // The activity that hosts this view
+                        .title("Send") // Specify the title text
+                        .description("Send your text") // Specify the description text
+                        .cancelable(true)
+                        .listener(new TapTargetView.Listener() {
+                            @Override
+                            public void onTargetClick(TapTargetView view) {
+                                view.dismiss(true);
+                            }
+
+                            @Override
+                            public void onTargetLongClick(TapTargetView view) {
+
+                            }
+                        })
+                        .showFor(send);
+
+                return false;
+            }
+        });
+
+    }
+
+    public void achievements(int num) {
+
+        Log.e("Amount", num + "");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog;
+
+        int amount;
+
+        int digits = String.valueOf(num).length();
+
+        Log.e("asd", digits + "");
+
+        int tens = 10;
+
+        for (int i = 1; i < digits; i++) {
+            tens *= 10;
+        }
+
+        Log.d("dak;sfj", "achievements: " + tens);
+
+        if (num <= tens) {
+            amount = num % tens;
+        } else {
+            amount = num;
+        }
+
+        Log.d("dak;sfj", "amount: " + amount);
+
+        if(num==1) {
+            builder.setTitle("Congrats!");
+            builder.setMessage("You just sent your first text! Celebrate!");
+            builder.setNegativeButton("OK", null);
+            dialog = builder.create();
+
+            //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
+            dialog.show();
+
+        } else if(amount%(tens/10)==0) {
+
+
+            builder.setTitle("Milestone Reached!");
+            builder.setMessage("You've sent your " + num + "th text!");
+            builder.setNegativeButton("OK", null);
+            dialog = builder.create();
+
+            //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
+            dialog.show();
+        }
+
+
 
     }
 
@@ -183,15 +277,52 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+    }
+
+    @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.from_contacts, R.anim.back_to_contacts);
+        finish();
+        //super.onBackPressed();
+        //overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.call:
+
+
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + phoneNumber));
+                startActivity(callIntent);
+
+                return true;
+
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
 
     public String getContactName(String phoneNumber) {
         ContentResolver cr = getContentResolver();

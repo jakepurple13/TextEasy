@@ -119,7 +119,7 @@ public class SmsReceiver extends BroadcastReceiver {
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
         mBuilder.setAutoCancel(true);
-        mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+        mBuilder.setVibrate(new long[] { 1000, 1000});
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context,  MainActivity.class);

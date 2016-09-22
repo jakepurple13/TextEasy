@@ -1,18 +1,28 @@
 package app.easy.text.texteasy.ContactList;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
+import android.support.annotation.ColorRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +32,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.getkeepsafe.taptargetview.TapTargetView;
+import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.viethoa.RecyclerViewFastScroller;
 import com.viethoa.models.AlphabetItem;
 
@@ -48,6 +62,11 @@ public class Contacts extends AppCompatActivity {
     EditText searchBar;
     String searchKey = "";
     ArrayList<ContactInfo> searched;
+    ProgressTask pt;
+    RecyclerViewFastScroller fastScroller;
+    boolean firstTimeAddContact = false;
+    boolean firstTimeSearch = false;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,20 +75,64 @@ public class Contacts extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        pt = new ProgressTask(Contacts.this);
+        pt.execute();
 
         searched = new ArrayList<>();
         /**Ask User for Location Premisson and Accounts**/
-        AskPermission();
+        //AskPermission();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
+        firstTimeAddContact = load.getBoolean("add contact", false);
+        firstTimeSearch = load.getBoolean("search", false);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Add here
 
+                if(!firstTimeAddContact) {
+
+                    setTutorial("Add Contact", "Add a contact", fab);
+
+                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = enter.edit();
+                    editor.putBoolean("add contact", true);
+                    editor.apply();
+
+                    firstTimeAddContact = true;
+
+                } else {
+
+                    // Creates a new Intent to insert a contact
+                    Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                    // Sets the MIME type to match the Contacts Provider
+                    intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                    startActivity(intent);
+
+                    al.clear();
+                    readContacts();
+                    Collections.sort(al, new InfoCompare());
+                    mAdapter = new ContactAdapter(al, Contacts.this);
+                    mRecyclerView.setAdapter(mAdapter);
+
+                }
+
             }
         });
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                setTutorial("Add Contact", "Add a contact", fab);
+
+                return false;
+            }
+        });
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.contacts);
 
@@ -80,8 +143,6 @@ public class Contacts extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-
 
         searchBar = (EditText) findViewById(R.id.search);
 
@@ -97,7 +158,8 @@ public class Contacts extends AppCompatActivity {
                 searchKey = s.toString();
                 System.out.println(searchKey);
                 for (int i = 0; i < al.size(); i++) {
-                    if (al.get(i).name.toUpperCase().contains(searchKey.toUpperCase())) {
+                    if (al.get(i).name.toUpperCase().contains(searchKey.toUpperCase()) ||
+                            al.get(i).number.contains(searchKey)) {
                         searched.add(al.get(i));
                     }
                 }
@@ -112,10 +174,39 @@ public class Contacts extends AppCompatActivity {
             }
         });
 
+        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!firstTimeSearch) {
+                    setTutorial("Search", "Search for a contact to find", searchBar);
 
-        /*readContacts();
+                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = enter.edit();
+                    editor.putBoolean("search", true);
+                    editor.apply();
 
-        RecyclerViewFastScroller fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
+                    firstTimeSearch = true;
+                }
+            }
+        });
+
+        searchBar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                setTutorial("Search", "Search for a contact to find", searchBar);
+                return false;
+            }
+        });
+
+
+        try {
+            //readContacts();
+        } catch(Exception e) {
+
+        }
+
+        fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
 
         // adds in Alphabetical scroller
         fastScroller.setRecyclerView(mRecyclerView);
@@ -134,7 +225,7 @@ public class Contacts extends AppCompatActivity {
             }
         }
 
-        fastScroller.setUpAlphabet(mAlphabetItems);*/
+        fastScroller.setUpAlphabet(mAlphabetItems);
 
 
     }
@@ -186,9 +277,113 @@ public class Contacts extends AppCompatActivity {
             }
         }
 
-        Collections.sort(al, new InfoCompare());
+        /*Collections.sort(al, new InfoCompare());
         mAdapter = new ContactAdapter(al, this);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);*/
+
+    }
+
+    public void setTutorial(String title, String description, View v) {
+        new TapTargetView.Builder(Contacts.this) // The activity that hosts this view
+                .title(title) // Specify the title text
+                .description(description) // Specify the description text
+                .cancelable(true)
+                .drawShadow(true)
+                .outerCircleColor(R.color.bleu_de_france)
+                .targetCircleColor(R.color.sea_pink)
+                .listener(new TapTargetView.Listener() {
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        view.dismiss(true);
+                    }
+
+                    @Override
+                    public void onTargetLongClick(TapTargetView view) {
+
+                    }
+                })
+                .showFor(v);
+    }
+
+
+    private class ProgressTask extends AsyncTask<String, Void, Boolean> {
+        private Dialog dialog;
+        private Contacts activity;
+        private Context context;
+
+
+        public ProgressTask(Contacts activity) {
+            this.activity = activity;
+            context = activity;
+            dialog = new Dialog(context);
+        }
+
+
+
+        /** progress dialog to show user that the backup is processing. */
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            activity.readContacts();
+
+            return null;
+        }
+
+        /** application context. */
+
+
+        protected void onPreExecute() {
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.setContentView(R.layout.dialogload);
+
+            ProgressBar mProgress = (ProgressBar) dialog.findViewById(R.id.load_and_wait);
+
+            int[] colors = {
+                    Color.rgb(229, 134, 58),
+                    Color.RED,
+                    Color.YELLOW,
+                    Color.rgb(90, 49, 157)
+            };
+
+            mProgress.setIndeterminateDrawable(new FoldingCirclesDrawable.Builder(Contacts.this)
+                    .colors(colors)
+                    .build());
+
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            dialog.hide();
+            dialog.dismiss();
+            Collections.sort(al, new InfoCompare());
+            mAdapter = new ContactAdapter(al, Contacts.this);
+            mRecyclerView.setAdapter(mAdapter);
+            // adds in Alphabetical scroller
+            fastScroller.setRecyclerView(mRecyclerView);
+
+            ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
+            List<String> strAlphabets = new ArrayList<>();
+            for (int i = 0; i < al.size(); i++) {
+                String name = al.get(i).name;
+                if (name == null || name.trim().isEmpty())
+                    continue;
+
+                String word = name.substring(0, 1);
+                if (!strAlphabets.contains(word)) {
+                    strAlphabets.add(word);
+                    mAlphabetItems.add(new AlphabetItem(i, word, false));
+                }
+            }
+
+            fastScroller.setUpAlphabet(mAlphabetItems);
+        }
+
+
+
 
     }
 
@@ -238,6 +433,7 @@ public class Contacts extends AppCompatActivity {
     }
 
 
+
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
 
@@ -249,28 +445,6 @@ public class Contacts extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    readContacts();
-
-                    RecyclerViewFastScroller fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
-
-                    // adds in Alphabetical scroller
-                    fastScroller.setRecyclerView(mRecyclerView);
-
-                    ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
-                    List<String> strAlphabets = new ArrayList<>();
-                    for (int i = 0; i < al.size(); i++) {
-                        String name = al.get(i).name;
-                        if (name == null || name.trim().isEmpty())
-                            continue;
-
-                        String word = name.substring(0, 1);
-                        if (!strAlphabets.contains(word)) {
-                            strAlphabets.add(word);
-                            mAlphabetItems.add(new AlphabetItem(i, word, false));
-                        }
-                    }
-
-                    fastScroller.setUpAlphabet(mAlphabetItems);
 
                 } else
                     Toast.makeText(this, "For full app functions these premission are needed", Toast.LENGTH_LONG).show();
@@ -301,6 +475,9 @@ public class Contacts extends AppCompatActivity {
                 } else {
                     /**If the app does have their Permission  dont ask again**/
                     requestPermissions(perms, permsRequestCode);
+
+
+
                 }
 
             }

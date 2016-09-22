@@ -15,10 +15,10 @@ import app.easy.text.texteasy.Receiver.SmsReceiver;
 public class HeadlessSmsSendService extends Service {
 
 
-    private SmsReceiver smsReceiver;
+    //private SmsReceiver smsReceiver;
     final IntentFilter smsFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
 
-    private SmsReceiver mSMSreceiver;
+    //private SmsReceiver mSMSreceiver;
     private IntentFilter mIntentFilter;
 
     @Override
@@ -46,7 +46,7 @@ public class HeadlessSmsSendService extends Service {
         super.onDestroy();
 
         // Unregister the SMS receiver
-        unregisterReceiver(mSMSreceiver);
+        //unregisterReceiver(mSMSreceiver);
     }
 
     @Nullable
