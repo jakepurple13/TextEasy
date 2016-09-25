@@ -2,6 +2,8 @@ package app.easy.text.texteasy.ContactList;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -65,6 +67,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
+        GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
+        bgShape.setColor(Color.rgb(187, 187, 187)); //gray
+
         holder.mTextView.setText(mDataset.get(position).toString());
 
         View.OnClickListener von = new View.OnClickListener() {

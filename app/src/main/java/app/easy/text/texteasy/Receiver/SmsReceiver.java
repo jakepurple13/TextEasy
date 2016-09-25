@@ -33,7 +33,6 @@ import app.easy.text.texteasy.Translator;
 public class SmsReceiver extends BroadcastReceiver {
 
     MainActivity inst;
-    static byte[] received;
 
     public SmsReceiver() {
 
@@ -57,24 +56,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
         String from = smsMess[0].getDisplayOriginatingAddress();
         String message = t.translate(smsMess[0].getDisplayMessageBody());
-        long timestamp = smsMess[0].getTimestampMillis();
-        int q = smsMess[0].getProtocolIdentifier();
-        String a = smsMess[0].getServiceCenterAddress();
-        byte[] b = smsMess[0].getPdu();
-
-        received = b;
-
-
-
-        Log.e("askdjfhl", timestamp + "|" + q + "|" + a + "|" + b);
-
 
         inst = MainActivity.instance();
-
-        /*SharedPreferences enter = context.getSharedPreferences("Received", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = enter.edit();
-        editor.putBoolean("add contact", true);
-        editor.apply();*/
 
         try {
 
@@ -131,7 +114,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.myrect);
+                        .setSmallIcon(R.drawable.doublerainbow);
 
         mBuilder.setContentTitle(getContactName(context,from));
         mBuilder.setContentText(message);
@@ -139,7 +122,7 @@ public class SmsReceiver extends BroadcastReceiver {
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
         mBuilder.setAutoCancel(true);
-        mBuilder.setVibrate(new long[] { 1000, 1000});
+        mBuilder.setVibrate(new long[] { 1000});
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context,  MainActivity.class);

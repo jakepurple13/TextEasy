@@ -32,7 +32,7 @@ public class Translator {
 
         for(int i=0;i<sentence.length;i++) {
             if(hm.containsKey(sentence[i])) {
-                sentence[i] = hm.get(sentence[i]);
+                sentence[i] = hm.get(sentence[i]) + " (" + sentence[i] + ")";
             }
         }
 

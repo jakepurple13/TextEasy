@@ -259,7 +259,7 @@ public class Contacts extends AppCompatActivity {
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        Log.e("alkdshf ", "Name: " + name + ", Phone No: " + phoneNo);
+                        //Log.e("Contact ", "Name: " + name + ", Phone No: " + phoneNo);
 
                         String whereAddress = "address = '" + phoneNo + "'";
                         Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 1");
@@ -430,7 +430,7 @@ public class Contacts extends AppCompatActivity {
 
         @Override
         public String toString() {
-            return name + ":" + number + "\n" + text;
+            return name + ": " + "Number goes here";//number + "\n" + text;
         }
 
     }
