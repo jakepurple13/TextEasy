@@ -1,6 +1,7 @@
 package app.easy.text.texteasy;
 
 
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -23,8 +25,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.getkeepsafe.taptargetview.TapTargetView;
 
@@ -51,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity inst;
 
     public int lastPosition = 0;
+
+    private Dialog dialog;
+    ImageView achievementIcon;
 
     public static MainActivity instance() {
         return inst;
@@ -80,8 +88,23 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Receiver name:" + info.activityInfo.name + "; priority=" + info.priority);
         }*/
 
+        //Bundle b = getIntent().getExtras();
+
+
+        //Log.e("MainActivity", b.toString());
+
         phoneNumber = getIntent().getStringExtra("Number");
-        Log.w("Number", phoneNumber);
+        try {
+            Log.w("Number", phoneNumber);
+        } catch(NullPointerException e) {
+
+            Intent intent = getIntent();
+            Uri data = intent.getData();
+            Log.d("Data", data.toString());
+            phoneNumber = data.toString().substring(6);
+            Log.d("Data", phoneNumber);
+
+        }
         //phoneNumber = phoneNumber.replaceAll("(", " ");
         phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
         //phoneNumber = phoneNumber.replaceAll("\\^([0-9]+)", "");
@@ -127,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         mSmallBang.setDotNumber(num);
                     }
-
 
                     mSmallBang.bang(send);
 
@@ -182,9 +204,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.e("Amount", num + "");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog dialog;
-
         int amount;
 
         int digits = String.valueOf(num).length();
@@ -208,34 +227,45 @@ public class MainActivity extends AppCompatActivity {
         Log.d("dak;sfj", "amount: " + amount);
 
         if (num == 1) {
-            builder.setTitle("Congrats!");
-            builder.setMessage("You just sent your first text! Celebrate!");
-            builder.setNegativeButton("OK", null);
-            dialog = builder.create();
 
-            //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
-            dialog.show();
+            anotherAchieve("Congrats!", "You just sent your first text! Celebrate!");
 
         } else if (amount % (tens / 10) == 0 && !(amount < 10)) {
 
+            anotherAchieve("Milestone Reached!", "You've sent your " + num + "th text!");
 
-            builder.setTitle("Milestone Reached!");
-            builder.setMessage("You've sent your " + num + "th text!");
-            builder.setNegativeButton("OK", null);
-            dialog = builder.create();
-
-            //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //style id
-            dialog.show();
         }
-
 
     }
 
-    public void updateList(String message) {
-        al.add(0, new TextInfo(message));
-        mAdapter = new MessageAdapter(al, MainActivity.this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.scrollToPosition(al.size() - 1);
+
+    public void anotherAchieve(String title, String message) {
+
+        dialog = new Dialog(this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.achievement_window);
+        dialog.setTitle(title);
+
+        achievementIcon = (ImageView) dialog.findViewById(R.id.achieveicon);
+        TextView tv = (TextView) dialog.findViewById(R.id.achievetexet);
+
+        Button closeButton = (Button) dialog.findViewById(R.id.achievebutton);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        tv.setText(message);
+
+        dialog.show();
+
+        mSmallBang.bang(achievementIcon);
+
     }
 
     public void updateList(String message, int fromTo) {
@@ -290,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        //super.onBackPressed();
+        super.onBackPressed();
         //overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
     }
 
@@ -352,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = Uri.parse("content://sms");
 
         String[] proj = {"*"};
-        ContentResolver cr = getContentResolver();
+        ContentResolver cr = this.getContentResolver();
         String whereAddress = "address = '" + number + "'";
         Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 20");
 
@@ -389,8 +419,6 @@ public class MainActivity extends AppCompatActivity {
                         "\nBody: " + body;
 
                 Log.i("SMS text", sms);
-
-
 
                 Log.e("Person?", person + "HERE");
 

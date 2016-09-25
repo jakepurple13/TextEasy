@@ -430,7 +430,7 @@ public class Contacts extends AppCompatActivity {
 
         @Override
         public String toString() {
-            return name + ": " + "Number goes here";//number + "\n" + text;
+            return name + ": " + number + "\n" + text;
         }
 
     }
