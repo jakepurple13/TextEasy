@@ -32,4 +32,5 @@ dependencies {
     compile 'com.jpardogo.googleprogressbar:library:1.2.0'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.0.1'
     compile 'hanks.xyz:smallbang-library:0.1.2'
+
 }

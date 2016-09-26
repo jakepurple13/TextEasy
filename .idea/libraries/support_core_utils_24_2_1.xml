@@ -8,7 +8,6 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/../adt-bundle-mac-x86_64-20140702 3/sdk/extras/android/m2repository/com/android/support/support-core-utils/24.2.1/support-core-utils-24.2.1-sources.jar!/" />
-      <root url="jar://$USER_HOME$/Documents/extras/android/m2repository/com/android/support/support-core-utils/24.2.1/support-core-utils-24.2.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

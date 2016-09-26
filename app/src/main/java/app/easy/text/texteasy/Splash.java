@@ -78,9 +78,18 @@ public class Splash extends AppCompatActivity {
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
 
+
+
+        } else {
+            // App is the default.
+            /**
+             * 
+             */
+            // Hide the "not currently set as the default SMS app" interface
+            check = true;
             new Handler().postDelayed(new Runnable() {
                 /**
-                 * 
+                 *
                  */
                 @Override
                 public void run() {
@@ -94,13 +103,7 @@ public class Splash extends AppCompatActivity {
                 }
             }, 1000);
 
-        } else {
-            // App is the default.
-            /**
-             * 
-             */
-            // Hide the "not currently set as the default SMS app" interface
-            check = true;
+
         }
 
 
