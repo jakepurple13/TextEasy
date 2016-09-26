@@ -21,6 +21,12 @@ public class HeadlessSmsSendService extends Service {
     //private SmsReceiver mSMSreceiver;
     private IntentFilter mIntentFilter;
 
+    /**
+     * 
+     */
+    /**
+     * 
+     */
     @Override
     public void onCreate() {
 
@@ -38,20 +44,36 @@ public class HeadlessSmsSendService extends Service {
 
         Toast.makeText(this, "GOT IT", Toast.LENGTH_LONG).show();
 
+    /**
+     * 
+     */
     }
 
 
+    /**
+     * 
+     */
     @Override
     public void onDestroy() {
+    /**
+     * 
+     * @param intent 
+     */
         super.onDestroy();
 
         // Unregister the SMS receiver
         //unregisterReceiver(mSMSreceiver);
     }
 
+    /**
+     * 
+     * @param intent 
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 }
+
+

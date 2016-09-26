@@ -30,20 +30,49 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
+    /**
+     * 
+     */
+    /**
+     * 
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        /**
+         * 
+         * @param v 
+         */
         public TextView mTextView;
 
 
+        /**
+         * 
+         * @param v 
+         */
         public ViewHolder(View v) {
             super(v);
+    /**
+     * 
+     * @param myDataset 
+     * @param in 
+     */
             mTextView = (TextView) v.findViewById(R.id.textView);
 
 
         }
     }
 
+    /**
+     * 
+     * @param parent 
+     * @param viewType 
+     */
     // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * 
+     * @param myDataset 
+     * @param in 
+     */
     public ContactAdapter(ArrayList<Contacts.ContactInfo> myDataset, Contacts in) {
         mDataset = myDataset;
         this.in = in;
@@ -57,23 +86,43 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.mytextview, parent, false);
         // set the view's size, margins, paddings and layout parameters
+            /**
+             * 
+             * @param v 
+             */
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * 
+     * @param holder 
+     * @param position 
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
+    /**
+     * 
+     */
         GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
         bgShape.setColor(Color.rgb(187, 187, 187)); //gray
 
         holder.mTextView.setText(mDataset.get(position).toString());
 
+    /**
+     * 
+     * @param pos 
+     */
         View.OnClickListener von = new View.OnClickListener() {
+            /**
+             * 
+             * @param v 
+             */
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(in, MainActivity.class);
@@ -90,11 +139,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     }
 
     // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * 
+     */
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
 
+    /**
+     * 
+     * @param pos 
+     */
     @Override
     public String getTextToShowInBubble(int pos) {
         if (pos < 0 || pos >= mDataset.size())
@@ -108,3 +164,5 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     }
 
 }
+
+

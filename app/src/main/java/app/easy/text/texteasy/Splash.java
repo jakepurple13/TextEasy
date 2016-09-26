@@ -28,14 +28,29 @@ import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
 import xyz.hanks.library.SmallBangListener;
 
+/**
+ * 
+ */
+/**
+ * 
+ */
 public class Splash extends AppCompatActivity {
 
     ExplosionField mExplosionField;
 
     ProgressBar mProgressBar;
     SmallBang mSmallBang;
+    /**
+     * 
+     * @param savedInstanceState 
+     */
     ImageView iv;
+    boolean check = false;
 
+    /**
+     * 
+     * @param savedInstanceState 
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,29 +69,63 @@ public class Splash extends AppCompatActivity {
 
             Intent intent =
                     new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                /**
+                 * 
+                 */
             intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
                     myPackageName);
             startActivity(intent);
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
 
+            new Handler().postDelayed(new Runnable() {
+                /**
+                 * 
+                 */
+                @Override
+                public void run() {
+
+
+                    Intent i = new Intent(Splash.this, Contacts.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                    finish();
+
+                }
+            }, 1000);
+
         } else {
             // App is the default.
+            /**
+             * 
+             */
             // Hide the "not currently set as the default SMS app" interface
-
+            check = true;
         }
 
 
+            /**
+             * 
+             */
         AskPermission();
 
         iv.setVisibility(View.GONE);
 
         mSmallBang.bang(iv, 50, new SmallBangListener() {
+            /**
+             * 
+             */
             @Override
             public void onAnimationStart() {
                 iv.setVisibility(View.VISIBLE);
             }
 
+            /**
+             * 
+             */
+                    /**
+                     * 
+                     */
             @Override
             public void onAnimationEnd() {
 
@@ -90,18 +139,21 @@ public class Splash extends AppCompatActivity {
                 && checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+
+            if(check) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
 
-                    Intent i = new Intent(Splash.this, Contacts.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
-                    finish();
+                        Intent i = new Intent(Splash.this, Contacts.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                        finish();
 
-                }
-            }, 1000);
+                    }
+                }, 1000);
+            }
 
         }
 
@@ -132,6 +184,9 @@ public class Splash extends AppCompatActivity {
 
     }
 
+    /**
+     * 
+     */
     public void AskPermission() {
 
         String[] perms = {"android.permission.RECEIVE_SMS", "android.permission.CALL_PHONE", "android.permission.WRITE_CONTACTS", "android.permission.READ_CONTACTS", "android.permission.SEND_SMS", "android.permission.READ_SMS"};
@@ -173,3 +228,5 @@ public class Splash extends AppCompatActivity {
     }
 
 }
+
+

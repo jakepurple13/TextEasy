@@ -27,26 +27,56 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
+    /**
+     * 
+     */
+    /**
+     * 
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        /**
+         * 
+         * @param v 
+         */
         public TextView mTextView;
 
 
+        /**
+         * 
+         * @param v 
+         */
         public ViewHolder(View v) {
             super(v);
+    /**
+     * 
+     * @param myDataset 
+     * @param in 
+     */
             mTextView = (TextView) v.findViewById(R.id.textView);
 
 
         }
     }
 
+    /**
+     * 
+     * @param parent 
+     * @param viewType 
+     */
     // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * 
+     * @param myDataset 
+     * @param in 
+     */
     public MessageAdapter(ArrayList<MainActivity.TextInfo> myDataset, MainActivity in) {
         mDataset = myDataset;
         this.in = in;
     }
 
     // Create new views (invoked by the layout manager)
+
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                         int viewType) {
@@ -60,11 +90,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * 
+     * @param holder 
+     * @param position 
+    /**
+     * 
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(mDataset.get(position).toString());
+    /**
+     * 
+     * @param viewToAnimate 
+     * @param position 
+     * @param type 
+     */
 
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
@@ -81,12 +124,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * 
+     */
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
 
 
+    /**
+     * 
+     * @param viewToAnimate 
+     * @param position 
+     * @param type 
+     */
     private void setAnimation(View viewToAnimate, int position, int type) {
         //right is you
         //left is friend
@@ -104,3 +156,5 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
 }
+
+

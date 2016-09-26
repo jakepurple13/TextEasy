@@ -11,6 +11,12 @@ public class Translator {
 
     LinkedHashMap<String, String> hm;
 
+    /**
+     * 
+     */
+    /**
+     * 
+     */
     public Translator() {
 
         hm = new LinkedHashMap<>();
@@ -23,9 +29,17 @@ public class Translator {
         hm.put("brb", "be right back");
         hm.put("hi", "hello world");
         hm.put("Good", "Amazing");
+    /**
+     * 
+     * @param words 
+     */
 
     }
 
+    /**
+     * 
+     * @param words 
+     */
     public String translate(String words) {
 
         String[] sentence = words.split(" ");
@@ -46,3 +60,5 @@ public class Translator {
     }
 
 }
+
+

@@ -19,6 +19,16 @@ public class MmsReceiver extends BroadcastReceiver {
 
     public static final String SMS_BUNDLE = "pdus";
 
+    /**
+     * 
+     * @param context 
+     * @param intent 
+     */
+    /**
+     * 
+     * @param context 
+     * @param intent 
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("AKSDJL:ASKDJ:ASJ", "MMS");
@@ -94,3 +104,5 @@ public class MmsReceiver extends BroadcastReceiver {
 
     }
 }
+
+

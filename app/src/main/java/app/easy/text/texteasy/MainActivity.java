@@ -20,6 +20,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
+import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +42,12 @@ import java.util.ArrayList;
 
 import xyz.hanks.library.SmallBang;
 
+/**
+ * 
+ */
+/**
+ * 
+ */
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -57,25 +65,44 @@ public class MainActivity extends AppCompatActivity {
 
     public int lastPosition = 0;
 
+    /**
+     * 
+     */
     private Dialog dialog;
     ImageView achievementIcon;
 
+    /**
+    /**
+     * 
+     */
     public static MainActivity instance() {
         return inst;
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
+    /**
+     * 
+     * @param savedInstanceState 
+     */
         inst = this;
     }
 
 
+    /**
+     * 
+     */
     @Override
     protected void onStop() {
         super.onStop();
     }
 
+    /**
+     * 
+     * @param savedInstanceState 
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +114,6 @@ public class MainActivity extends AppCompatActivity {
         for (ResolveInfo info : infos) {
             System.out.println("Receiver name:" + info.activityInfo.name + "; priority=" + info.priority);
         }*/
-
-        //Bundle b = getIntent().getExtras();
-
-
-        //Log.e("MainActivity", b.toString());
 
         phoneNumber = getIntent().getStringExtra("Number");
         try {
@@ -121,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
+            /**
+             * 
+             * @param v 
+             */
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -137,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
         mSmallBang = SmallBang.attach2Window(this);
 
         send.setOnClickListener(new View.OnClickListener() {
+            /**
+             * 
+             * @param v 
+             */
             @Override
             public void onClick(View v) {
 
@@ -152,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     mSmallBang.bang(send);
+            /**
+             * 
+             * @param v 
+             */
 
                     sendSMS(phoneNumber, message.getText().toString());
 
@@ -162,31 +196,55 @@ public class MainActivity extends AppCompatActivity {
                     achievements(num);
 
                     SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                            /**
+                             * 
+                             * @param view 
+                             */
                     SharedPreferences.Editor editor = enter.edit();
                     editor.putInt("DotNum", num);
                     editor.apply();
 
                 }
+                            /**
+                             * 
+                             * @param view 
+                             */
             }
         });
 
 
         send.setOnLongClickListener(new View.OnLongClickListener() {
+            /**
+             * 
+             * @param v 
+             */
             @Override
             public boolean onLongClick(View v) {
 
                 new TapTargetView.Builder(MainActivity.this) // The activity that hosts this view
+    /**
+     * 
+     * @param num 
+     */
                         .title("Send") // Specify the title text
                         .description("Send your text") // Specify the description text
                         .outerCircleColor(R.color.lavender_indigo)
                         .targetCircleColor(R.color.paris_daisy)
                         .cancelable(true)
                         .listener(new TapTargetView.Listener() {
+                            /**
+                             * 
+                             * @param view 
+                             */
                             @Override
                             public void onTargetClick(TapTargetView view) {
                                 view.dismiss(true);
                             }
 
+                            /**
+                             * 
+                             * @param view 
+                             */
                             @Override
                             public void onTargetLongClick(TapTargetView view) {
 
@@ -200,9 +258,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 
+     * @param num 
+     */
     public void achievements(int num) {
 
         Log.e("Amount", num + "");
+    /**
+     * 
+     * @param title 
+     * @param message 
+     */
 
         int amount;
 
@@ -218,6 +285,10 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("dak;sfj", "achievements: " + tens);
 
+            /**
+             * 
+             * @param v 
+             */
         if (num <= tens) {
             amount = num % tens;
         } else {
@@ -232,6 +303,11 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (amount % (tens / 10) == 0 && !(amount < 10)) {
 
+    /**
+     * 
+     * @param message 
+     * @param fromTo 
+     */
             anotherAchieve("Milestone Reached!", "You've sent your " + num + "th text!");
 
         }
@@ -239,14 +315,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void anotherAchieve(String title, String message) {
 
         dialog = new Dialog(this);
+    /**
+     * 
+     */
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.achievement_window);
+        /**
+         * 
+         * @param text 
+         */
         dialog.setTitle(title);
 
         achievementIcon = (ImageView) dialog.findViewById(R.id.achieveicon);
@@ -260,75 +344,126 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         tv.setText(message);
 
         dialog.show();
 
         mSmallBang.bang(achievementIcon);
 
+    /**
+     * 
+     */
     }
+
 
     public void updateList(String message, int fromTo) {
         al.add(0, new TextInfo(message, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
+    /**
+     * 
+     */
     }
+
 
 
     public void updateList(String message, int fromTo, boolean sent) {
         al.add(new TextInfo(message, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
+    /**
+     * 
+     * @param item 
+     */
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
     }
 
+    /**
+     * 
+     */
     public class TextInfo {
         String text;
         int fromTo; //1 is from
         //2 is to
 
+        /**
+         * 
+         * @param text 
+         */
         public TextInfo(String text) {
             this.text = text;
             fromTo = 1;
         }
+    /**
+     * 
+     * @param phoneNumber 
+     */
 
+        /**
+         * 
+         * @param text 
+         * @param fromTo 
+         */
         public TextInfo(String text, int fromTo) {
             this.text = text;
             this.fromTo = fromTo;
         }
 
+        /**
+         * 
+         */
         @Override
         public String toString() {
             return text;
         }
 
     }
+    /**
+     * 
+     * @param number 
+     */
 
+    /**
+     * 
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
     }
 
+    /**
+     * 
+     */
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
     }
 
+    /**
+     * 
+     */
     @Override
     public void onBackPressed() {
         finish();
         super.onBackPressed();
-        //overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
     }
 
+    /**
+     * 
+     */
     @Override
     protected void onPause() {
         super.onPause();
     }
 
+    /**
+     * 
+     * @param menu 
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -336,6 +471,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 
+     * @param item 
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -348,6 +487,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             default:
+    /**
+     * 
+     * @param phoneNumber 
+     * @param message 
+     */
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
@@ -356,6 +500,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 
+     * @param phoneNumber 
+     */
     public String getContactName(String phoneNumber) {
         ContentResolver cr = getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -376,6 +524,10 @@ public class MainActivity extends AppCompatActivity {
         return contactName;
     }
 
+    /**
+     * 
+     * @param number 
+     */
     public void ScanSMS(String number) {
         System.out.println("==============================ScanSMS()==============================");
         //Initialize Box
@@ -439,6 +591,11 @@ public class MainActivity extends AppCompatActivity {
         c.close();
     }
 
+    /**
+     * 
+     * @param phoneNumber 
+     * @param message 
+     */
     private void sendSMS(String phoneNumber, String message) {
         String SENT = "SMS_SENT";
         String DELIVERED = "SMS_DELIVERED";
@@ -456,3 +613,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+

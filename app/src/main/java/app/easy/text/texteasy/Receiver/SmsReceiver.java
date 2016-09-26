@@ -23,6 +23,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.MainActivity;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
@@ -34,11 +35,19 @@ public class SmsReceiver extends BroadcastReceiver {
 
     MainActivity inst;
 
+    /**
+     * 
+     */
     public SmsReceiver() {
 
     }
 
 
+    /**
+     *
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         // Get the data (SMS data) bound to intent
@@ -57,19 +66,20 @@ public class SmsReceiver extends BroadcastReceiver {
         String from = smsMess[0].getDisplayOriginatingAddress();
         String message = t.translate(smsMess[0].getDisplayMessageBody());
 
+
         inst = MainActivity.instance();
 
         try {
 
-            if(!inst.isDestroyed()) {
+            if (!inst.isDestroyed()) {
                 inst.updateList(getContactName(context, from) + ": " + message, 1, true);
             }
 
         } catch (NullPointerException e) {
             Log.e("Null point on line 70", e.toString());
 
-            if(!inst.isDestroyed()) {
-                inst.updateList((from) + ": " + message, 1, true);
+            if (!inst.isDestroyed()) {
+                inst.updateList(from + ": " + message, 1, true);
             }
 
         }
@@ -84,12 +94,16 @@ public class SmsReceiver extends BroadcastReceiver {
         } else {
             // App is the default.
             // Hide the "not currently set as the default SMS app" interface
-
             notification(from, message, context);
 
         }
     }
 
+    /**
+     *
+     * @param context
+     * @param phoneNumber
+     */
     public String getContactName(Context context, String phoneNumber) {
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -110,22 +124,28 @@ public class SmsReceiver extends BroadcastReceiver {
         return contactName;
     }
 
+    /**
+     *
+     * @param from
+     * @param message
+     * @param context
+     */
     public void notification(String from, String message, Context context) {
 
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.doublerainbow);
 
-        mBuilder.setContentTitle(getContactName(context,from));
+        mBuilder.setContentTitle(getContactName(context, from));
         mBuilder.setContentText(message);
 
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
         mBuilder.setAutoCancel(true);
-        mBuilder.setVibrate(new long[] { 1000});
+        mBuilder.setVibrate(new long[]{1000});
 
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(context,  MainActivity.class);
+        Intent resultIntent = new Intent(context, MainActivity.class);
         Log.e("NUMBERS", from + "\t" + message);
         resultIntent.putExtra("Number", from);
         // The stack builder object will contain an artificial back stack for the
@@ -134,7 +154,8 @@ public class SmsReceiver extends BroadcastReceiver {
         // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
+        //stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addParentStack(Contacts.class);
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
@@ -152,3 +173,5 @@ public class SmsReceiver extends BroadcastReceiver {
 
 
 }
+
+

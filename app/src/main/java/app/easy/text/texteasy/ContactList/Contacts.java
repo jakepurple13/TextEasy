@@ -51,6 +51,13 @@ import app.easy.text.texteasy.MessageAdapter;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
 
+/**
+ *
+ */
+
+/**
+ *
+ */
 public class Contacts extends AppCompatActivity {
 
 
@@ -65,9 +72,15 @@ public class Contacts extends AppCompatActivity {
     ProgressTask pt;
     RecyclerViewFastScroller fastScroller;
     boolean firstTimeAddContact = false;
+    /**
+     * @param savedInstanceState
+     */
     boolean firstTimeSearch = false;
     FloatingActionButton fab;
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +97,10 @@ public class Contacts extends AppCompatActivity {
 
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
         firstTimeAddContact = load.getBoolean("add contact", false);
+        /**
+         *
+         * @param view
+         */
         firstTimeSearch = load.getBoolean("search", false);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -91,12 +108,16 @@ public class Contacts extends AppCompatActivity {
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
 
         fab.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
 
                 //Add here
 
-                if(!firstTimeAddContact) {
+                if (!firstTimeAddContact) {
 
                     setTutorial("Add Contact", "Add a contact", fab);
 
@@ -116,6 +137,10 @@ public class Contacts extends AppCompatActivity {
                     startActivity(intent);
 
                     //al.clear();
+                    /**
+                     *
+                     * @param v
+                     */
                     //readContacts();
                     Collections.sort(al, new InfoCompare());
                     mAdapter = new ContactAdapter(al, Contacts.this);
@@ -127,6 +152,10 @@ public class Contacts extends AppCompatActivity {
         });
 
         fab.setOnLongClickListener(new View.OnLongClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public boolean onLongClick(View v) {
 
@@ -135,11 +164,25 @@ public class Contacts extends AppCompatActivity {
                 return false;
             }
         });
+        /**
+         *
+         * @param s
+         * @param start
+         * @param count
+         * @param after
+         */
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.contacts);
 
         // use this setting to improve performance if you know that changes
+        /**
+         *
+         * @param s
+         * @param start
+         * @param before
+         * @param count
+         */
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
@@ -150,10 +193,21 @@ public class Contacts extends AppCompatActivity {
         searchBar = (EditText) findViewById(R.id.search);
 
         searchBar.addTextChangedListener(new TextWatcher() {
+            /**
+             *
+             * @param s
+             * @param start
+             * @param count
+             * @param after
+            /**
+             *
+             * @param s
+             */
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -165,12 +219,20 @@ public class Contacts extends AppCompatActivity {
                             al.get(i).number.contains(searchKey)) {
                         searched.add(al.get(i));
                     }
+                    /**
+                     *
+                     * @param v
+                     */
                 }
 
                 mAdapter = new ContactAdapter(searched, Contacts.this);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
+            /**
+             *
+             * @param s
+             */
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -178,9 +240,14 @@ public class Contacts extends AppCompatActivity {
         });
 
         searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            /**
+             *
+             * @param v
+             * @param hasFocus
+             */
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!firstTimeSearch) {
+                if (!firstTimeSearch) {
                     setTutorial("Search", "Search for a contact to find", searchBar);
 
                     SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
@@ -194,6 +261,10 @@ public class Contacts extends AppCompatActivity {
         });
 
         searchBar.setOnLongClickListener(new View.OnLongClickListener() {
+            /**
+             /**
+             *
+             * */
             @Override
             public boolean onLongClick(View v) {
 
@@ -205,7 +276,7 @@ public class Contacts extends AppCompatActivity {
 
         try {
             //readContacts();
-        } catch(Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -233,6 +304,9 @@ public class Contacts extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     */
     public void readContacts() {
 
         ContentResolver cr = getContentResolver();
@@ -241,6 +315,12 @@ public class Contacts extends AppCompatActivity {
         Uri uri = Uri.parse("content://sms");
         String[] proj = {"*"};
 
+        /**
+         *
+         * @param title
+         * @param description
+         * @param v
+         */
 
         if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
@@ -250,11 +330,19 @@ public class Contacts extends AppCompatActivity {
                         ContactsContract.Contacts.DISPLAY_NAME));
 
                 if (cur.getInt(cur.getColumnIndex(
+                        /**
+                         *
+                         * @param view
+                         */
                         ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
                     Cursor pCur = cr.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            /**
+                             *
+                             * @param view
+                             */
                             new String[]{id}, null);
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
@@ -264,12 +352,19 @@ public class Contacts extends AppCompatActivity {
                         String whereAddress = "address = '" + phoneNo + "'";
                         Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 1");
                         String text = "Hello";
+                        /**
+                         *
+                         */
                         if (c.moveToFirst()) {
                             do {
                                 text = c.getString(c.getColumnIndex("body"));
                                 Log.w("ASD", text);
                                 text = translate.translate(text);
                             } while (c.moveToNext());
+                            /**
+                             *
+                             * @param activity
+                             */
                         }
 
                         al.add(new ContactInfo(name, phoneNo, text));
@@ -278,13 +373,19 @@ public class Contacts extends AppCompatActivity {
                     pCur.close();
                 }
             }
-        }
 
         /*Collections.sort(al, new InfoCompare());
         mAdapter = new ContactAdapter(al, this);
         mRecyclerView.setAdapter(mAdapter);*/
 
+        }
     }
+
+    /**
+     * @param title
+     * @param description
+     * @param v
+     */
 
     public void setTutorial(String title, String description, View v) {
         new TapTargetView.Builder(Contacts.this) // The activity that hosts this view
@@ -295,6 +396,10 @@ public class Contacts extends AppCompatActivity {
                 .outerCircleColor(R.color.lavender_indigo)
                 .targetCircleColor(R.color.paris_daisy)
                 .listener(new TapTargetView.Listener() {
+                    /**
+                     *
+                     * @param view
+                     */
                     @Override
                     public void onTargetClick(TapTargetView view) {
                         view.dismiss(true);
@@ -309,12 +414,18 @@ public class Contacts extends AppCompatActivity {
     }
 
 
+    /**
+     *
+     */
     private class ProgressTask extends AsyncTask<String, Void, Boolean> {
         private Dialog dialog;
         private Contacts activity;
         private Context context;
 
 
+        /**
+         * @param activity
+         */
         public ProgressTask(Contacts activity) {
             this.activity = activity;
             context = activity;
@@ -322,22 +433,38 @@ public class Contacts extends AppCompatActivity {
         }
 
 
-
-        /** progress dialog to show user that the backup is processing. */
+        /**
+         * /**
+         */
 
         @Override
         protected Boolean doInBackground(String... params) {
+            /**
+             *
+             */
 
             activity.readContacts();
 
             return null;
         }
+        /**
+         *
+         * @param name
+         * @param number
+         * @param text
+         */
 
-        /** application context. */
+        /**
+         * application context.
+         */
 
 
         protected void onPreExecute() {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            /**
+             *
+             * @param phoneNumber
+             */
             dialog.setCancelable(false);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             dialog.setContentView(R.layout.dialogload);
@@ -358,12 +485,19 @@ public class Contacts extends AppCompatActivity {
             dialog.show();
         }
 
+
         @Override
         protected void onPostExecute(final Boolean success) {
             dialog.hide();
             dialog.dismiss();
             Collections.sort(al, new InfoCompare());
             mAdapter = new ContactAdapter(al, Contacts.this);
+            /**
+             *
+             * @param permsRequestCode
+             * @param permissions
+             * @param grantResults
+             */
             mRecyclerView.setAdapter(mAdapter);
             // adds in Alphabetical scroller
             fastScroller.setRecyclerView(mRecyclerView);
@@ -383,30 +517,49 @@ public class Contacts extends AppCompatActivity {
             }
 
             fastScroller.setUpAlphabet(mAlphabetItems);
+            /**
+             *
+             */
         }
-
-
 
 
     }
 
+    /**
+     *
+     */
     public class InfoCompare implements Comparator<ContactInfo> {
+        /**
+         * @param e1
+         * @param e2
+         */
         public int compare(ContactInfo e1, ContactInfo e2) {
             return e1.name.compareTo(e2.name);
         }
     }
 
+    /**
+     *
+     */
     public class ContactInfo {
         String name;
         String text;
         String number;
 
+        /**
+         * @param name
+         * @param number
+         * @param text
+         */
         public ContactInfo(String name, String number, String text) {
             this.name = name;
             this.number = PhoneNumberUtils.normalizeNumber(number);
             this.text = text;
         }
 
+        /**
+         * @param phoneNumber
+         */
         public String getContactName(String phoneNumber) {
             ContentResolver cr = getContentResolver();
             Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -428,6 +581,9 @@ public class Contacts extends AppCompatActivity {
         }
 
 
+        /**
+         *
+         */
         @Override
         public String toString() {
             return name + ": " + number + "\n" + text;
@@ -436,7 +592,11 @@ public class Contacts extends AppCompatActivity {
     }
 
 
-
+    /**
+     * @param permsRequestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
 
@@ -456,6 +616,9 @@ public class Contacts extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     */
     public void AskPermission() {
 
         String[] perms = {"android.permission.RECEIVE_SMS", "android.permission.WRITE_CONTACTS", "android.permission.READ_CONTACTS", "android.permission.SEND_SMS", "android.permission.READ_SMS"};
@@ -478,7 +641,6 @@ public class Contacts extends AppCompatActivity {
                 } else {
                     /**If the app does have their Permission  dont ask again**/
                     requestPermissions(perms, permsRequestCode);
-
 
 
                 }
@@ -508,3 +670,5 @@ public class Contacts extends AppCompatActivity {
     }
 
 }
+
+
