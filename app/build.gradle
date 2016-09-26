@@ -32,5 +32,9 @@ dependencies {
     compile 'com.jpardogo.googleprogressbar:library:1.2.0'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.0.1'
     compile 'hanks.xyz:smallbang-library:0.1.2'
-
+    compile 'com.google.firebase:firebase-core:9.2.0'
+    compile 'com.google.firebase:firebase-ads:9.2.0'
 }
+
+// ADD THIS AT THE BOTTOM
+apply plugin: 'com.google.gms.google-services'

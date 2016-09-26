@@ -56,7 +56,6 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         mSmallBang = SmallBang.attach2Window(this);
 
         iv = (ImageView) findViewById(R.id.imageView);
@@ -78,7 +77,21 @@ public class Splash extends AppCompatActivity {
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
 
+            new Handler().postDelayed(new Runnable() {
+                /**
+                 *
+                 */
+                @Override
+                public void run() {
 
+
+                    Intent i = new Intent(Splash.this, Contacts.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                    finish();
+
+                }
+            }, 2500);
 
         } else {
             // App is the default.
@@ -116,7 +129,7 @@ public class Splash extends AppCompatActivity {
 
         mSmallBang.bang(iv, 50, new SmallBangListener() {
             /**
-             * 
+             *
              */
             @Override
             public void onAnimationStart() {
@@ -124,10 +137,10 @@ public class Splash extends AppCompatActivity {
             }
 
             /**
-             * 
+             *
              */
                     /**
-                     * 
+                     *
                      */
             @Override
             public void onAnimationEnd() {

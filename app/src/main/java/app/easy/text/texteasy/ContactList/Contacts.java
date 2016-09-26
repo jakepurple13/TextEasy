@@ -38,6 +38,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.viethoa.RecyclerViewFastScroller;
 import com.viethoa.models.AlphabetItem;
@@ -87,6 +90,12 @@ public class Contacts extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-8950844463555971~6055866848");
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         pt = new ProgressTask(Contacts.this);
         pt.execute();

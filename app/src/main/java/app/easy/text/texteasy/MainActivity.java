@@ -607,7 +607,7 @@ public class MainActivity extends AppCompatActivity {
                 new Intent(DELIVERED), 0);
 
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+        sms.sendTextMessage(phoneNumber, null, message, null, null);
 
         updateList("You: " + translate.translate(message), 2, true);
     }

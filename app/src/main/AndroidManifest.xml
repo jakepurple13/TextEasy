@@ -67,7 +67,7 @@
 
         <activity
             android:name=".Splash"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/doublerainbow"
             android:label="TextEasy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
