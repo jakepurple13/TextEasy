@@ -313,81 +313,54 @@ public class Contacts extends AppCompatActivity {
 
     }
 
-    /**
-     *
-     */
-    public void readContacts() {
+    public void getAllContacts() {
+        long startnow;
+        long endnow;
 
+        Uri uris = Uri.parse("content://sms");
+        String[] proj = {"body", "address"};
+
+        startnow = android.os.SystemClock.uptimeMillis();
         ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
-        Uri uri = Uri.parse("content://sms");
-        String[] proj = {"*"};
 
-        /**
-         *
-         * @param title
-         * @param description
-         * @param v
-         */
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String selection = ContactsContract.Contacts.HAS_PHONE_NUMBER;
+        Cursor cursor = cr.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,   ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, selection, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
 
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(
-                        ContactsContract.Contacts.DISPLAY_NAME));
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
 
-                if (cur.getInt(cur.getColumnIndex(
-                        /**
-                         *
-                         * @param view
-                         */
-                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-                    Cursor pCur = cr.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            /**
-                             *
-                             * @param view
-                             */
-                            new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        String phoneNo = pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        //Log.e("Contact ", "Name: " + name + ", Phone No: " + phoneNo);
+            String contactNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            Log.d("con ", "name " + contactName + " number" + contactNumber);
 
-                        String whereAddress = "address = '" + phoneNo + "'";
-                        Cursor c = cr.query(uri, proj, whereAddress, null, "date desc limit 1");
-                        String text = "Hello";
-                        /**
-                         *
-                         */
-                        if (c.moveToFirst()) {
-                            do {
-                                text = c.getString(c.getColumnIndex("body"));
-                                Log.w("ASD", text);
-                                text = translate.translate(text);
-                            } while (c.moveToNext());
-                            /**
-                             *
-                             * @param activity
-                             */
-                        }
+            //String whereAddress = "address = '" + contactNumber + "'";
+            //Cursor c = cr.query(uris, proj, whereAddress, null, "date desc limit 1");
+            //Log.wtf("QWE", c.getCount() + "");
+            String text = " ";
+            /*if (c.isNull(0) == false) {
+                *//*do {
+                    text = c.getString(c.getColumnIndex("body"));
+                    Log.w("ASD", text);
+                    text = translate.translate(text);
+                } while (c.moveToNext());*//*
+                text = c.getString(c.getColumnIndex("body"));
+                Log.w("ASD", text);
+                text = translate.translate(text);
+            }*/
 
-                        al.add(new ContactInfo(name, phoneNo, text));
-                        c.close();
-                    }
-                    pCur.close();
-                }
-            }
+            al.add(new ContactInfo(contactName, contactNumber, text));
+            //c.close();
 
-        /*Collections.sort(al, new InfoCompare());
-        mAdapter = new ContactAdapter(al, this);
-        mRecyclerView.setAdapter(mAdapter);*/
+            //al.add(new ContactInfo(contactName, contactNumber, "Hello"));
 
+            cursor.moveToNext();
         }
+        cursor.close();
+        cursor = null;
+
+        endnow = android.os.SystemClock.uptimeMillis();
+        Log.d("END", "TimeForContacts " + (endnow - startnow) + " ms");
     }
 
     /**
@@ -451,8 +424,7 @@ public class Contacts extends AppCompatActivity {
             /**
              *
              */
-
-            activity.readContacts();
+            activity.getAllContacts();
 
             return null;
         }

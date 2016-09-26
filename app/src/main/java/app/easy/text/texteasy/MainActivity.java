@@ -222,10 +222,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
 
                 new TapTargetView.Builder(MainActivity.this) // The activity that hosts this view
-    /**
-     * 
-     * @param num 
-     */
                         .title("Send") // Specify the title text
                         .description("Send your text") // Specify the description text
                         .outerCircleColor(R.color.lavender_indigo)
