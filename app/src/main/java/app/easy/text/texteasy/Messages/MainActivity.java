@@ -560,7 +560,7 @@ public class MainActivity extends AppCompatActivity {
                         "\nSubject: " + subject +
                         "\nBody: " + body;
 
-                Log.i("SMS text", sms);
+                //Log.i("SMS text", sms);
 
                 Log.e("Person?", person + "HERE");
 

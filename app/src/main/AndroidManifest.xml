@@ -14,9 +14,16 @@
         android:allowBackup="true"
         android:icon="@drawable/doublerainbow"
         android:label="TextEasy"
+        android:name="com.orm.SugarApp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+
+        <meta-data android:name="DATABASE" android:value="lingo.db" />
+        <meta-data android:name="VERSION" android:value="3" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="app.easy.text.texteasy.Dictionary.Lingo" />
+
         <activity android:name=".Messages.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

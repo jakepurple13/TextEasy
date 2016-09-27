@@ -1,6 +1,7 @@
 package app.easy.text.texteasy;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -10,7 +11,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import app.easy.text.texteasy.Dictionary.ListOfWords;
+import app.easy.text.texteasy.Dictionary.Lingo;
+
 
 /**
  * Created by Jacob on 9/13/16.
@@ -20,6 +22,7 @@ public class Translator {
 
 
     LinkedHashMap<String, String> hm;
+    boolean firsttime;
 
     /**
      * 
@@ -35,30 +38,70 @@ public class Translator {
          * Put all words into hashmap here
          *
          */
+        SharedPreferences load = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
+        firsttime = load.getBoolean("FirstLoad", false);
 
-        InputStreamReader is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
+        Log.e("Translator: ", firsttime + "");
 
-        BufferedReader br = new BufferedReader(is);
+        if(firsttime==false) {
 
-        String word = " ";
-        String meaning = " ";
-        while(word!=null) {
-            try {
-                word = br.readLine();
-                meaning = br.readLine();
+            InputStreamReader is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
 
-                if(word==null) {
-                    break;
+            BufferedReader br = new BufferedReader(is);
+
+            String word = " ";
+            String meaning = " ";
+            while (word != null) {
+                try {
+                    word = br.readLine();
+                    meaning = br.readLine();
+
+                    if (word == null) {
+                        break;
+                    }
+
+                    Lingo l = new Lingo(word, meaning);
+                    l.save();
+
+                    hm.put(word, meaning);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                Log.d("asdfkjh", word + "\t" + meaning);
 
-                hm.put(word, meaning);
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-            Log.d("asdfkjh", word + "\t" + meaning);
+
+            firsttime = true;
+
+            SharedPreferences enter = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = enter.edit();
+            editor.putBoolean("FirstLoad", firsttime);
+            editor.apply();
+
+        } else {
+
+            long size = Lingo.count(Lingo.class);
+
+            Log.e("Translator: ", size + "");
+
+            for(int i=1;i<=size-1;i++) {
+
+                Lingo l = Lingo.findById(Lingo.class, i);
+                hm.put(l.getWord(), l.getMeaning());
+
+            }
+
+            Log.w("HM KEYS", hm.keySet().toString());
+            Log.e("Split", "-----------------");
+            Log.w("HM ENTRIES", hm.entrySet().toString());
+
 
         }
+
+
+
+
     }
 
     /**

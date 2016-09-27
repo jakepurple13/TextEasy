@@ -1,6 +1,7 @@
 package app.easy.text.texteasy.Dictionary;
 
 import android.app.Dialog;
+import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +49,7 @@ public class ListOfWords extends AppCompatActivity {
     ArrayList<WordInfo> searched;
     ArrayList<WordInfo> al = new ArrayList<>();
 
+    String TAG = "List Of Words";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class ListOfWords extends AppCompatActivity {
 
         LinkedHashMap<String, String> hm = t.getWords();
 
-        for(String s : hm.keySet()) {
+        for (String s : hm.keySet()) {
             al.add(new WordInfo(s, hm.get(s)));
         }
 
@@ -149,11 +151,11 @@ public class ListOfWords extends AppCompatActivity {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                changeWord("", "", -1);
             }
         });
     }
@@ -163,12 +165,14 @@ public class ListOfWords extends AppCompatActivity {
         public int compare(WordInfo e1, WordInfo e2) {
             return e1.word.compareTo(e2.word);
         }
+
     }
 
     public class WordInfo {
+
+
         String word;
         String meaning;
-
 
         public WordInfo(String word, String meaning) {
             this.word = word;
@@ -192,7 +196,7 @@ public class ListOfWords extends AppCompatActivity {
 
     Dialog dialog;
 
-    public void changeWord(String word, String meaning, final int location) {
+    public void changeWord(String word, final String meaning, final int location) {
 
         dialog = new Dialog(this);
         /**
@@ -209,7 +213,7 @@ public class ListOfWords extends AppCompatActivity {
          */
         dialog.setTitle("Change the Word");
 
-        final EditText origin = (EditText)  dialog.findViewById(R.id.original);
+        final EditText origin = (EditText) dialog.findViewById(R.id.original);
 
         final EditText newWord = (EditText) dialog.findViewById(R.id.newMeaning);
 
@@ -230,33 +234,78 @@ public class ListOfWords extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                WordInfo wi = al.remove(location);
+                Lingo l;
+                WordInfo wi;
 
-                wi.setWord(origin.getText().toString());
-                wi.setMeaning(newWord.getText().toString());
+                String org = origin.getText().toString();
+                String mean = newWord.getText().toString();
+
+                if (location != -1) {
+
+                    wi = al.remove(location);
+
+                    wi.setWord(org);
+                    wi.setMeaning(mean);
+
+                    List<Lingo> q;
+
+                    q = Lingo.find(Lingo.class, "word = ?", org);
+
+                    if (q.size() == 0) {
+                        q = Lingo.listAll(Lingo.class);
+
+                        Log.i("size", q.size() + "");
+
+                        for (int i = 0; i < q.size(); i++) {
+                            Log.d("Log number " + i, q.get(i).toString());
+                        }
+
+                        Log.i("Location", location + "");
+                        l = q.get(location);
+
+                    } else {
+                        l = new Lingo();
+                    }
+
+                } else {
+                    l = new Lingo();
+                    wi = new WordInfo(org, mean);
+                }
+
+                l.word = org;
+                l.meaning = mean;
+                l.save();
 
                 al.add(wi);
 
                 Collections.sort(al, new InfoCompare());
 
                 mAdapter = new WordAdapter(al, ListOfWords.this);
+
                 mRecyclerView.setAdapter(mAdapter);
+
+                ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
+                List<String> strAlphabets = new ArrayList<>();
+                for (int i = 0; i < al.size(); i++) {
+                    String name = al.get(i).word;
+                    if (name == null || name.trim().isEmpty())
+                        continue;
+
+                    String word = name.substring(0, 1);
+                    if (!strAlphabets.contains(word)) {
+                        strAlphabets.add(word);
+                        mAlphabetItems.add(new AlphabetItem(i, word, false));
+                    }
+                }
+
+                fastScroller.setUpAlphabet(mAlphabetItems);
 
                 dialog.dismiss();
             }
         });
 
-
-        //tv.setText(message);
-
         dialog.show();
-
-
-        /**
-         *
-         */
     }
-
 
 
 }
