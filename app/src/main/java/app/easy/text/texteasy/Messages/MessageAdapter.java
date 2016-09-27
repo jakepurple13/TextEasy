@@ -1,7 +1,5 @@
-package app.easy.text.texteasy;
+package app.easy.text.texteasy.Messages;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import app.easy.text.texteasy.R;
 
 /**
  * Created by Jacob on 9/12/16.

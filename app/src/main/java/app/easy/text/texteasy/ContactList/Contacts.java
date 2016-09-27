@@ -2,7 +2,6 @@ package app.easy.text.texteasy.ContactList;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -18,11 +16,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
-import android.support.annotation.ColorRes;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +26,9 @@ import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -50,7 +48,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import app.easy.text.texteasy.MessageAdapter;
+import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
 
@@ -68,7 +66,7 @@ public class Contacts extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<ContactInfo> al = new ArrayList<>();
-    Translator translate = new Translator();
+    //Translator translate = new Translator(this);
     EditText searchBar;
     String searchKey = "";
     ArrayList<ContactInfo> searched;
@@ -185,13 +183,6 @@ public class Contacts extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.contacts);
 
         // use this setting to improve performance if you know that changes
-        /**
-         *
-         * @param s
-         * @param start
-         * @param before
-         * @param count
-         */
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
@@ -510,28 +501,18 @@ public class Contacts extends AppCompatActivity {
      *
      */
     public class InfoCompare implements Comparator<ContactInfo> {
-        /**
-         * @param e1
-         * @param e2
-         */
+
         public int compare(ContactInfo e1, ContactInfo e2) {
             return e1.name.compareTo(e2.name);
         }
     }
 
-    /**
-     *
-     */
     public class ContactInfo {
         String name;
         String text;
         String number;
 
-        /**
-         * @param name
-         * @param number
-         * @param text
-         */
+
         public ContactInfo(String name, String number, String text) {
             this.name = name;
             this.number = PhoneNumberUtils.normalizeNumber(number);
@@ -570,6 +551,41 @@ public class Contacts extends AppCompatActivity {
             return name + ": " + number + "\n" + text;
         }
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contact_activity_menu, menu);
+        return true;
+    }
+
+    /**
+     *
+     * @param item
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.wordChange:
+
+                Intent callIntent = new Intent(this, ListOfWords.class);
+                startActivity(callIntent);
+
+                return true;
+
+            default:
+                /**
+                 *
+                 * @param phoneNumber
+                 * @param message
+                 */
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 

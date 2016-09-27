@@ -17,8 +17,6 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/myrect"
         android:id="@+id/textView" />
-    <!--   " -->
-
-
+    <!--android:autoLink="all"-->
 
 </LinearLayout>

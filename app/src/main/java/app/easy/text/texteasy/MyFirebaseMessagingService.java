@@ -1,7 +1,10 @@
 package app.easy.text.texteasy;
 
+
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.RemoteInput;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
@@ -71,6 +74,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         stackBuilder.addParentStack(Contacts.class);
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
+
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(
                         0,

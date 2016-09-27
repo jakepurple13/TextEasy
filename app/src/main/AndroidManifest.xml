@@ -13,16 +13,18 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/doublerainbow"
-        tools:replace="android:label"
         android:label="TextEasy"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+        <activity android:name=".Messages.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
@@ -31,19 +33,23 @@
         </activity>
 
         <!-- BroadcastReceiver that listens for incoming SMS messages -->
-        <receiver android:name=".Receiver.SmsReceiver"
+        <receiver
+            android:name=".Receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="999">
-                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+
+                <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
 
         <!-- BroadcastReceiver that listens for incoming MMS messages -->
-        <receiver android:name=".Receiver.MmsReceiver"
+        <receiver
+            android:name=".Receiver.MmsReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
@@ -64,11 +70,9 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -85,7 +89,11 @@
         <activity
             android:name=".ContactList.Contacts"
             android:label="@string/title_activity_contacts"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dictionary.ListOfWords"
+            android:label="@string/title_activity_list_of_words"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

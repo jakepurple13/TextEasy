@@ -73,25 +73,10 @@ public class Splash extends AppCompatActivity {
                  */
             intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
                     myPackageName);
-            startActivity(intent);
+            startActivityForResult(intent, 201);
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
 
-            new Handler().postDelayed(new Runnable() {
-                /**
-                 *
-                 */
-                @Override
-                public void run() {
-
-
-                    Intent i = new Intent(Splash.this, Contacts.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
-                    finish();
-
-                }
-            }, 2500);
 
         } else {
             // App is the default.
@@ -172,6 +157,32 @@ public class Splash extends AppCompatActivity {
             }
 
         }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+
+        switch (requestCode) {
+            case 201:
+                new Handler().postDelayed(new Runnable() {
+                    /**
+                     *
+                     */
+                    @Override
+                    public void run() {
+
+                        Intent i = new Intent(Splash.this, Contacts.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                        finish();
+
+                    }
+                }, 1000);
+        }
+
+
 
     }
 

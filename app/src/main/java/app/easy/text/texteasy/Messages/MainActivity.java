@@ -1,4 +1,4 @@
-package app.easy.text.texteasy;
+package app.easy.text.texteasy.Messages;
 
 
 import android.app.Dialog;
@@ -8,20 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
-import android.transition.Explode;
-import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,11 +30,10 @@ import android.widget.TextView;
 
 import com.getkeepsafe.taptargetview.TapTargetView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 
+import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Translator;
 import xyz.hanks.library.SmallBang;
 
 /**
@@ -134,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle(getContactName(phoneNumber));
 
-        translate = new Translator();
+        translate = new Translator(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 

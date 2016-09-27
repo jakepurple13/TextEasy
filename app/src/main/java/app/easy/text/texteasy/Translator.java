@@ -1,6 +1,16 @@
 package app.easy.text.texteasy;
 
+import android.content.Context;
+import android.util.Log;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import app.easy.text.texteasy.Dictionary.ListOfWords;
 
 /**
  * Created by Jacob on 9/13/16.
@@ -17,7 +27,7 @@ public class Translator {
     /**
      * 
      */
-    public Translator() {
+    public Translator(Context context) {
 
         hm = new LinkedHashMap<>();
         /**
@@ -26,14 +36,29 @@ public class Translator {
          *
          */
 
-        hm.put("brb", "be right back");
-        hm.put("hi", "hello world");
-        hm.put("Good", "Amazing");
-    /**
-     * 
-     * @param words 
-     */
+        InputStreamReader is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
 
+        BufferedReader br = new BufferedReader(is);
+
+        String word = " ";
+        String meaning = " ";
+        while(word!=null) {
+            try {
+                word = br.readLine();
+                meaning = br.readLine();
+
+                if(word==null) {
+                    break;
+                }
+
+                hm.put(word, meaning);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.d("asdfkjh", word + "\t" + meaning);
+
+        }
     }
 
     /**
@@ -57,6 +82,10 @@ public class Translator {
         }
 
         return text;
+    }
+
+    public LinkedHashMap<String, String> getWords() {
+        return hm;
     }
 
 }

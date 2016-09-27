@@ -1,6 +1,5 @@
 package app.easy.text.texteasy.Receiver;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -8,23 +7,17 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.v7.app.NotificationCompat;
-import android.telephony.PhoneNumberUtils;
-import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import app.easy.text.texteasy.ContactList.Contacts;
-import app.easy.text.texteasy.MainActivity;
+import app.easy.text.texteasy.Messages.MainActivity;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
 
@@ -53,7 +46,7 @@ public class SmsReceiver extends BroadcastReceiver {
         // Get the data (SMS data) bound to intent
         Log.i("Text being received!", "SMS RECEIVER \t" + context.getPackageName());
 
-        Translator t = new Translator();
+        Translator t = new Translator(context);
 
         SmsMessage[] smsMess = Telephony.Sms.Intents.getMessagesFromIntent(intent);
 
