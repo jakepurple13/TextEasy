@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<TextInfo> al = new ArrayList<>();
     String phoneNumber;
-    Button send;
+    ImageButton send;
     EditText message;
     SmallBang mSmallBang;
 
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.scrollToPosition(al.size() - 1);
 
-        send = (Button) findViewById(R.id.button);
+        send = (ImageButton) findViewById(R.id.button);
         message = (EditText) findViewById(R.id.editText);
 
         mSmallBang = SmallBang.attach2Window(this);
