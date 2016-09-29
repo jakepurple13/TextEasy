@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import app.easy.text.texteasy.Dictionary.Lingo;
 
@@ -81,15 +82,10 @@ public class Translator {
 
         } else {
 
-            long size = Lingo.count(Lingo.class);
+            List<Lingo> ll = Lingo.listAll(Lingo.class);
 
-            Log.e("Translator: ", size + "");
-
-            for(int i=1;i<=size-1;i++) {
-
-                Lingo l = Lingo.findById(Lingo.class, i);
-                hm.put(l.getWord(), l.getMeaning());
-
+            for(int i=0;i<ll.size();i++) {
+                hm.put(ll.get(i).getWord(), ll.get(i).getMeaning());
             }
 
             Log.w("HM KEYS", hm.keySet().toString());

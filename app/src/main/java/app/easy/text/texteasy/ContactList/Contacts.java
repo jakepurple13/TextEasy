@@ -31,14 +31,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.viethoa.RecyclerViewFastScroller;
 import com.viethoa.models.AlphabetItem;
@@ -78,6 +81,8 @@ public class Contacts extends AppCompatActivity {
      */
     boolean firstTimeSearch = false;
     FloatingActionButton fab;
+
+    Dialog feed;
 
     /**
      * @param savedInstanceState
@@ -178,6 +183,66 @@ public class Contacts extends AppCompatActivity {
          * @param count
          * @param after
          */
+
+
+        FloatingActionButton feedback = (FloatingActionButton) findViewById(R.id.feedback);
+
+        feedback.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                feed = new Dialog(Contacts.this);
+
+
+                feed.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                /**
+                 *
+                 * @param phoneNumber
+                 */
+                feed.setCancelable(true);
+                feed.setContentView(R.layout.feed_back);
+
+                Button send = (Button) feed.findViewById(R.id.send);
+
+                Button cancel = (Button) feed.findViewById(R.id.dontsend);
+
+                final SimpleRatingBar srb = (SimpleRatingBar) feed.findViewById(R.id.ratingBar);
+
+                final EditText comments = (EditText) feed.findViewById(R.id.commentfield);
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        feed.dismiss();
+                    }
+                });
+
+                send.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String text = "";
+
+                        text += srb.getRating() + " rating" + "\n" +
+                                comments.getText().toString();
+
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("message/rfc822");
+                        intent.putExtra(Intent.EXTRA_EMAIL, "jakerein@gmai.com");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Beta Tester has something to say!");
+                        intent.putExtra(Intent.EXTRA_TEXT, text);
+
+                        startActivity(Intent.createChooser(intent, "Send Email"));
+
+                    }
+                });
+
+                feed.show();
+
+            }
+        });
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.contacts);

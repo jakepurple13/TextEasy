@@ -1,6 +1,8 @@
 package app.easy.text.texteasy.Dictionary;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,7 +22,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -39,7 +44,7 @@ import app.easy.text.texteasy.Translator;
 public class ListOfWords extends AppCompatActivity {
 
     Translator t;
-
+    FloatingActionButton fab;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -51,6 +56,8 @@ public class ListOfWords extends AppCompatActivity {
 
     String TAG = "List Of Words";
 
+    boolean firstTimeAddWord;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +67,12 @@ public class ListOfWords extends AppCompatActivity {
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-8950844463555971~6055866848");
 
-        AdView mAdView = (AdView) findViewById(R.id.adView1);
+        final AdView mAdView = (AdView) findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
+        firstTimeAddWord = load.getBoolean("add word", false);
 
         t = new Translator(this);
 
@@ -73,8 +83,6 @@ public class ListOfWords extends AppCompatActivity {
         for (String s : hm.keySet()) {
             al.add(new WordInfo(s, hm.get(s)));
         }
-
-        al.add(new WordInfo("lol", "laugh out loud"));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.dictionary);
 
@@ -90,7 +98,6 @@ public class ListOfWords extends AppCompatActivity {
 
         mAdapter = new WordAdapter(al, ListOfWords.this);
         mRecyclerView.setAdapter(mAdapter);
-
 
         fastScroller = (RecyclerViewFastScroller) findViewById(R.id.quickDictionary);
 
@@ -112,6 +119,27 @@ public class ListOfWords extends AppCompatActivity {
         }
 
         fastScroller.setUpAlphabet(mAlphabetItems);
+
+        /*ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                //Remove swiped item from list and notify the RecyclerView
+                //WordAdapter wa = (WordAdapter) mRecyclerView.getAdapter();
+                int swipedPosition = viewHolder.getAdapterPosition();
+                mAdapter.notifyItemRemoved(swipedPosition);
+                Lingo l = Lingo.findById(Lingo.class, swipedPosition);
+                l.delete();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);*/
 
         searchBar = (EditText) findViewById(R.id.wordsearch);
 
@@ -150,12 +178,87 @@ public class ListOfWords extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWord("", "", -1);
+
+                if(firstTimeAddWord) {
+                    changeWord("", "", -1);
+                } else {
+                    setTutorial("Add Your Own", "Add your own lingos", fab);
+
+                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = enter.edit();
+                    editor.putBoolean("add word", true);
+                    editor.apply();
+
+                    firstTimeAddWord = true;
+                }
+            }
+        });
+
+
+
+    }
+
+
+    public void setTutorial(final String title, final String description, View v) {
+        new TapTargetView.Builder(ListOfWords.this) // The activity that hosts this view
+                .title(title) // Specify the title text
+                .description(description + "\nPress and hold to bring up again") // Specify the description text
+                .cancelable(true)
+                .drawShadow(true)
+                .outerCircleColor(R.color.lavender_indigo)
+                .targetCircleColor(R.color.paris_daisy)
+                .listener(new TapTargetView.Listener() {
+                    /**
+                     *
+                     * @param view
+                     */
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        view.dismiss(true);
+                    }
+
+                    @Override
+                    public void onTargetLongClick(TapTargetView view) {
+
+                    }
+                })
+                .showFor(v);
+
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                new TapTargetView.Builder(ListOfWords.this) // The activity that hosts this view
+                        .title(title) // Specify the title text
+                        .description(description + "\nPress and hold to bring up again") // Specify the description text
+                        .cancelable(true)
+                        .drawShadow(true)
+                        .outerCircleColor(R.color.lavender_indigo)
+                        .targetCircleColor(R.color.paris_daisy)
+                        .listener(new TapTargetView.Listener() {
+                            /**
+                             *
+                             * @param view
+                             */
+                            @Override
+                            public void onTargetClick(TapTargetView view) {
+                                view.dismiss(true);
+                            }
+
+                            @Override
+                            public void onTargetLongClick(TapTargetView view) {
+
+                            }
+                        })
+                        .showFor(v);
+
+
+                return false;
             }
         });
     }
@@ -204,7 +307,7 @@ public class ListOfWords extends AppCompatActivity {
          */
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.update_word);
         /**
