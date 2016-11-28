@@ -127,7 +127,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.doublerainbow);
+                        .setSmallIcon(R.drawable.texteasyicon);
 
         mBuilder.setContentTitle(getContactName(context, from));
         mBuilder.setContentText(message);

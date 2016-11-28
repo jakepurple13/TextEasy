@@ -185,7 +185,9 @@ public class Contacts extends AppCompatActivity {
          */
 
 
-        FloatingActionButton feedback = (FloatingActionButton) findViewById(R.id.feedback);
+       /* FloatingActionButton feedback = (FloatingActionButton) findViewById(R.id.feedback);
+
+        feedback.setVisibility(View.GONE);
 
         feedback.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
 
@@ -195,12 +197,11 @@ public class Contacts extends AppCompatActivity {
 
                 feed = new Dialog(Contacts.this);
 
-
                 feed.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                /**
+                *//**
                  *
                  * @param phoneNumber
-                 */
+                 *//*
                 feed.setCancelable(true);
                 feed.setContentView(R.layout.feed_back);
 
@@ -225,16 +226,7 @@ public class Contacts extends AppCompatActivity {
 
                         String text = "";
 
-                        text += srb.getRating() + " rating" + "\n" +
-                                comments.getText().toString();
 
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.setType("message/rfc822");
-                        intent.putExtra(Intent.EXTRA_EMAIL, "jakerein@gmai.com");
-                        intent.putExtra(Intent.EXTRA_SUBJECT, "Beta Tester has something to say!");
-                        intent.putExtra(Intent.EXTRA_TEXT, text);
-
-                        startActivity(Intent.createChooser(intent, "Send Email"));
 
                     }
                 });
@@ -242,7 +234,7 @@ public class Contacts extends AppCompatActivity {
                 feed.show();
 
             }
-        });
+        });*/
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.contacts);

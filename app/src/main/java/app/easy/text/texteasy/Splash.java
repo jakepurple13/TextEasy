@@ -76,7 +76,7 @@ public class Splash extends AppCompatActivity {
             startActivityForResult(intent, 201);
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
-
+            AskPermission();
 
         } else {
             // App is the default.
@@ -85,21 +85,7 @@ public class Splash extends AppCompatActivity {
              */
             // Hide the "not currently set as the default SMS app" interface
             check = true;
-            new Handler().postDelayed(new Runnable() {
-                /**
-                 *
-                 */
-                @Override
-                public void run() {
-
-
-                    Intent i = new Intent(Splash.this, Contacts.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
-                    finish();
-
-                }
-            }, 1000);
+            AskPermission();
 
 
         }
@@ -108,7 +94,7 @@ public class Splash extends AppCompatActivity {
             /**
              * 
              */
-        AskPermission();
+
 
         iv.setVisibility(View.GONE);
 
@@ -140,20 +126,10 @@ public class Splash extends AppCompatActivity {
                 && checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
 
+            AskPermission();
 
             if(check) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
-
-                        Intent i = new Intent(Splash.this, Contacts.class);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
-                        finish();
-
-                    }
-                }, 1000);
             }
 
         }
@@ -166,20 +142,7 @@ public class Splash extends AppCompatActivity {
 
         switch (requestCode) {
             case 201:
-                new Handler().postDelayed(new Runnable() {
-                    /**
-                     *
-                     */
-                    @Override
-                    public void run() {
-
-                        Intent i = new Intent(Splash.this, Contacts.class);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
-                        finish();
-
-                    }
-                }, 1000);
+                AskPermission();
         }
 
 
@@ -198,10 +161,7 @@ public class Splash extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    Intent i = new Intent(Splash.this, Contacts.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
-                    finish();
+                   next();
 
                 } else {
                     Toast.makeText(this, "For full app functions these premission are needed", Toast.LENGTH_LONG).show();
@@ -261,6 +221,21 @@ public class Splash extends AppCompatActivity {
 
         }
 
+    }
+
+    public void next() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                Intent i = new Intent(Splash.this, Contacts.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                finish();
+
+            }
+        }, 1000);
     }
 
 }
