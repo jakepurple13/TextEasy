@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         send.setOnLongClickListener(new View.OnLongClickListener() {
             /**
              * 

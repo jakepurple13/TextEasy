@@ -47,6 +47,15 @@ public class Splash extends AppCompatActivity {
     ImageView iv;
     boolean check = false;
 
+    String[] perms = {"android.permission.RECEIVE_SMS",
+            "android.permission.CALL_PHONE",
+            "android.permission.WRITE_CONTACTS",
+            "android.permission.READ_CONTACTS",
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE",
+            "android.permission.SEND_SMS",
+            "android.permission.READ_SMS"};
+
     /**
      * 
      * @param savedInstanceState 
@@ -69,14 +78,14 @@ public class Splash extends AppCompatActivity {
             Intent intent =
                     new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
                 /**
-                 * 
+                 *
                  */
             intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
                     myPackageName);
             startActivityForResult(intent, 201);
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
-            AskPermission();
+            //AskPermission();
 
         } else {
             // App is the default.
@@ -89,7 +98,7 @@ public class Splash extends AppCompatActivity {
 
 
         }
-
+        //AskPermission();
 
             /**
              * 
@@ -119,7 +128,7 @@ public class Splash extends AppCompatActivity {
             }
         });
 
-        if(!(checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
+        /*if(!(checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
@@ -132,7 +141,7 @@ public class Splash extends AppCompatActivity {
 
             }
 
-        }
+        }*/
 
     }
 
@@ -143,6 +152,8 @@ public class Splash extends AppCompatActivity {
         switch (requestCode) {
             case 201:
                 AskPermission();
+            default:
+                requestPermissions(perms, 200);
         }
 
 
@@ -156,6 +167,7 @@ public class Splash extends AppCompatActivity {
         switch (permsRequestCode) {
 
             case 200:
+
 
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -175,15 +187,8 @@ public class Splash extends AppCompatActivity {
      * 
      */
     public void AskPermission() {
+        Log.e("sdaklfhja;sdf", "HERE'S JOHNNY!");
 
-        String[] perms = {"android.permission.RECEIVE_SMS",
-                "android.permission.CALL_PHONE",
-                "android.permission.WRITE_CONTACTS",
-                "android.permission.READ_CONTACTS",
-                "android.permission.INTERNET",
-                "android.permission.ACCESS_NETWORK_STATE",
-                "android.permission.SEND_SMS",
-                "android.permission.READ_SMS"};
 
         int permsRequestCode = 200;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -196,28 +201,28 @@ public class Splash extends AppCompatActivity {
                     && checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
 
-
-                //android.permission.CALL_PHONE
-
                 // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECEIVE_SMS)) {
 
                     // Show an expanation to the user *asynchronously* -- don't block
                     // this thread waiting for the user's response! After the user
                     // sees the explanation, try again to request the permission.
 
-
-
+                    //AskPermission();
+                    //requestPermissions(perms, permsRequestCode);
+                    ActivityCompat.requestPermissions(this, perms, permsRequestCode);
 
                 } else {
                     /**If the app does have their Permission  dont ask again**/
-                    requestPermissions(perms, permsRequestCode);
-
-
+                    //requestPermissions(perms, permsRequestCode);
+                    ActivityCompat.requestPermissions(this, perms, permsRequestCode);
+                    next();
                 }
 
 
             }
+
+            //next();
 
         }
 
@@ -227,7 +232,6 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
 
                 Intent i = new Intent(Splash.this, Contacts.class);
                 startActivity(i);
