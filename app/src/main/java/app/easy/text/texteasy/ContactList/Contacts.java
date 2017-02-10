@@ -36,7 +36,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
-
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -106,6 +105,9 @@ public class Contacts extends AppCompatActivity {
         searched = new ArrayList<>();
         /**Ask User for Location Premisson and Accounts**/
         //AskPermission();
+
+
+
 
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
         firstTimeAddContact = load.getBoolean("add contact", false);

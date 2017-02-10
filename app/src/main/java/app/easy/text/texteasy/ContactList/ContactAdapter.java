@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         bgShape.setColor(Color.rgb(187, 187, 187)); //gray
 
         holder.mTextView.setText(mDataset.get(position).toString());
+        holder.mTextView.setTextColor(Color.BLACK);
+        holder.mTextView.setGravity(Gravity.CENTER);
+        //holder.mTextView.setTextColor(R.color.textColors);
 
     /**
      * 

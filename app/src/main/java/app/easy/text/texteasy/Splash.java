@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.asha.nightowllib.NightOwl;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.jpardogo.android.googleprogressbar.library.GoogleMusicDicesDrawable;
 import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
