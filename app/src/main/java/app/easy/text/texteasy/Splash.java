@@ -19,11 +19,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.asha.nightowllib.NightOwl;
-import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
-import com.jpardogo.android.googleprogressbar.library.GoogleMusicDicesDrawable;
-import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
-
 import app.easy.text.texteasy.ContactList.Contacts;
 import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
@@ -63,6 +58,9 @@ public class Splash extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setThemed();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
@@ -241,6 +239,13 @@ public class Splash extends AppCompatActivity {
 
             }
         }, 1000);
+    }
+
+    public void setThemed() {
+        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
+        String themer = prefs.getString("themeID", "0");
+        setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
+
     }
 
 }

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.design.widget.FloatingActionButton;
@@ -42,6 +43,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
+import com.orm.SugarApp;
 import com.viethoa.RecyclerViewFastScroller;
 import com.viethoa.models.AlphabetItem;
 
@@ -52,6 +54,8 @@ import java.util.List;
 
 import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Settings.SettingsActivity;
+import app.easy.text.texteasy.Splash;
 import app.easy.text.texteasy.Translator;
 
 /**
@@ -89,6 +93,9 @@ public class Contacts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setThemed();
+
         setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,7 +113,10 @@ public class Contacts extends AppCompatActivity {
         /**Ask User for Location Premisson and Accounts**/
         //AskPermission();
 
-
+        //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        //String syncConnPref = sharedPref.getString(SettingsActivity., "");
+        //setTheme(getApplicationInfo().getThemeId());
+        //System.err.println(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultTheme", "0"));
 
 
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
@@ -634,6 +644,15 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
+            case R.id.settings:
+
+                Intent settingIntent = new Intent(this, SettingsActivity.class);
+                startActivityForResult(settingIntent, 201);
+
+                return true;
+
+
+
             default:
                 /**
                  *
@@ -722,6 +741,35 @@ public class Contacts extends AppCompatActivity {
             // Hide the "not currently set as the default SMS app" interface
 
         }
+
+
+    }
+
+    public void setThemed() {
+        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
+        String themer = prefs.getString("themeID", "0");
+
+        Log.e("adsl;kfj", themer);
+        setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
+        //boolean ? (if true) : (if false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if (requestCode == 201) {
+
+            if (1 == SettingsActivity.RESULT_CODE_THEME_UPDATED) {
+
+                this.recreate();
+                return;
+
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 

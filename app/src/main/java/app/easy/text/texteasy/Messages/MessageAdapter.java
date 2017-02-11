@@ -111,6 +111,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             bgShape.setColor(Color.rgb(175, 210, 246)); //blue
+            //bgShape.setColor(R.color.dark_color); //blue
             holder.mTextView.setGravity(Gravity.LEFT);
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();

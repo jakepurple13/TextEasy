@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setThemed();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -600,6 +603,13 @@ public class MainActivity extends AppCompatActivity {
         sms.sendTextMessage(phoneNumber, null, message, null, null);
 
         updateList("You: " + translate.translate(message), 2, true);
+    }
+
+    public void setThemed() {
+        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
+        String themer = prefs.getString("themeID", "0");
+        setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
+        //boolean ? (if true) : (if false);
     }
 
 }

@@ -114,7 +114,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         holder.mTextView.setText(mDataset.get(position).toString());
         holder.mTextView.setTextColor(Color.BLACK);
-        holder.mTextView.setGravity(Gravity.CENTER);
+        //holder.mTextView.setGravity(Gravity.CENTER);
         //holder.mTextView.setTextColor(R.color.textColors);
 
     /**

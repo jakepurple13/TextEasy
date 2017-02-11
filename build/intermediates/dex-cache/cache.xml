@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="ad430d7baa57c48d0086ba04bd004a518a0454e8">
+        sha1="98573edc6b20da1e4d6f950b86182479a03b4305">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
     </item>
     <item
@@ -34,26 +34,8 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="dbaf6cc448b52dadde33a1b789efc408873e8ca8">
+        sha1="fe44f08fcf2cc9f940f9eb55395408e1a06d5a27">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_aa20c4087d4697be84be10d8510d7a9e78e33d03/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="363f626ad5686283250cdb6073ae1bba5cb07a87">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.2.0_5ffe660dc16965a6d4dddcaa8e18b389941cedd4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="fb15fd9774b5c51dcb39d8e6fa1b6f06bcd1cd34">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-9.2.0_6dd07e1de0f05dffb9f62d35069b53f63d05c953/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -63,6 +45,33 @@
         revision="24.0.2"
         sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_8b326aca2cfc2193c12d54d641cfafe98576accc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-10.0.1_e39f8c4c387e10cc993a1cf1df904c634fbf6969/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-10.0.1_537f58334c2cba34767b267861e4afd355ac3c0b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-10.0.1_2e21e5d54d5d8b709d0cd77d35a914a3b1e3c652/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -111,21 +120,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="593fbaec1c3e100480a2bd72457b64b7dde6ac2d">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.2.0_6c1a5c3b338077dceaa667089bb476a47fce1276/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.getkeepsafe.taptargetview/taptargetview/1.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="24ef354da09e86e3886af34bfbc06b7db16d4861">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.getkeepsafe.taptargetview-taptargetview-1.0.1_bcffe68a6c48aa5c0c4550102e48dc0ca59d354b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-10.0.1_3f66ebf82c8088605efa59cc13f9128c5a05b700/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -138,21 +147,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/jars/classes.jar"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="dc4c18602ecffb3e69cda6cdc51ba4feac0f97d7">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-9.2.0_8f93ec567eeb0f4e483cc21616e82b8c793d9cd4/classes.dex" />
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-10.0.1_d112e63e489f68f14486f9dd38ef3d613425b208/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/9.2.0/jars/classes.jar"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="b53d61bae49278c0fa202d9066d2e72fc151c1e8">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-9.2.0_3448cde97cd4fa5c1aba5c312ae12474ca6366f9/classes.dex" />
+        sha1="1d193729baf37df3d902a423291423a0df7e3779">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.1_215411a7dea73d0cf081cf0742c121791dfcf192/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-10.0.1_7064cca435de4a28bf2aa85e26e1ce13b5d7b3a2/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -162,15 +180,6 @@
         revision="24.0.2"
         sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_dece83603f921cacc77a4cc735b53a5919efad63/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="dd7676ac12aa6653718b7ea33d93ce9d6915d526">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.2.0_8c85f99a89543e7a96f6b659c9288962e304beec/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -210,12 +219,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="57c2eceb8548de84509d1ebc293fedec53231f6c">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gass-10.0.1_48a2d9c505aa860d238abf91e472d216448bc24e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.github.viethoa/fastscroller/1.1.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="b8ef49eba9eb3fd7ff631b9c83e66d4200102ff1">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.github.viethoa-fastscroller-1.1.0_c9737be5e190d3d9751aeb2b1b163913752192e0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d0460bf07cc3657e0be518ca01c174493951c6b8">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-10.0.1_ce4a146bb07a39a75593c7925a5d5308d947dddd/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -246,6 +273,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-10.0.1_4b2fa4e2cb3335d6dfb354880e3be85199cfeb44/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Applications/Android Studio.app/Contents/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar"
         jumboMode="true"
         optimize="true"
@@ -273,15 +309,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="4838df6db988160b107e954e02a745370df543b6">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.2.0_b46b08422645bda18d80f75f48affc32d96bba71/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -300,15 +327,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="21bb89120d84fa29afeb0f9c0ebf415bc3b45a7e">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-9.2.0_a0943c8c094d57f617fb60a0bf56d56b3f2336c3/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -318,21 +336,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/9.2.0/jars/classes.jar"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="1dc44c4798cbd79e95e4838a3fdc734c0e3f895f">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gass-9.2.0_7e3ff40d1ecb58612bb7d43055745ffe6b349990/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="30489a97b06cc3945bdbcc1770089af9e3b3b64d">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-9.2.0_d7065019489787e54719206707c25ac9c1c871ac/classes.dex" />
+        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-10.0.1_3e4fff6bb0715e094efc1be2b81f9b8f87787257/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -345,24 +354,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/9.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e91e1f335dc418d0138991a1d5155f0490ab6082">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-lite-9.2.0_a472b3c82e64eff38526622c92baa5bf260841b5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.asha.nightowllib/nightowllib/0.2/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b7d5db5bb14c19817d2014d24dd2d127956780cd">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.asha.nightowllib-nightowllib-0.2_3390fcc519c66420265a064969a93c656a56c0c7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -372,12 +363,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/9.2.0/jars/classes.jar"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="a06eb7761fca120bbb46b34b930a3a3462ba9d7f">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-9.2.0_b6a0aa1106672e536034b5545f61e0b496996512/classes.dex" />
+        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-lite-10.0.1_5166f584e334df87c761f12fe217c0b680822033/classes.dex" />
     </item>
 
 </items>

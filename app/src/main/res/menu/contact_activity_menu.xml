@@ -5,7 +5,13 @@
         <item
             android:id="@+id/wordChange"
             android:icon="@android:drawable/ic_menu_agenda"
-            android:title="Call"
+            android:title="Words"
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/settings"
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Settings"
             app:showAsAction="always" />
 
 </menu>

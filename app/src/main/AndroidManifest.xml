@@ -9,22 +9,29 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@drawable/texteasyicon"
         android:label="TextEasy"
-        android:name="com.orm.SugarApp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-
-        <meta-data android:name="DATABASE" android:value="lingo.db" />
-        <meta-data android:name="VERSION" android:value="3" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="app.easy.text.texteasy.Dictionary.Lingo" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="lingo.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="3" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="app.easy.text.texteasy.Dictionary.Lingo" />
 
         <activity android:name=".Messages.MainActivity">
             <intent-filter>
@@ -103,6 +110,9 @@
             android:name=".Dictionary.ListOfWords"
             android:label="Dictionary of Acronyms"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Settings.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
