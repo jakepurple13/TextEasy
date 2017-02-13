@@ -40,11 +40,11 @@ public class Translator {
          *
          */
         SharedPreferences load = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
-        firsttime = load.getBoolean("FirstLoad", false);
+        firsttime = load.getBoolean("FirstLoad", true);
 
         Log.e("Translator: ", firsttime + "");
-
-        if(firsttime==false) {
+        //firsttime
+        if(true) {
 
             InputStreamReader is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
 
@@ -61,8 +61,8 @@ public class Translator {
                         break;
                     }
 
-                    Lingo l = new Lingo(word, meaning);
-                    l.save();
+                    //Lingo l = new Lingo(word, meaning);
+                    //l.save();
 
                     hm.put(word, meaning);
 
@@ -73,7 +73,7 @@ public class Translator {
 
             }
 
-            firsttime = true;
+            firsttime = false;
 
             SharedPreferences enter = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = enter.edit();

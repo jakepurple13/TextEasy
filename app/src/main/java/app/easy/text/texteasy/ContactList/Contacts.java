@@ -7,9 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -19,6 +23,7 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +62,9 @@ import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.SettingsActivity;
 import app.easy.text.texteasy.Splash;
 import app.easy.text.texteasy.Translator;
+import me.everything.providers.android.telephony.Sms;
+import me.everything.providers.android.telephony.TelephonyProvider;
+import me.everything.providers.core.Data;
 
 /**
  *
@@ -87,14 +95,19 @@ public class Contacts extends AppCompatActivity {
 
     Dialog feed;
 
+    Resources.Theme lastTheme;
+
+    String currentTheme;
+
     /**
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setThemed();
+        currentTheme = setThemed();
+
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -129,7 +142,13 @@ public class Contacts extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
+        int backColor = currentTheme.equals("2") ? R.color.charcoal : R.color.lavender_indigo;
+
+        fab.setBackgroundTintList(getResources().getColorStateList(backColor));
+
+        int iconColor = currentTheme.equals("2") ? R.color.white : R.color.apple_green;
+
+        fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, iconColor));
 
         fab.setOnClickListener(new View.OnClickListener() {
             /**
@@ -371,12 +390,32 @@ public class Contacts extends AppCompatActivity {
         fastScroller.setUpAlphabet(mAlphabetItems);
 
 
+
     }
+
+
+    public void getTexts() {
+        TelephonyProvider tp = new TelephonyProvider(this);
+
+        Data<Sms> ds = tp.getSms(TelephonyProvider.Filter.ALL);
+
+
+        List<Sms> ls = ds.getList();
+
+        for(int i=0;i<ls.size();i++) {
+
+            Log.e(ls.get(i).address, ls.get(i).body);
+
+        }
+
+
+    }
+
 
     public void getAllContacts() {
         long startnow;
         long endnow;
-
+        //getTexts();
         Uri uris = Uri.parse("content://sms");
         String[] proj = {"body", "address"};
 
@@ -645,7 +684,7 @@ public class Contacts extends AppCompatActivity {
                 return true;
 
             case R.id.settings:
-
+                lastTheme = getTheme();
                 Intent settingIntent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(settingIntent, 201);
 
@@ -745,13 +784,15 @@ public class Contacts extends AppCompatActivity {
 
     }
 
-    public void setThemed() {
+    public String setThemed() {
+
         SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
         String themer = prefs.getString("themeID", "0");
 
         Log.e("adsl;kfj", themer);
         setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
         //boolean ? (if true) : (if false);
+        return themer;
     }
 
     @Override
@@ -761,8 +802,7 @@ public class Contacts extends AppCompatActivity {
         if (requestCode == 201) {
 
             if (1 == SettingsActivity.RESULT_CODE_THEME_UPDATED) {
-
-                this.recreate();
+                reload();
                 return;
 
             }
@@ -773,6 +813,28 @@ public class Contacts extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(lastTheme!=null) {
+            if(!getTheme().equals(lastTheme)) {
+                reload();
+            }
+        }
+    }
+
+
+    public void reload() {
+
+        //recreate();
+
+        setThemed();
+        Intent intent = new Intent(this, Contacts.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
 }
 
 

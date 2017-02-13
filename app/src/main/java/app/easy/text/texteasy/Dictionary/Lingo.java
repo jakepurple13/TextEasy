@@ -11,10 +11,11 @@ public class Lingo extends SugarRecord {
     String meaning;
 
     public Lingo() {
-
+        super();
     }
 
     public Lingo(String word, String meaning) {
+        super();
         this.word = word;
         this.meaning = meaning;
     }

@@ -33,7 +33,8 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="app.easy.text.texteasy.Dictionary.Lingo" />
 
-        <activity android:name=".Messages.MainActivity">
+        <activity android:name=".Messages.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
@@ -95,7 +96,8 @@
         <activity
             android:name=".Splash"
             android:icon="@drawable/texteasyicon"
-            android:label="TextEasy">
+            android:label="TextEasy"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -105,14 +107,17 @@
         <activity
             android:name=".ContactList.Contacts"
             android:label="@string/title_activity_contacts"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Dictionary.ListOfWords"
             android:label="Dictionary of Acronyms"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Settings.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
