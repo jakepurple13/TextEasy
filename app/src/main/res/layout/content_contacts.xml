@@ -12,7 +12,7 @@
     tools:context="app.easy.text.texteasy.ContactList.Contacts"
     tools:showIn="@layout/activity_contacts">
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:id="@+id/contacts"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
@@ -27,7 +27,8 @@
         android:layout_below="@+id/search"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true" />-->
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -39,5 +40,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
+
+    <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
+        android:id="@+id/contactScroller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search" />
 
 </RelativeLayout>

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "app.easy.text.texteasy"
         minSdkVersion 23
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 5
         versionName "5.0"
     }
@@ -18,6 +18,8 @@ android {
         }
     }
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -41,7 +43,8 @@ dependencies {
 
     compile 'me.everything:providers-android:1.0.1'
 
-    compile 'com.github.viethoa:fastscroller:1.1.0'
+    compile 'com.github.viethoa:fastscroller:1.2.0'
+    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.1'
 
 }
 

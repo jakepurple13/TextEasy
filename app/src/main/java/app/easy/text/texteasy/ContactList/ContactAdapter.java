@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.viethoa.RecyclerViewFastScroller;
@@ -18,14 +19,52 @@ import java.util.ArrayList;
 
 import app.easy.text.texteasy.Messages.MainActivity;
 import app.easy.text.texteasy.R;
+import in.myinnos.alphabetsindexfastscrollrecycler.utilities_fs.StringMatcher;
 
 /**
  * Created by Jacob on 9/15/16.
  */
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> implements RecyclerViewFastScroller.BubbleTextGetter  {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> implements SectionIndexer {
     private ArrayList<Contacts.ContactInfo> mDataset;
 
     Contacts in;
+
+    private String mSections = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    @Override
+    public int getPositionForSection(int section) {
+
+        // If there is no item for current section, previous section will be selected
+        for (int i = section; i >= 0; i--) {
+            for (int j = 0; j < getItemCount(); j++) {
+                if (i == 0) {
+                    // For numeric section
+                    for (int k = 0; k <= 9; k++) {
+                        if (StringMatcher.match(String.valueOf(mDataset.get(j).name.charAt(0)), String.valueOf(k)))
+                            return j;
+                    }
+                } else {
+                    if (StringMatcher.match(String.valueOf(mDataset.get(j).name.charAt(0)), String.valueOf(mSections.charAt(i))))
+                        return j;
+                }
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return 0;
+    }
+
+    @Override
+    public Object[] getSections() {
+        String[] sections = new String[mSections.length()];
+        for (int i = 0; i < mSections.length(); i++)
+            sections[i] = String.valueOf(mSections.charAt(i));
+        return sections;
+    }
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -73,9 +112,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
      * @param myDataset 
      * @param in 
      */
-    public ContactAdapter(ArrayList<Contacts.ContactInfo> myDataset, Contacts in) {
+    public ContactAdapter(ArrayList<Contacts.ContactInfo> myDataset, Contacts in, String list) {
         mDataset = myDataset;
         this.in = in;
+        mSections = list;
     }
 
     // Create new views (invoked by the layout manager)
@@ -154,17 +194,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
      * 
      * @param pos 
      */
-    @Override
-    public String getTextToShowInBubble(int pos) {
-        if (pos < 0 || pos >= mDataset.size())
-            return null;
 
-        String name = mDataset.get(pos).name;
-        if (name == null || name.length() < 1)
-            return null;
-
-        return mDataset.get(pos).name.substring(0, 1);
-    }
 
 }
 

@@ -62,6 +62,8 @@ import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.SettingsActivity;
 import app.easy.text.texteasy.Splash;
 import app.easy.text.texteasy.Translator;
+import app.easy.text.texteasy.test.Fastscrollerindex;
+import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
 import me.everything.providers.core.Data;
@@ -79,13 +81,18 @@ public class Contacts extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    RecyclerViewFastScroller fastScroller;
+    IndexFastScrollRecyclerView alphabetScroller;
+
+
+
     ArrayList<ContactInfo> al = new ArrayList<>();
     //Translator translate = new Translator(this);
     EditText searchBar;
     String searchKey = "";
     ArrayList<ContactInfo> searched;
     ProgressTask pt;
-    RecyclerViewFastScroller fastScroller;
+
     boolean firstTimeAddContact = false;
     /**
      * @param savedInstanceState
@@ -98,6 +105,8 @@ public class Contacts extends AppCompatActivity {
     Resources.Theme lastTheme;
 
     String currentTheme;
+
+    String listOfNames = "";
 
     /**
      * @param savedInstanceState
@@ -142,14 +151,6 @@ public class Contacts extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        int backColor = currentTheme.equals("2") ? R.color.charcoal : R.color.lavender_indigo;
-
-        fab.setBackgroundTintList(getResources().getColorStateList(backColor));
-
-        int iconColor = currentTheme.equals("2") ? R.color.white : R.color.apple_green;
-
-        fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, iconColor));
-
         fab.setOnClickListener(new View.OnClickListener() {
             /**
              *
@@ -186,8 +187,8 @@ public class Contacts extends AppCompatActivity {
                      */
                     //readContacts();
                     Collections.sort(al, new InfoCompare());
-                    mAdapter = new ContactAdapter(al, Contacts.this);
-                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+                    alphabetScroller.setAdapter(mAdapter);
 
                 }
 
@@ -268,15 +269,13 @@ public class Contacts extends AppCompatActivity {
         });*/
 
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.contacts);
+        alphabetScroller = (IndexFastScrollRecyclerView) findViewById(R.id.contactScroller);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
+        alphabetScroller.setHasFixedSize(true);
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        alphabetScroller.setLayoutManager(mLayoutManager);
 
         searchBar = (EditText) findViewById(R.id.search);
 
@@ -313,8 +312,8 @@ public class Contacts extends AppCompatActivity {
                      */
                 }
 
-                mAdapter = new ContactAdapter(searched, Contacts.this);
-                mRecyclerView.setAdapter(mAdapter);
+                mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
+                alphabetScroller.setAdapter(mAdapter);
             }
 
             /**
@@ -368,30 +367,13 @@ public class Contacts extends AppCompatActivity {
 
         }
 
-        fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
+        alphabetScroller.requestFocus();
 
-        // adds in Alphabetical scroller
-        fastScroller.setRecyclerView(mRecyclerView);
-
-        ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
-        List<String> strAlphabets = new ArrayList<>();
-        for (int i = 0; i < al.size(); i++) {
-            String name = al.get(i).name;
-            if (name == null || name.trim().isEmpty())
-                continue;
-
-            String word = name.substring(0, 1);
-            if (!strAlphabets.contains(word)) {
-                strAlphabets.add(word);
-                mAlphabetItems.add(new AlphabetItem(i, word, false));
-            }
-        }
-
-        fastScroller.setUpAlphabet(mAlphabetItems);
-
-
+        themeChanged();
 
     }
+
+
 
 
     public void getTexts() {
@@ -431,7 +413,7 @@ public class Contacts extends AppCompatActivity {
 
             String contactNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            Log.d("con ", "name " + contactName + " number" + contactNumber);
+            //Log.d("con ", "name " + contactName + " number" + contactNumber);
 
             //String whereAddress = "address = '" + contactNumber + "'";
             //Cursor c = cr.query(uris, proj, whereAddress, null, "date desc limit 1");
@@ -460,6 +442,26 @@ public class Contacts extends AppCompatActivity {
 
         endnow = android.os.SystemClock.uptimeMillis();
         Log.d("END", "TimeForContacts " + (endnow - startnow) + " ms");
+
+
+        ArrayList<String> mAlphabetItems = new ArrayList<>();
+        List<String> strAlphabets = new ArrayList<>();
+        for (int i = 0; i < al.size(); i++) {
+            String name = al.get(i).name;
+            if (name == null || name.trim().isEmpty())
+                continue;
+
+            String word = name.substring(0, 1);
+            if (!strAlphabets.contains(word)) {
+                strAlphabets.add(word);
+                mAlphabetItems.add(word);
+            }
+        }
+
+        for(int i=0;i<mAlphabetItems.size();i++) {
+            listOfNames+=mAlphabetItems.get(i);
+        }
+
     }
 
     /**
@@ -571,32 +573,17 @@ public class Contacts extends AppCompatActivity {
             dialog.hide();
             dialog.dismiss();
             Collections.sort(al, new InfoCompare());
-            mAdapter = new ContactAdapter(al, Contacts.this);
+            mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+
+            alphabetScroller.setAdapter(mAdapter);
+
             /**
              *
              * @param permsRequestCode
              * @param permissions
              * @param grantResults
              */
-            mRecyclerView.setAdapter(mAdapter);
-            // adds in Alphabetical scroller
-            fastScroller.setRecyclerView(mRecyclerView);
 
-            ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
-            List<String> strAlphabets = new ArrayList<>();
-            for (int i = 0; i < al.size(); i++) {
-                String name = al.get(i).name;
-                if (name == null || name.trim().isEmpty())
-                    continue;
-
-                String word = name.substring(0, 1);
-                if (!strAlphabets.contains(word)) {
-                    strAlphabets.add(word);
-                    mAlphabetItems.add(new AlphabetItem(i, word, false));
-                }
-            }
-
-            fastScroller.setUpAlphabet(mAlphabetItems);
             /**
              *
              */
@@ -690,8 +677,6 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
-
-
             default:
                 /**
                  *
@@ -784,6 +769,30 @@ public class Contacts extends AppCompatActivity {
 
     }
 
+
+    public void themeChanged() {
+        int backColor = currentTheme.equals("2") ? R.color.charcoal : R.color.lavender_indigo;
+
+        fab.setBackgroundTintList(getResources().getColorStateList(backColor));
+
+        int iconColor = currentTheme.equals("2") ? R.color.white : R.color.apple_green;
+
+        fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, iconColor));
+        
+        alphabetScroller.setIndexBarColor(getColored(R.color.apple_green));
+        //alphabetScroller.setIndexBarTextColor();
+        //String.valueOf(currentTheme.equals("2") ? R.color.white : R.color.charcoal)
+
+
+    }
+
+    public String getColored(int resource) {
+        //resource - int - an id from the R.color file
+        return "#"+Integer.toHexString(getResources().getColor(resource));
+        //"#"+Integer.toHexString(getResources().getColor(R.color.blue))
+    }
+
+
     public String setThemed() {
 
         SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
@@ -804,7 +813,6 @@ public class Contacts extends AppCompatActivity {
             if (1 == SettingsActivity.RESULT_CODE_THEME_UPDATED) {
                 reload();
                 return;
-
             }
 
         }
@@ -814,11 +822,15 @@ public class Contacts extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+
+        Log.e("sdlaf;jk", "I'M HERE");
+
         if(lastTheme!=null) {
             if(!getTheme().equals(lastTheme)) {
-                reload();
+                Log.e("BLASGASHDGJASDG", "I'M DIFFERENT");
+                //reload();
             }
         }
     }
@@ -828,7 +840,7 @@ public class Contacts extends AppCompatActivity {
 
         //recreate();
 
-        setThemed();
+        //setThemed();
         Intent intent = new Intent(this, Contacts.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();

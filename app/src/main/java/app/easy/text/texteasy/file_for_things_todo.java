@@ -9,5 +9,6 @@ public class file_for_things_todo {
     //TODO: work on a new sql database
     //TODO: Make a java file for own resources
     //TODO: Change fast scroller color
+    //TODO: Take a look at other sms apps for settings
 
 }

@@ -12,7 +12,6 @@
     <string name="pref_header_general">General</string>
 
 
-
     <string name="themeChoices">Theme Choices</string>
     <string-array name="list_of_themes">
         <item>Default</item>
