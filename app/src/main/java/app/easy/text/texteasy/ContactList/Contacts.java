@@ -42,6 +42,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import com.ftinc.scoop.Scoop;
+import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -102,7 +105,7 @@ public class Contacts extends AppCompatActivity {
 
     Dialog feed;
 
-    Resources.Theme lastTheme;
+    int lastTheme = -1;
 
     String currentTheme;
 
@@ -114,9 +117,11 @@ public class Contacts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        currentTheme = setThemed();
+        //currentTheme = setThemed();
 
         super.onCreate(savedInstanceState);
+
+        Scoop.getInstance().apply(this);
 
         setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -671,9 +676,8 @@ public class Contacts extends AppCompatActivity {
                 return true;
 
             case R.id.settings:
-                lastTheme = getTheme();
-                Intent settingIntent = new Intent(this, SettingsActivity.class);
-                startActivityForResult(settingIntent, 201);
+
+                launchSettings();
 
                 return true;
 
@@ -771,17 +775,22 @@ public class Contacts extends AppCompatActivity {
 
 
     public void themeChanged() {
-        int backColor = currentTheme.equals("2") ? R.color.charcoal : R.color.lavender_indigo;
+
+        /*int backColor = currentTheme.equals("2") ? R.color.charcoal : R.color.lavender_indigo;
 
         fab.setBackgroundTintList(getResources().getColorStateList(backColor));
 
         int iconColor = currentTheme.equals("2") ? R.color.white : R.color.apple_green;
 
         fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, iconColor));
-        
-        alphabetScroller.setIndexBarColor(getColored(R.color.apple_green));
-        //alphabetScroller.setIndexBarTextColor();
-        //String.valueOf(currentTheme.equals("2") ? R.color.white : R.color.charcoal)
+
+        int indexBarColor = currentTheme.equals("2") ? R.color.charcoal : R.color.redred;
+
+        alphabetScroller.setIndexBarColor(getColored(indexBarColor));
+
+        int indexBarTextColor = R.color.white;//currentTheme.equals("2") ? R.color.white : R.color.yellow;
+
+        alphabetScroller.setIndexBarTextColor(getColored(indexBarTextColor));*/
 
 
     }
@@ -795,13 +804,14 @@ public class Contacts extends AppCompatActivity {
 
     public String setThemed() {
 
-        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String themer = prefs.getString("themeID", "0");
 
-        Log.e("adsl;kfj", themer);
-        setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
+        int numTheme = Integer.parseInt(themer);
+
+        setTheme(numTheme==2 ? R.style.NightTheme1 : R.style.LightTheme);
         //boolean ? (if true) : (if false);
-        return themer;
+        return themer+"";
     }
 
     @Override
@@ -810,10 +820,7 @@ public class Contacts extends AppCompatActivity {
 
         if (requestCode == 201) {
 
-            if (1 == SettingsActivity.RESULT_CODE_THEME_UPDATED) {
-                reload();
-                return;
-            }
+            recreate();
 
         }
 
@@ -824,29 +831,29 @@ public class Contacts extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int selectedTheme = Integer.parseInt(prefs.getString("themeID", "-1"));
 
-        Log.e("sdlaf;jk", "I'M HERE");
+        Log.e("sdlaf;jk", "selectedTheme: " + selectedTheme + " lastTheme: " + lastTheme);
 
-        if(lastTheme!=null) {
-            if(!getTheme().equals(lastTheme)) {
-                Log.e("BLASGASHDGJASDG", "I'M DIFFERENT");
-                //reload();
-            }
+        if ((lastTheme != -1) && (lastTheme != selectedTheme)) {
+            Log.d("Theme", "the theme was changed");
+            //recreate();
         }
+        lastTheme = -1;
     }
 
+    protected void launchSettings() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        lastTheme = Integer.parseInt(prefs.getString("themeID", "-1"));
+        //Intent settingIntent = new Intent(this, SettingsActivity.class);
+        //startActivityForResult(settingIntent, 201);
 
-    public void reload() {
-
-        //recreate();
-
-        //setThemed();
-        Intent intent = new Intent(this, Contacts.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
+        Intent settings = ScoopSettingsActivity.createIntent(this, "Settings");
+        startActivityForResult(settings, 201);
+        //startActivity(settings);
     }
+
 }
 
 

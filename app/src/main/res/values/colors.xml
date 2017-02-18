@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="bleu_de_france">#468DF0</color>
@@ -29,7 +29,11 @@
     <color name="primary_dark">#303f9f</color>
     <color name="accent">#6889ff</color>
 
+    <color name="redred">#FF0000</color>
 
+    <color name="pure_gray">#bbbbbb</color>
+
+    <color name="super_light_blue">#AFD2F6</color>
 
     <!--FastScroller colors-->
     <!--<color name="alphabet_background_color">#3F51B5</color>-->

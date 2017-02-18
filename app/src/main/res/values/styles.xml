@@ -30,7 +30,7 @@
 
 
     <!-- inherit from the material theme -->
-    <style name="NightTheme" parent="android:Theme.Black">
+    <style name="NightTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
         <item name="android:colorPrimary">@color/primary_color</item>
@@ -42,7 +42,7 @@
 
 
     <!-- inherit from the material theme -->
-    <style name="NightTheme1" parent="android:Theme.Material.NoActionBar">
+    <style name="NightTheme1" parent="android:ThemeOverlay.Material.ActionBar">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
         <item name="android:colorPrimary">@color/primary</item>
@@ -58,6 +58,43 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+
+
+    <!-- inherit from the material theme -->
+    <style name="darkModed" parent="android:ThemeOverlay.Material.Dark.ActionBar">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
+
+        <item name="android:text">@color/white</item>
+    </style>
+
+
+    <!-- Light -->
+    <style name="TestingDarkMode" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <!-- Palatte -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/charcoal</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+
+        <!-- Theming Elements -->
+        <item name="toolbarTheme">@color/bleu_de_france</item>
+        <item name="toolbarPopupTheme">@color/yellow_sea</item>
+        <item name="toolbarItemTint">#fff</item>
+
+        <item name="actionButtonStyle">@color/charcoal</item>
+
+    </style>
+
+    <style name="Theme.NightTheme.DayNight.NightMODE" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorAccent">@color/charcoal</item>
+    </style>
 
 
 </resources>

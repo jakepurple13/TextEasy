@@ -110,17 +110,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-            bgShape.setColor(Color.rgb(175, 210, 246)); //blue
+            bgShape.setColor(getColored(R.color.super_light_blue)); //blue
             //bgShape.setColor(R.color.dark_color); //blue
             holder.mTextView.setGravity(Gravity.LEFT);
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-            bgShape.setColor(Color.rgb(187, 187, 187)); //gray
+            bgShape.setColor(getColored(R.color.pure_gray)); //gray
             holder.mTextView.setGravity(Gravity.RIGHT);
         }
 
         setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
 
+    }
+
+
+    public int getColored(int resource) {
+        //resource - int - an id from the R.color file
+        return Color.parseColor("#"+Integer.toHexString(in.getResources().getColor(resource)));
+        //"#"+Integer.toHexString(getResources().getColor(R.color.blue))
     }
 
     // Return the size of your dataset (invoked by the layout manager)

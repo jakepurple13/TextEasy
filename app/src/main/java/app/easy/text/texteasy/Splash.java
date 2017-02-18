@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.ftinc.scoop.Scoop;
+
 import app.easy.text.texteasy.ContactList.Contacts;
 import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
@@ -59,9 +61,10 @@ public class Splash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setThemed();
-
         super.onCreate(savedInstanceState);
+
+        Scoop.getInstance().apply(this);
+
         setContentView(R.layout.activity_splash);
 
         mSmallBang = SmallBang.attach2Window(this);

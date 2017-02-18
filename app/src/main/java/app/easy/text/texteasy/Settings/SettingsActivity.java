@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.Messages.MainActivity;
 import app.easy.text.texteasy.R;
 
@@ -119,11 +120,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         .getString(preference.getKey(), ""));
     }
 
-    @Override
+   /* @Override
     public void onBackPressed() {
-        setResult(201);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String themer = prefs.getString("themeID", "0");
+        Intent i = new Intent();
+        i.putExtra("thimed", themer);
+        setResult(201, i);
+
         super.onBackPressed();
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,17 +144,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     public void setThemed() {
-        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String themer = prefs.getString("themeID", "0");
         setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
-
+        checkValues();
     }
 
     private void checkValues() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String themed = sharedPrefs.getString("themeChanger", "0");
 
-        SharedPreferences.Editor editor = getSharedPreferences("theming", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putString("themeID", themed);
         editor.apply();
     }
@@ -206,63 +212,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("themeChanger"));
+            bindPreferenceSummaryToValue(findPreference("themeChanger"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
-
-            SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
-            String themer = prefs.getString("themeID", "0");
-            val = themer;
-
-            Preference.OnPreferenceChangeListener pop = new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object o) {
-                    String stringValue = o.toString(); //the value set in the strings.xml
-                    String preferenceKey = preference.getKey(); //the key set in the actual xml file
-
-                    Log.e("Settings " + preference.getKey(), "Clicked " + o);
-
-                    setThemed();
-                    checkValues();
-
-                    if (preference instanceof ListPreference) {
-                        // For list preferences, look up the correct display value in
-                        // the preference's 'entries' list.
-                        ListPreference listPreference = (ListPreference) preference;
-                        int index = listPreference.findIndexOfValue(stringValue);
-                        // Set the summary to reflect the new value.
-                        preference.setSummary(
-                                index >= 0
-                                        ? listPreference.getEntries()[index]
-                                        : null);
-
-                        if(preferenceKey.equalsIgnoreCase("themeChanger")) {
-                            //setThemed();
-                        }
-
-
-
-                        if(!val.equals(stringValue)) {
-                            Log.e("Settings2 " + preference.getKey(), "Clicked2 " + o);
-
-                        }
-
-
-
-                    } else {
-                        // For all other preferences, set the summary to the value's
-                        // simple string representation.
-                        preference.setSummary(stringValue);
-                    }
-                    return true;
-                }
-            };
-
-            findPreference("themeChanger").setOnPreferenceChangeListener(pop);
-
-            pop.onPreferenceChange(findPreference("themeChanger"),
-                    PreferenceManager
-                            .getDefaultSharedPreferences(findPreference("themeChanger").getContext())
-                            .getString(findPreference("themeChanger").getKey(), ""));
 
 
 

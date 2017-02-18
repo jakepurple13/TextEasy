@@ -150,10 +150,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
      * 
      */
         GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-        bgShape.setColor(Color.rgb(187, 187, 187)); //gray
+        bgShape.setColor(getColored(R.color.pure_gray)); //gray
+        //bgShape.setSize(30, 15);
 
         holder.mTextView.setText(mDataset.get(position).toString());
-        holder.mTextView.setTextColor(Color.BLACK);
+        //holder.mTextView.setTextColor(Color.BLACK);
         //holder.mTextView.setGravity(Gravity.CENTER);
         //holder.mTextView.setTextColor(R.color.textColors);
 
@@ -179,6 +180,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.mTextView.setOnClickListener(von);
 
 
+    }
+
+    public int getColored(int resource) {
+        //resource - int - an id from the R.color file
+        return Color.parseColor("#"+Integer.toHexString(in.getResources().getColor(resource)));
+        //"#"+Integer.toHexString(getResources().getColor(R.color.blue))
     }
 
     // Return the size of your dataset (invoked by the layout manager)

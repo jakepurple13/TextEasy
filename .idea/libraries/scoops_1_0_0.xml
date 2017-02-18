@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="scoops-1.0.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.52inc/scoops/1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.52inc/scoops/1.0.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.52inc/scoops/1.0.0/51438629e999da7e93c7195346db5eb6651d0f47/scoops-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

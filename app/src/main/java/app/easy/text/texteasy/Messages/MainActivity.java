@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ftinc.scoop.Scoop;
 import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.util.ArrayList;
@@ -101,9 +102,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setThemed();
+        //setThemed();
 
         super.onCreate(savedInstanceState);
+
+        Scoop.getInstance().apply(this);
+
         setContentView(R.layout.activity_main);
 
 

@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.orm.SugarApp"
+        android:name=".MainApp"
         android:allowBackup="true"
         android:icon="@drawable/texteasyicon"
         android:label="TextEasy"

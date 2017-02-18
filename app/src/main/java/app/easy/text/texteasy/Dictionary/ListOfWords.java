@@ -60,6 +60,9 @@ public class ListOfWords extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setThemed();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_words);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -408,6 +411,13 @@ public class ListOfWords extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    public void setThemed() {
+        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
+        String themer = prefs.getString("themeID", "0");
+        setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
+        //boolean ? (if true) : (if false);
     }
 
 
