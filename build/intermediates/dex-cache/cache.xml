@@ -277,7 +277,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="befff02964c0ca640dcbf2644229a4ac01c13d19">
+        sha1="9a13cb265d19dc1958cc9e1a1866afa886fefd7f">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
     </item>
     <item
@@ -322,7 +322,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="dbde584425f17ef4cd87d75e051cb6221fa17f0c">
+        sha1="15cd946d165758b4f9d8cd493317e629fe507af8">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_aa20c4087d4697be84be10d8510d7a9e78e33d03/classes.dex" />
     </item>
     <item

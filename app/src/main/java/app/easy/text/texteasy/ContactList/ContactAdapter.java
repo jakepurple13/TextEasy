@@ -150,7 +150,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
      * 
      */
         GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-        bgShape.setColor(getColored(R.color.pure_gray)); //gray
+        //bgShape.setColor(getColored(R.color.pure_gray)); //gray
         //bgShape.setSize(30, 15);
 
         holder.mTextView.setText(mDataset.get(position).toString());

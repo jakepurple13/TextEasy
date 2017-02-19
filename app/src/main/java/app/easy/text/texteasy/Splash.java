@@ -77,14 +77,7 @@ public class Splash extends AppCompatActivity {
         final String myPackageName = getPackageName();
         if (!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
 
-            Intent intent =
-                    new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                /**
-                 *
-                 */
-            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-                    myPackageName);
-            startActivityForResult(intent, 201);
+            askForDeafult(myPackageName);
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
             //AskPermission();
@@ -189,9 +182,6 @@ public class Splash extends AppCompatActivity {
      * 
      */
     public void AskPermission() {
-        Log.e("sdaklfhja;sdf", "HERE'S JOHNNY!");
-
-
         int permsRequestCode = 200;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
@@ -228,6 +218,17 @@ public class Splash extends AppCompatActivity {
 
         }
 
+    }
+
+
+    public void askForDeafult(String myPackageName) {
+        Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+        /**
+         *
+         */
+        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                myPackageName);
+        startActivityForResult(intent, 201);
     }
 
     public void next() {

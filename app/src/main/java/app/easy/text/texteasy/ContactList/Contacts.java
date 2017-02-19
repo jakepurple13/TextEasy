@@ -62,6 +62,7 @@ import java.util.List;
 
 import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.Settings.SettingsActivity;
 import app.easy.text.texteasy.Splash;
 import app.easy.text.texteasy.Translator;
@@ -675,9 +676,16 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
-            case R.id.settings:
+            case R.id.themes:
 
                 launchSettings();
+
+                return true;
+
+            case R.id.settings:
+
+                Intent settingsIntent = new Intent(this, Settings1Activity.class);
+                startActivity(settingsIntent);
 
                 return true;
 
@@ -820,9 +828,11 @@ public class Contacts extends AppCompatActivity {
 
         if (requestCode == 201) {
 
-            recreate();
+            //recreate();
 
         }
+
+        recreate();
 
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -834,10 +844,10 @@ public class Contacts extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int selectedTheme = Integer.parseInt(prefs.getString("themeID", "-1"));
 
-        Log.e("sdlaf;jk", "selectedTheme: " + selectedTheme + " lastTheme: " + lastTheme);
+        //Log.e("sdlaf;jk", "selectedTheme: " + selectedTheme + " lastTheme: " + lastTheme);
 
         if ((lastTheme != -1) && (lastTheme != selectedTheme)) {
-            Log.d("Theme", "the theme was changed");
+            //Log.d("Theme", "the theme was changed");
             //recreate();
         }
         lastTheme = -1;

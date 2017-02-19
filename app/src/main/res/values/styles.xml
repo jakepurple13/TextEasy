@@ -59,7 +59,6 @@
     </style>
 
 
-
     <!-- inherit from the material theme -->
     <style name="darkModed" parent="android:ThemeOverlay.Material.Dark.ActionBar">
         <!-- Main theme colors -->
@@ -92,7 +91,7 @@
 
     </style>
 
-    <style name="Theme.NightTheme.DayNight.NightMODE" parent="Theme.AppCompat.NoActionBar" >
+    <style name="Theme.NightTheme.DayNight.NightMODE" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/charcoal</item>
     </style>
 

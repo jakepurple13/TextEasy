@@ -119,7 +119,15 @@
             android:name=".Settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait" />
-        <activity android:name=".test.Fastscrollerindex"></activity>
+        <activity android:name=".test.Fastscrollerindex" />
+        <activity
+            android:name=".Settings.Settings1Activity"
+            android:label="@string/title_activity_settings1" />
+        <activity
+            android:name=".AboutAndCont"
+            android:label="About"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

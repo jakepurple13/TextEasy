@@ -9,6 +9,12 @@
             app:showAsAction="always" />
 
         <item
+            android:id="@+id/themes"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Theme"
+            app:showAsAction="always" />
+
+        <item
             android:id="@+id/settings"
             android:icon="@android:drawable/ic_menu_preferences"
             android:title="Settings"

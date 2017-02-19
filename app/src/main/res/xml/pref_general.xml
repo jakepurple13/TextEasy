@@ -1,12 +1,18 @@
 <PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="1"
-        android:title="Themes"
-        android:entries="@array/list_of_themes"
-        android:entryValues="@array/list_of_themes_values"
-        android:key="themeChanger" />
+
+    <Preference
+        android:title="About"
+        android:summary="About Page">
+
+    <intent
+        android:action="your."
+
+        android:targetPackage="app.easy.text.texteasy"
+        android:targetClass="app.easy.text.texteasy.AboutAndCont" />
+
+    </Preference>
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
