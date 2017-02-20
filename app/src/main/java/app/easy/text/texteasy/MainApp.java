@@ -22,7 +22,7 @@ public class MainApp extends Application {
                 .addDayNightFlavor("DayNight", R.style.Theme_Scoop_DayNight)
                 .addFlavor("Alternate 1", R.style.Theme_Scoop_Alt1)
                 .addFlavor("Alternate 2", R.style.Theme_Scoop_Alt2)
-                .addDayNightFlavor("Dark Mode", R.style.Theme_NightTheme_DayNight_NightMODE)
+                .addFlavor("Dark Mode", R.style.Theme_NightTheme_DayNight_NightMODE)
                 .setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this))
                 .initialize();
 

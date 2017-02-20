@@ -1,8 +1,10 @@
 package app.easy.text.texteasy.Messages;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import app.easy.text.texteasy.R;
@@ -110,13 +113,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-            bgShape.setColor(getColored(R.color.super_light_blue)); //blue
+            bgShape.setColor(getColored(R.color.pure_gray)); //blue
             //bgShape.setColor(R.color.dark_color); //blue
             holder.mTextView.setGravity(Gravity.LEFT);
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-            bgShape.setColor(getColored(R.color.pure_gray)); //gray
+            //bgShape.setColor(getColored(R.color.pure_gray)); //gray
             holder.mTextView.setGravity(Gravity.RIGHT);
+
+            if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
+                holder.mTextView.setTextColor(Color.WHITE);
+            }
         }
 
         setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
@@ -128,6 +135,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         //resource - int - an id from the R.color file
         return Color.parseColor("#"+Integer.toHexString(in.getResources().getColor(resource)));
         //"#"+Integer.toHexString(getResources().getColor(R.color.blue))
+    }
+
+
+    public int getThemeId() {
+        try {
+            Class<?> wrapper = Context.class;
+            Method method = wrapper.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(in);
+        } catch (Exception e) {
+            Log.w("themeid", e.toString());
+        }
+        return 0;
     }
 
     // Return the size of your dataset (invoked by the layout manager)

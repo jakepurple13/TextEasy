@@ -12,4 +12,11 @@ public class file_for_things_todo {
     //TODO: Take a look at other sms apps for settings
     //TODO: Remember to deal with theme change issue
 
+
+    public void asdf() {
+
+
+
+    }
+
 }

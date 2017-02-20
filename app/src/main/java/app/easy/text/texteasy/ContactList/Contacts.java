@@ -55,6 +55,7 @@ import com.orm.SugarApp;
 import com.viethoa.RecyclerViewFastScroller;
 import com.viethoa.models.AlphabetItem;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -66,7 +67,7 @@ import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.Settings.SettingsActivity;
 import app.easy.text.texteasy.Splash;
 import app.easy.text.texteasy.Translator;
-import app.easy.text.texteasy.test.Fastscrollerindex;
+import app.easy.text.texteasy.test.CustomThemeCreator;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
@@ -689,6 +690,13 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
+            case R.id.testPage:
+
+                Intent tester = new Intent(this, CustomThemeCreator.class);
+                startActivity(tester);
+
+                return true;
+
             default:
                 /**
                  *
@@ -799,8 +807,22 @@ public class Contacts extends AppCompatActivity {
         int indexBarTextColor = R.color.white;//currentTheme.equals("2") ? R.color.white : R.color.yellow;
 
         alphabetScroller.setIndexBarTextColor(getColored(indexBarTextColor));*/
+        if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
+            fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, R.color.white));
+        }
+    }
 
 
+    public int getThemeId() {
+        try {
+            Class<?> wrapper = Context.class;
+            Method method = wrapper.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(this);
+        } catch (Exception e) {
+            Log.w("themeid", e.toString());
+        }
+        return 0;
     }
 
     public String getColored(int resource) {

@@ -1,11 +1,14 @@
 package app.easy.text.texteasy.ContactList;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import com.viethoa.RecyclerViewFastScroller;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import app.easy.text.texteasy.Messages.MainActivity;
@@ -154,6 +158,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         //bgShape.setSize(30, 15);
 
         holder.mTextView.setText(mDataset.get(position).toString());
+
+        if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
+            holder.mTextView.setTextColor(Color.WHITE);
+        }
+
         //holder.mTextView.setTextColor(Color.BLACK);
         //holder.mTextView.setGravity(Gravity.CENTER);
         //holder.mTextView.setTextColor(R.color.textColors);
@@ -180,6 +189,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.mTextView.setOnClickListener(von);
 
 
+    }
+
+    public int getThemeId() {
+        try {
+            Class<?> wrapper = Context.class;
+            Method method = wrapper.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(in);
+        } catch (Exception e) {
+            Log.w("themeid", e.toString());
+        }
+        return 0;
     }
 
     public int getColored(int resource) {

@@ -20,4 +20,10 @@
             android:title="Settings"
             app:showAsAction="always" />
 
+        <item
+            android:id="@+id/testPage"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Test"
+            app:showAsAction="always" />
+
 </menu>

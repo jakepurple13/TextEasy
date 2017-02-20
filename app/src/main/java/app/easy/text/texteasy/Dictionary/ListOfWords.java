@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ftinc.scoop.Scoop;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -61,9 +62,12 @@ public class ListOfWords extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setThemed();
+        //setThemed();
 
         super.onCreate(savedInstanceState);
+
+        Scoop.getInstance().apply(this);
+
         setContentView(R.layout.activity_list_of_words);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
