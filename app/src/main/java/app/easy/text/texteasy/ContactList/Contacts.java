@@ -7,13 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -37,23 +33,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
-import com.orm.SugarApp;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.viethoa.RecyclerViewFastScroller;
-import com.viethoa.models.AlphabetItem;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -64,10 +57,7 @@ import java.util.List;
 import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Settings1Activity;
-import app.easy.text.texteasy.Settings.SettingsActivity;
-import app.easy.text.texteasy.Splash;
-import app.easy.text.texteasy.Translator;
-import app.easy.text.texteasy.test.CustomThemeCreator;
+import app.easy.text.texteasy.About.AboutScreen;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
@@ -89,7 +79,7 @@ public class Contacts extends AppCompatActivity {
     RecyclerViewFastScroller fastScroller;
     IndexFastScrollRecyclerView alphabetScroller;
 
-
+    FloatingSearchView fsv;
 
     ArrayList<ContactInfo> al = new ArrayList<>();
     //Translator translate = new Translator(this);
@@ -112,6 +102,8 @@ public class Contacts extends AppCompatActivity {
     String currentTheme;
 
     String listOfNames = "";
+
+    MaterialSearchBar searchBars;
 
     /**
      * @param savedInstanceState
@@ -284,19 +276,61 @@ public class Contacts extends AppCompatActivity {
 
         alphabetScroller.setLayoutManager(mLayoutManager);
 
-        searchBar = (EditText) findViewById(R.id.search);
+        searchBars = (MaterialSearchBar) findViewById(R.id.searchBars);
+
+        searchBars.setTextColor(R.color.black);
+
+        searchBars.setSpeechMode(true);
+
+        searchBars.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i3, int i1, int i2) {
+                searched.clear();
+                searchKey = s.toString();
+                System.out.println(searchKey);
+                for (int i = 0; i < al.size(); i++) {
+                    if (al.get(i).name.toUpperCase().contains(searchKey.toUpperCase()) ||
+                            al.get(i).number.contains(searchKey)) {
+                        searched.add(al.get(i));
+                    }
+
+                }
+
+                mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
+                alphabetScroller.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        /*fsv = (FloatingSearchView) findViewById(R.id.search);
+
+        fsv.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+
+                //get suggestions based on newQuery
+
+                //pass them on to the search view
+                //fsv.swapSuggestions(newSuggestions);
+
+                Log.e(oldQuery, newQuery);
+
+            }
+        });*/
+
+        /*searchBar = (EditText) findViewById(R.id.search);
 
         searchBar.addTextChangedListener(new TextWatcher() {
-            /**
-             *
-             * @param s
-             * @param start
-             * @param count
-             * @param after
-            /**
-             *
-             * @param s
-             */
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -313,20 +347,20 @@ public class Contacts extends AppCompatActivity {
                             al.get(i).number.contains(searchKey)) {
                         searched.add(al.get(i));
                     }
-                    /**
+                    *//**
                      *
                      * @param v
-                     */
+                     *//*
                 }
 
                 mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
                 alphabetScroller.setAdapter(mAdapter);
             }
 
-            /**
+            *//**
              *
              * @param s
-             */
+             *//*
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -334,11 +368,11 @@ public class Contacts extends AppCompatActivity {
         });
 
         searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            /**
+            *//**
              *
              * @param v
              * @param hasFocus
-             */
+             *//*
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!firstTimeSearch) {
@@ -355,10 +389,10 @@ public class Contacts extends AppCompatActivity {
         });
 
         searchBar.setOnLongClickListener(new View.OnLongClickListener() {
-            /**
-             /**
+            *//**
+             *//**
              *
-             * */
+             * *//*
             @Override
             public boolean onLongClick(View v) {
 
@@ -366,7 +400,7 @@ public class Contacts extends AppCompatActivity {
                 return false;
             }
         });
-
+*/
 
         try {
             //readContacts();
@@ -690,12 +724,12 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
-            case R.id.testPage:
+            /*case R.id.testPage:
 
-                Intent tester = new Intent(this, CustomThemeCreator.class);
+                Intent tester = new Intent(this, AboutScreen.class);
                 startActivity(tester);
 
-                return true;
+                return true;*/
 
             default:
                 /**

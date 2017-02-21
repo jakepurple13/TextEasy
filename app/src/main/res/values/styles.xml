@@ -93,11 +93,13 @@
 
     <style name="Theme.NightTheme.DayNight.NightMODE" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/charcoal</item>
-        <item name="android:textAppearance">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorPrimaryInverse">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="AppTheme.MaterialAboutActivity" parent="Theme.Mal.Dark.DarkActionBar" >
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/charcoal</item>
+        <item name="colorPrimaryDark">@color/charcoal</item>
+        <item name="colorAccent">@color/charcoal</item>
     </style>
 
 

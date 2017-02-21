@@ -30,7 +30,26 @@
         android:layout_alignParentRight="true" />-->
 
 
-    <EditText
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        app:speechMode="false"
+        app:hint="Search"
+        app:placeholder="Search"
+        app:maxSuggestionsCount="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchBars" >
+
+    </com.mancj.materialsearchbar.MaterialSearchBar>
+
+    <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
+        android:id="@+id/contactScroller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchBars"
+        android:layout_alignParentStart="true" />
+
+
+    <!--<EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -39,12 +58,19 @@
         android:id="@+id/search"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true" />-->
 
-    <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
-        android:id="@+id/contactScroller"
+    <!--<com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/search1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search" />
+        app:floatingSearch_searchHint="Search..."
+        app:floatingSearch_suggestionsListAnimDuration="250"
+        app:floatingSearch_showSearchKey="true"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+        android:layout_alignParentStart="true">
+
+    </com.arlib.floatingsearchview.FloatingSearchView>-->
+
 
 </RelativeLayout>

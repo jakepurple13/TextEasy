@@ -20,12 +20,11 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 
-import app.easy.text.texteasy.AboutAndCont;
+import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.R;
 
 import java.util.List;
@@ -198,6 +197,11 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             // guidelines.
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
+
+            Intent i = new Intent(this.getContext(), AboutScreen.class);
+            startActivity(i);
+            getActivity().finish();
+
         }
 
 
