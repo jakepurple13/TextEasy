@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import app.easy.text.texteasy.Dictionary.Lingo;
 
@@ -46,7 +45,14 @@ public class Translator {
         //firsttime
         if(true) {
 
-            InputStreamReader is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
+            InputStreamReader is;
+
+            if(Locale.getDefault().getLanguage().equals("de")) {
+                is = new InputStreamReader(context.getResources().openRawResource(R.raw.germanwordlist));
+            } else {
+                is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
+            }
+
 
             BufferedReader br = new BufferedReader(is);
 

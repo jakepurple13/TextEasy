@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
@@ -16,6 +15,7 @@ import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
 import com.ftinc.scoop.Scoop;
 
 import app.easy.text.texteasy.R;
+import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by Jacob on 2/21/17.
@@ -25,9 +25,31 @@ public class AboutScreen extends MaterialAboutActivity {
 
     int num = 0;
 
+    MaterialDialog mMaterialDialog;
+
     @Override
     protected MaterialAboutList getMaterialAboutList(Context context) {
+        
         Scoop.getInstance().apply(this);
+
+        mMaterialDialog = new MaterialDialog(AboutScreen.this)
+                .setTitle("MaterialDialog")
+                .setMessage("Hello world!")
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                })
+                .setNegativeButton("CANCEL", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                });
+
+
+
         MaterialAboutCard.Builder devTeam = new MaterialAboutCard.Builder();
 
         devTeam.title("Development Team");
@@ -38,7 +60,7 @@ public class AboutScreen extends MaterialAboutActivity {
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
-                        Intent i = new Intent(AboutScreen.this, CustomThemeCreator.class);
+                        Intent i = new Intent(AboutScreen.this, DevAbout.class);
                         i.putExtra("AboutName", true);
                         startActivity(i);
                     }
@@ -52,7 +74,7 @@ public class AboutScreen extends MaterialAboutActivity {
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
-                        Intent i = new Intent(AboutScreen.this, CustomThemeCreator.class);
+                        Intent i = new Intent(AboutScreen.this, DevAbout.class);
                         i.putExtra("AboutName", false);
                         startActivity(i);
                     }
@@ -82,7 +104,11 @@ public class AboutScreen extends MaterialAboutActivity {
                         num++;
 
                         if(num==79) {
-                            Toast.makeText(AboutScreen.this, "You have unlocked the Gold Theme", Toast.LENGTH_LONG).show();
+                            // You can change the message anytime. before show
+                            mMaterialDialog.setTitle("Easter Egg Unlocked");
+                            // You can change the message anytime. after show
+                            mMaterialDialog.setMessage("You have unlocked the Gold Theme");
+                            mMaterialDialog.show();
                         }
 
                         SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(AboutScreen.this);
@@ -94,13 +120,48 @@ public class AboutScreen extends MaterialAboutActivity {
                 .build());
 
         contTeam.addItem(new MaterialAboutActionItem.Builder()
-                .text("Jean Coppola")
-                .subText("Mentor and Great Professor")
+                .text("Ryou")
+                .subText("Spriter")
+                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+
+                        // You can change the message anytime. before show
+                        mMaterialDialog.setTitle("Ryou");
+                        // You can change the message anytime. after show
+                        mMaterialDialog.setMessage("Thank you for the german words!");
+                        mMaterialDialog.show();
+                    }
+                })
                 .icon(R.mipmap.ic_launcher)
                 .build());
 
 
-        return new MaterialAboutList(devTeam.build(), contTeam.build());
+
+        MaterialAboutCard.Builder specialThanks = new MaterialAboutCard.Builder();
+
+        specialThanks.title("Special Thanks");
+
+        specialThanks.addItem(new MaterialAboutActionItem.Builder()
+                .text("Dr. Jean Coppola")
+                .subText("Mentor and Great Professor")
+                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+
+                        // You can change the message anytime. before show
+                        mMaterialDialog.setTitle("Dr. Coppola");
+                        // You can change the message anytime. after show
+                        mMaterialDialog.setMessage("Thank you so much for being there for and with us." +
+                                " Helping us learn and introduce us to so much, it means a lot to us.");
+                        mMaterialDialog.show();
+                    }
+                })
+                .icon(R.mipmap.ic_launcher)
+                .build());
+
+
+        return new MaterialAboutList(devTeam.build(), contTeam.build(), specialThanks.build());
 
     }
 
@@ -119,6 +180,5 @@ public class AboutScreen extends MaterialAboutActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

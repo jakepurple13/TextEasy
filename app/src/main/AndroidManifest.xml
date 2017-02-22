@@ -127,7 +127,7 @@
             android:name=".AboutAndCont"
             android:label="About"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".About.CustomThemeCreator" />
+        <activity android:name=".About.DevAbout" />
         <activity android:name=".About.AboutScreen"
             android:theme="@style/AppTheme.MaterialAboutActivity"/>
     </application>

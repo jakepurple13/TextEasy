@@ -28,6 +28,7 @@ import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.R;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -296,7 +297,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
             if (requestCode == 201) {
 
-                getActivity().finish();
+
+                getActivity().recreate();
+                //getActivity().finish();
 
             }
 
@@ -331,7 +334,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
             Intent settings = ScoopSettingsActivity.createIntent(getActivity(), "Change Theme");
             startActivity(settings);
-            //startActivityForResult(settings, 201);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TextEasy</string>
     <string name="title_activity_contacts">Contacts</string>
-    <string name="banner_ad_unit_id">ca-app-pub-8950844463555971/7532600047</string>
-    <string name="banner_ad_unit_id_2">ca-app-pub-8950844463555971/7740762848</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-8950844463555971/7532600047</string>
+    <string name="banner_ad_unit_id_2" translatable="false">ca-app-pub-8950844463555971/7740762848</string>
     <string name="title_activity_list_of_words">ListOfWords</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -67,7 +67,7 @@
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 
@@ -103,4 +103,11 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <!--ca-app-pub-8950844463555971/-->
     <!--ca-app-pub-3940256099942544/6300978111-->
+
+    <string name="aboutSettings">About</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="makeDefault">Make TextEasy Default Messaging App</string>
+    <string name="themeChanged">Change Themes</string>
+
+
 </resources>
