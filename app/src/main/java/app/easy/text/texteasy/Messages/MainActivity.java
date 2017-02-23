@@ -1,6 +1,7 @@
 package app.easy.text.texteasy.Messages;
 
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -15,6 +16,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -116,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
         Scoop.getInstance().apply(this);
 
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarsed);
+        setSupportActionBar(toolbar);
 
         mMaterialDialog = new MaterialDialog(this)
                 .setTitle("Hi")

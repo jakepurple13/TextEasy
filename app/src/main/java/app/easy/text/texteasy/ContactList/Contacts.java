@@ -42,6 +42,10 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -172,6 +176,9 @@ public class Contacts extends AppCompatActivity {
                     }
                 });
 
+
+
+
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
         firstTimeAddContact = load.getBoolean("add contact", false);
         /**
@@ -242,8 +249,7 @@ public class Contacts extends AppCompatActivity {
 
         fab.setVisibility(View.GONE);
 
-
-
+        //---------------BOOM---------------------
 
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
@@ -298,7 +304,16 @@ public class Contacts extends AppCompatActivity {
 
         bmb.addBuilder(groupChat);
 
+        bmb.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
+                setTutorial("See More Options", "Add a Contact\nCall Someone\nGroup Chat", bmb);
+                return false;
+            }
+        });
+
+        //---------------BOOM---------------------
         /**
          *
          * @param s
@@ -402,6 +417,35 @@ public class Contacts extends AppCompatActivity {
 
             }
         });
+
+
+        searchBars.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!firstTimeSearch) {
+                    setTutorial("Search", "Search for a contact to find", searchBars);
+
+                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = enter.edit();
+                    editor.putBoolean("search", true);
+                    editor.apply();
+
+                    firstTimeSearch = true;
+                }
+            }
+        });
+
+        searchBars.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+
+                setTutorial("Search", "Search for a contact to find", searchBars);
+                return false;
+            }
+        });
+
 
         /*fsv = (FloatingSearchView) findViewById(R.id.search);
 
@@ -612,10 +656,6 @@ public class Contacts extends AppCompatActivity {
                 .outerCircleColor(R.color.lavender_indigo)
                 .targetCircleColor(R.color.paris_daisy)
                 .listener(new TapTargetView.Listener() {
-                    /**
-                     *
-                     * @param view
-                     */
                     @Override
                     public void onTargetClick(TapTargetView view) {
                         view.dismiss(true);
@@ -627,6 +667,7 @@ public class Contacts extends AppCompatActivity {
                     }
                 })
                 .showFor(v);
+
     }
 
 
@@ -816,12 +857,12 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
-            case R.id.testPage:
+            /*case R.id.testPage:
 
                 Intent tester = new Intent(this, FloatingActionTester.class);
                 startActivity(tester);
 
-                return true;
+                return true;*/
 
             default:
                 /**

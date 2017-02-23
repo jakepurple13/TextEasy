@@ -25,6 +25,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private ArrayList<MainActivity.TextInfo> mDataset;
 
     MainActivity in;
+    int lastPos = -1;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -170,7 +171,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         //right is you
         //left is friend
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > in.lastPosition) {
+        //if (position > in.lastPosition) {
+        if (position > lastPos) {
             Animation animation;
             if(type==1) {
                 animation = AnimationUtils.loadAnimation(in, R.anim.push_left_in);
@@ -179,8 +181,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             }
             viewToAnimate.startAnimation(animation);
             in.lastPosition = position;
+            lastPos = position;
         }
     }
+
+
 
 }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -13,6 +14,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -32,6 +35,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     private ArrayList<Contacts.ContactInfo> mDataset;
 
     Contacts in;
+
+    int lastPos = -1;
 
     private String mSections = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -190,6 +195,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         holder.mTextView.setOnClickListener(von);
 
+        setAnimation(holder.mTextView, position);
+
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        //right is you
+        //left is friend
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPos) {
+            Animation animation;
+            animation = AnimationUtils.loadAnimation(in, R.anim.push_right_in);
+            viewToAnimate.startAnimation(animation);
+            lastPos = position;
+        }
 
     }
 
