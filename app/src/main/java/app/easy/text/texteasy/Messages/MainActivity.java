@@ -34,8 +34,11 @@ import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.util.ArrayList;
 
+import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
+import me.drakeet.materialdialog.MaterialDialog;
+import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
 
 /**
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity inst;
 
     public int lastPosition = 0;
+
+    MaterialDialog mMaterialDialog;
+
+    ExplosionField mExplosionField;
 
     /**
      * 
@@ -109,6 +116,23 @@ public class MainActivity extends AppCompatActivity {
         Scoop.getInstance().apply(this);
 
         setContentView(R.layout.activity_main);
+
+        mMaterialDialog = new MaterialDialog(this)
+                .setTitle("Hi")
+                .setMessage("Hello")
+                .setCanceledOnTouchOutside(true)
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                })
+                .setNegativeButton("CANCEL", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                });
 
 
        /* Intent intent = new Intent("android.provider.Telephony.SMS_RECEIVED");
@@ -315,19 +339,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void anotherAchieve(String title, String message) {
 
-        dialog = new Dialog(this);
-    /**
+
+        mMaterialDialog.setTitle(title);
+        mMaterialDialog.setMessage(message);
+        mMaterialDialog.show();
+
+
+        /*dialog = new Dialog(this);
+    *//**
      * 
-     */
+     *//*
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.achievement_window);
-        /**
+        *//**
          * 
          * @param text 
-         */
+         *//*
         dialog.setTitle(title);
 
         achievementIcon = (ImageView) dialog.findViewById(R.id.achieveicon);
@@ -346,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
 
-        mSmallBang.bang(achievementIcon);
+        mSmallBang.bang(achievementIcon);*/
 
     /**
      * 

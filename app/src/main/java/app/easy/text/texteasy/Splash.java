@@ -89,7 +89,9 @@ public class Splash extends AppCompatActivity {
              */
             // Hide the "not currently set as the default SMS app" interface
             check = true;
-            AskPermission();
+            //AskPermission();
+
+            next();
 
 
         }

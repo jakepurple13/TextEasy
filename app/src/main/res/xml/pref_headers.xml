@@ -22,4 +22,9 @@
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/themeChanged" />
 
+    <header
+        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$SettingsThemePreferenceFragment"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/gotoSettings" />
+
 </preference-headers>

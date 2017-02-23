@@ -108,6 +108,7 @@
     <string name="pref_header_notifications">Notifications</string>
     <string name="makeDefault">Make TextEasy Default Messaging App</string>
     <string name="themeChanged">Change Themes</string>
+    <string name="gotoSettings">Colorblind Mode</string>
 
 
 </resources>

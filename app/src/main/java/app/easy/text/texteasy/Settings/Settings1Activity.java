@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.provider.Settings;
 import android.provider.Telephony;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
@@ -173,6 +174,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DefaultPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || SettingsThemePreferenceFragment.class.getName().equals(fragmentName)
                 || ThemePreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -297,9 +299,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
             if (requestCode == 201) {
 
-
-                getActivity().recreate();
-                //getActivity().finish();
+                getActivity().finish();
 
             }
 
@@ -334,6 +334,37 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
             Intent settings = ScoopSettingsActivity.createIntent(getActivity(), "Change Theme");
             startActivity(settings);
+            getActivity().finish();
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            //bindPreferenceSummaryToValue(findPreference("example_text"));
+            //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), Settings1Activity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class SettingsThemePreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Scoop.getInstance().apply(getActivity());
+            setHasOptionsMenu(true);
+
+            startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

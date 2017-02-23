@@ -29,12 +29,13 @@ public class AboutScreen extends MaterialAboutActivity {
 
     @Override
     protected MaterialAboutList getMaterialAboutList(Context context) {
-        
+
         Scoop.getInstance().apply(this);
 
         mMaterialDialog = new MaterialDialog(AboutScreen.this)
                 .setTitle("MaterialDialog")
                 .setMessage("Hello world!")
+                .setCanceledOnTouchOutside(true)
                 .setPositiveButton("OK", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -66,6 +67,7 @@ public class AboutScreen extends MaterialAboutActivity {
                     }
                 })
                 .icon(R.mipmap.ic_launcher)
+                //.icon(R.mipmap.profile_picture)
                 .build());
 
         devTeam.addItem(new MaterialAboutActionItem.Builder()
