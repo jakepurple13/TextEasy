@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -46,6 +47,14 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.nightonke.boommenu.BoomButtons.BoomButton;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.OnBoomListener;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.viethoa.RecyclerViewFastScroller;
 
 import java.lang.reflect.Method;
@@ -58,7 +67,9 @@ import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.About.AboutScreen;
+import app.easy.text.texteasy.Tester.FloatingActionTester;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
+import me.drakeet.materialdialog.MaterialDialog;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
 import me.everything.providers.core.Data;
@@ -105,6 +116,10 @@ public class Contacts extends AppCompatActivity {
 
     MaterialSearchBar searchBars;
 
+    BoomMenuButton bmb;
+
+    MaterialDialog mMaterialDialog;
+
     /**
      * @param savedInstanceState
      */
@@ -139,6 +154,23 @@ public class Contacts extends AppCompatActivity {
         //setTheme(getApplicationInfo().getThemeId());
         //System.err.println(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultTheme", "0"));
 
+
+        mMaterialDialog = new MaterialDialog(Contacts.this)
+                .setTitle("MaterialDialog")
+                .setMessage("Hello world!")
+                .setCanceledOnTouchOutside(true)
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                })
+                .setNegativeButton("CANCEL", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                });
 
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
         firstTimeAddContact = load.getBoolean("add contact", false);
@@ -207,6 +239,66 @@ public class Contacts extends AppCompatActivity {
                 return false;
             }
         });
+
+        fab.setVisibility(View.GONE);
+
+
+
+
+        bmb = (BoomMenuButton) findViewById(R.id.bmb);
+
+        bmb.setButtonEnum(ButtonEnum.Ham);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
+
+        HamButton.Builder contactAdd = new HamButton.Builder()
+                .normalImageRes(android.R.drawable.ic_menu_add)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                        // Sets the MIME type to match the Contacts Provider
+                        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                        startActivity(intent);
+                        Collections.sort(al, new InfoCompare());
+                        mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+                        alphabetScroller.setAdapter(mAdapter);
+                    }
+                })
+                .normalText("Add a Contact")
+                .subNormalText("Met a new friend? Add their Contact info!");
+
+        bmb.addBuilder(contactAdd);
+
+        HamButton.Builder phoneCall = new HamButton.Builder()
+                .normalImageRes(android.R.drawable.ic_menu_call)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        startActivity(intent);
+                    }
+                })
+                .normalText("Call Someone");
+
+        bmb.addBuilder(phoneCall);
+
+        HamButton.Builder groupChat = new HamButton.Builder()
+                .normalImageRes(android.R.drawable.sym_action_chat)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        mMaterialDialog.setTitle("Group Chat");
+                        mMaterialDialog.setMessage("Coming Soon!");
+                        mMaterialDialog.show();
+                    }
+                })
+                .normalText("Set up a Group Chat")
+                .subNormalText("Coming Soon!");
+
+        bmb.addBuilder(groupChat);
+
+
         /**
          *
          * @param s
@@ -724,12 +816,12 @@ public class Contacts extends AppCompatActivity {
 
                 return true;
 
-            /*case R.id.testPage:
+            case R.id.testPage:
 
-                Intent tester = new Intent(this, AboutScreen.class);
+                Intent tester = new Intent(this, FloatingActionTester.class);
                 startActivity(tester);
 
-                return true;*/
+                return true;
 
             default:
                 /**

@@ -169,7 +169,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="f2f4bc78e0e1006cd4bffa89e44d0bf0826eca98">
+        sha1="99e894e0d6c0f0b494633cf7c62c6c1a6d68be10">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
     </item>
     <item
@@ -279,6 +279,15 @@
         revision="24.0.3"
         sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.1.1_2dbd1dd0508346add7890c6598ec023ec8cf4be7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/exploded-aar/com.nightonke/boommenu/2.0.7/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="735f52d952785f327a7f05ededa9da7d92ffccca">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.nightonke-boommenu-2.0.7_ceaf6f7528261ee7c9932e1bba780c83a2172725/classes.dex" />
     </item>
     <item
         is-multidex="true"

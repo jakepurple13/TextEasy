@@ -20,11 +20,11 @@
             android:title="Settings"
             app:showAsAction="always" />
 
-       <!--<item
+       <item
             android:id="@+id/testPage"
             android:icon="@android:drawable/btn_radio"
             android:title="Test"
-            app:showAsAction="always" />-->
+            app:showAsAction="always" />
 
 
 
