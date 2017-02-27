@@ -69,7 +69,7 @@ public class DevAbout extends AppCompatActivity {
                 .setAppIcon(R.drawable.texteasyicon)
                 .setAppName(R.string.app_name)
                 .addFiveStarsAction("app.easy.text.texteasy")
-                .setVersionAsAppTitle()
+                .setVersionNameAsAppSubTitle()
                 .addShareAction(R.string.app_name + "", "Check out this awesome texting app I found!\n" +
                         "https://play.google.com/store/apps/details?id=app.easy.text.texteasy")
                 .build();
