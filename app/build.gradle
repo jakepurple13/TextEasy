@@ -32,6 +32,10 @@ dependencies {
 
     compile 'com.github.jrvansuita:MaterialAbout:+'
 
+    compile 'com.github.florent37:materialtextfield:1.0.7'
+
+    compile 'com.balysv.materialmenu:material-menu:2.0.0'
+
     compile 'com.nightonke:boommenu:2.0.7'
 
     compile 'me.drakeet.materialdialog:library:1.3.1'

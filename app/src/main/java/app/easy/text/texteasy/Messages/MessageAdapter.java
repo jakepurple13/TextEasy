@@ -2,7 +2,9 @@ package app.easy.text.texteasy.Messages;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -112,11 +114,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * @param type 
      */
 
+        //ScaleDrawable background = (ScaleDrawable) holder.mTextView.getBackground();
+
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             bgShape.setColor(getColored(R.color.pure_gray)); //blue
             //bgShape.setColor(R.color.dark_color); //blue
             holder.mTextView.setGravity(Gravity.LEFT);
+
+
+            //background.setTileModeX(new );//holder.mTextView.getMaxWidth());
+
+            //holder.mTextView.setBackground(background);
+
+
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             //bgShape.setColor(getColored(R.color.pure_gray)); //gray

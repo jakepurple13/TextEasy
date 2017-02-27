@@ -1,7 +1,6 @@
 package app.easy.text.texteasy.Messages;
 
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -9,9 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,18 +27,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
+import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import app.easy.text.texteasy.About.AboutScreen;
+import app.easy.text.texteasy.ContactList.ContactAdapter;
+import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -69,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     MaterialDialog mMaterialDialog;
 
     ExplosionField mExplosionField;
+
+    private MaterialMenuDrawable materialMenu;
 
     /**
      * 
@@ -120,6 +129,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarsed);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                // Handle your drawable state here
+                materialMenu.animateIconState(MaterialMenuDrawable.IconState.CHECK);
+                onBackPressed();
+            }
+        });
+
+        materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
+        materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
+        toolbar.setNavigationIcon(materialMenu);
+
 
         mMaterialDialog = new MaterialDialog(this)
                 .setTitle("Hi")
@@ -190,6 +212,13 @@ public class MainActivity extends AppCompatActivity {
         send = (ImageButton) findViewById(R.id.button);
         message = (EditText) findViewById(R.id.editText);
 
+        message.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                mRecyclerView.scrollToPosition(al.size() - 1);
+            }
+        });
+
         mSmallBang = SmallBang.attach2Window(this);
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -212,10 +241,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     mSmallBang.bang(send);
-            /**
-             * 
-             * @param v 
-             */
 
                     sendSMS(phoneNumber, message.getText().toString());
 
@@ -226,19 +251,11 @@ public class MainActivity extends AppCompatActivity {
                     achievements(num);
 
                     SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
-                            /**
-                             * 
-                             * @param view 
-                             */
                     SharedPreferences.Editor editor = enter.edit();
                     editor.putInt("DotNum", num);
                     editor.apply();
 
                 }
-                            /**
-                             * 
-                             * @param view 
-                             */
             }
         });
 
@@ -403,10 +420,6 @@ public class MainActivity extends AppCompatActivity {
     public void updateList(String message, int fromTo, boolean sent) {
         al.add(new TextInfo(message, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
-    /**
-     * 
-     * @param item 
-     */
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
     }
@@ -628,6 +641,7 @@ public class MainActivity extends AppCompatActivity {
      * @param message 
      */
     private void sendSMS(String phoneNumber, String message) {
+
         String SENT = "SMS_SENT";
         String DELIVERED = "SMS_DELIVERED";
 
@@ -641,6 +655,18 @@ public class MainActivity extends AppCompatActivity {
         sms.sendTextMessage(phoneNumber, null, message, null, null);
 
         updateList("You: " + translate.translate(message), 2, true);
+
+        //Change menu icon back to arrow
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
+            }
+        }, 2500);
+
+        //change menu icon to a check showing that the text was sent
+        materialMenu.animateIconState(MaterialMenuDrawable.IconState.CHECK);
+
     }
 
     public void setThemed() {
