@@ -93,6 +93,7 @@
 
     <style name="Theme.NightTheme.DayNight.NightMODE" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/charcoal</item>
+
     </style>
 
     <style name="AppTheme.MaterialAboutActivity" parent="Theme.Mal.Dark.DarkActionBar" >

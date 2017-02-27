@@ -32,7 +32,7 @@ dependencies {
 
     compile 'com.github.jrvansuita:MaterialAbout:+'
 
-    compile 'com.github.florent37:materialtextfield:1.0.7'
+    compile 'com.github.rey5137:material:1.2.4'
 
     compile 'com.balysv.materialmenu:material-menu:2.0.0'
 
