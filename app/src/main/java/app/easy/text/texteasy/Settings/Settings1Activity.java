@@ -333,14 +333,27 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
 
             Intent settings = ScoopSettingsActivity.createIntent(getActivity(), "Change Theme");
-            startActivity(settings);
-            getActivity().finish();
+            startActivityForResult(settings, 201);
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+            if (requestCode == 201) {
+
+                getActivity().finish();
+
+            }
+
+            super.onActivityResult(requestCode, resultCode, data);
+
         }
 
 

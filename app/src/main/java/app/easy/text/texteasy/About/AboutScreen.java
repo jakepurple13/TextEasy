@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
@@ -105,14 +106,17 @@ public class AboutScreen extends MaterialAboutActivity {
 
                         num++;
 
+
+
                         if(num==79) {
                             // You can change the message anytime. before show
                             mMaterialDialog.setTitle("Easter Egg Unlocked");
                             // You can change the message anytime. after show
                             mMaterialDialog.setMessage("You have unlocked the Gold Theme");
                             mMaterialDialog.show();
+                        } else if(num<79) {
+                            Toast.makeText(AboutScreen.this, num+"",Toast.LENGTH_SHORT).show();
                         }
-
                         SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(AboutScreen.this);
                         SharedPreferences.Editor editor = enter.edit();
                         editor.putInt("GSBug", num);

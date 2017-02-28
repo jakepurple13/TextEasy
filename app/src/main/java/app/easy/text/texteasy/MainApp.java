@@ -1,12 +1,8 @@
 package app.easy.text.texteasy;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.UserManager;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
-
 import com.ftinc.scoop.Scoop;
 
 /**
@@ -19,18 +15,16 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-
         SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this);
         int num = load.getInt("GSBug", 0);
 
-        if(num>79) {
+        if(num>=79) {
             // Initialize Scoop
             Scoop.waffleCone()
                     .addFlavor("Default", R.style.Theme_Scoop, true)
-                    .addFlavor("Light", R.style.Theme_Scoop_Light)
-                    .addDayNightFlavor("DayNight", R.style.Theme_Scoop_DayNight)
-                    .addFlavor("Alternate 1", R.style.Theme_Scoop_Alt1)
-                    .addFlavor("Alternate 2", R.style.Theme_Scoop_Alt2)
+                    .addFlavor("Light", R.style.AppTheme)
+                    .addFlavor("Blue", R.style.BlueTheme)
+                    .addFlavor("Gold", R.style.GoldTheme)
                     .addFlavor("Dark Mode", R.style.Theme_NightTheme_DayNight_NightMODE)
                     .setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this))
                     .initialize();
@@ -38,14 +32,14 @@ public class MainApp extends Application {
             // Initialize Scoop
             Scoop.waffleCone()
                     .addFlavor("Default", R.style.Theme_Scoop, true)
-                    .addFlavor("Light", R.style.Theme_Scoop_Light)
-                    .addDayNightFlavor("DayNight", R.style.Theme_Scoop_DayNight)
-                    .addFlavor("Alternate 1", R.style.Theme_Scoop_Alt1)
-                    .addFlavor("Alternate 2", R.style.Theme_Scoop_Alt2)
+                    .addFlavor("Light", R.style.AppTheme)
+                    .addFlavor("Blue", R.style.BlueTheme)
                     .addFlavor("Dark Mode", R.style.Theme_NightTheme_DayNight_NightMODE)
                     .setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this))
                     .initialize();
         }
+
+        //TODO: put in a handler that'll play something every ten seconds for a minute
 
 
     }

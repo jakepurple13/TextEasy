@@ -11,10 +11,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="app.easy.text.texteasy.Tester.FloatingActionTester">
 
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
+
+    <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/testRating" />
 
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/testButton" />
 
+    <CheckBox
+        android:text="CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/testButton"
+        android:id="@+id/testCheck" />
 </RelativeLayout>

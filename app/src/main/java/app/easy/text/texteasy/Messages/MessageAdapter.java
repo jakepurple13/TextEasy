@@ -122,11 +122,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             //bgShape.setColor(R.color.dark_color); //blue
             holder.mTextView.setGravity(Gravity.LEFT);
 
-
             //background.setTileModeX(new );//holder.mTextView.getMaxWidth());
 
             //holder.mTextView.setBackground(background);
-
 
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();

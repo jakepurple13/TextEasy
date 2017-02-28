@@ -30,7 +30,7 @@
         android:layout_alignParentRight="true" />-->
 
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
+    <!--<com.mancj.materialsearchbar.MaterialSearchBar
         app:speechMode="false"
         app:hint="Search"
         app:placeholder="Search"
@@ -39,13 +39,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchBars" >
 
-    </com.mancj.materialsearchbar.MaterialSearchBar>
+    </com.mancj.materialsearchbar.MaterialSearchBar>-->
 
     <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
         android:id="@+id/contactScroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchBars"
+
         android:layout_alignParentStart="true" />
 
 

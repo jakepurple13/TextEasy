@@ -1,12 +1,15 @@
 package app.easy.text.texteasy.Tester;
 
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
@@ -19,58 +22,51 @@ import app.easy.text.texteasy.R;
 
 public class FloatingActionTester extends AppCompatActivity {
 
-    BoomMenuButton bmb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floating_action_tester);
 
-        bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
-        bmb.setButtonEnum(ButtonEnum.Ham);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
 
-        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-            HamButton.Builder builder = new HamButton.Builder()
-                    .normalImageRes(R.drawable.texteasyicon)
-                    .normalText("Butter Doesn't fly!")
-                    .subNormalText("Little butter Doesn't fly, either!");
-            bmb.addBuilder(builder);
-        }
 
-        bmb.setOnBoomListener(new OnBoomListener() {
-            @Override
-            public void onClicked(int index, BoomButton boomButton) {
-                Log.e(index + ":", boomButton.toString());
-            }
 
-            @Override
-            public void onBackgroundClick() {
 
-            }
 
-            @Override
-            public void onBoomWillHide() {
+        Rect r = new Rect();
+        r.set(0,0,0,0);
 
-            }
+        Drawable d = getResources().getDrawable(R.drawable.sendbutton);
 
-            @Override
-            public void onBoomDidHide() {
+        new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forView(findViewById(R.id.testCheck), "Check", "Button"),
+                        TapTarget.forView(findViewById(R.id.testRating), "Rating", "Bar"),
+                        TapTarget.forView(findViewById(R.id.testButton), "You", "Up")
+                                .dimColor(R.color.amber_500)
+                                .outerCircleColor(R.color.teal_800)
+                                .targetCircleColor(R.color.deep_orange_50)
+                                .textColor(R.color.black))
+                .listener(new TapTargetSequence.Listener() {
+                    // This listener will tell us when interesting(tm) events happen in regards
+                    // to the sequence
+                    @Override
+                    public void onSequenceFinish() {
+                        // Yay
+                    }
 
-            }
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget) {
+                        // Perfom action for the current target
+                    }
 
-            @Override
-            public void onBoomWillShow() {
-
-            }
-
-            @Override
-            public void onBoomDidShow() {
-
-            }
-        });
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                        // Boo
+                    }
+                }).start();
 
     }
 }

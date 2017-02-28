@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
+import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 
@@ -260,39 +261,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
         send.setOnLongClickListener(new View.OnLongClickListener() {
-            /**
-             * 
-             * @param v 
-             */
+
             @Override
             public boolean onLongClick(View v) {
 
-                new TapTargetView.Builder(MainActivity.this) // The activity that hosts this view
-                        .title("Send") // Specify the title text
-                        .description("Send your text") // Specify the description text
-                        .outerCircleColor(R.color.lavender_indigo)
-                        .targetCircleColor(R.color.paris_daisy)
-                        .cancelable(true)
-                        .listener(new TapTargetView.Listener() {
-                            /**
-                             * 
-                             * @param view 
-                             */
+                TapTargetView.showFor(MainActivity.this,
+                        TapTarget.forView(send, "Send", "Send your text\nPress and hold to bring up again")
+                                .cancelable(true)
+                                .drawShadow(true)
+                                .tintTarget(true)
+                                //.icon(R.drawable.sendbutton)
+                                .transparentTarget(false)
+                                .outerCircleColor(R.color.primary)
+                                .targetCircleColor(R.color.primary_dark),
+                        new TapTargetView.Listener() {
                             @Override
                             public void onTargetClick(TapTargetView view) {
                                 view.dismiss(true);
                             }
 
-                            /**
-                             * 
-                             * @param view 
-                             */
                             @Override
                             public void onTargetLongClick(TapTargetView view) {
 
                             }
-                        })
-                        .showFor(send);
+                        });
 
                 return false;
             }

@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberUtils;
@@ -41,6 +42,8 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
@@ -85,7 +88,7 @@ import me.everything.providers.core.Data;
 /**
  *
  */
-public class Contacts extends AppCompatActivity {
+public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
 
     private RecyclerView mRecyclerView;
@@ -181,11 +184,10 @@ public class Contacts extends AppCompatActivity {
 
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
         firstTimeAddContact = load.getBoolean("add contact", false);
-        /**
-         *
-         * @param view
-         */
+
         firstTimeSearch = load.getBoolean("search", false);
+
+
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -387,7 +389,17 @@ public class Contacts extends AppCompatActivity {
 
         searchBars.setTextColor(R.color.black);
 
-        searchBars.setSpeechMode(true);
+        searchBars.setSpeechMode(false);
+
+        //searchBars.setHint("Search");
+
+        //searchBars.setPlaceHolder("Search");
+
+        searchBars.setMaxSuggestionCount(5);
+
+        searchBars.inflateMenu(R.menu.contact_activity_menu);
+
+        searchBars.getMenu().setOnMenuItemClickListener(this);
 
         searchBars.addTextChangeListener(new TextWatcher() {
             @Override
@@ -397,6 +409,7 @@ public class Contacts extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int i3, int i1, int i2) {
+
                 searched.clear();
                 searchKey = s.toString();
                 System.out.println(searchKey);
@@ -410,6 +423,28 @@ public class Contacts extends AppCompatActivity {
 
                 mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
                 alphabetScroller.setAdapter(mAdapter);
+
+                List<String> suggestions = new ArrayList<>();
+
+                if(searched.size()!=0) {
+
+                    for (int i = 0; i < 5 && i<searched.size(); i++) {
+                        suggestions.add(searched.get(i).name);
+                    }
+
+                    searchBars.updateLastSuggestions(suggestions);
+
+
+                    if(s.length()==0) {
+                        searchBars.hideSuggestionsList();
+                    } else {
+                        //searchBars.showSuggestionsList();
+                    }
+
+                } else {
+                    searchBars.hideSuggestionsList();
+                }
+
             }
 
             @Override
@@ -418,21 +453,20 @@ public class Contacts extends AppCompatActivity {
             }
         });
 
-
-        searchBars.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        searchBars.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
+                searchBars.hideSuggestionsList();
+            }
 
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!firstTimeSearch) {
-                    setTutorial("Search", "Search for a contact to find", searchBars);
+            public void onSearchConfirmed(CharSequence text) {
+                searchBars.hideSuggestionsList();
+            }
 
-                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = enter.edit();
-                    editor.putBoolean("search", true);
-                    editor.apply();
-
-                    firstTimeSearch = true;
-                }
+            @Override
+            public void onButtonClicked(int buttonCode) {
+                searchBars.hideSuggestionsList();
             }
         });
 
@@ -445,23 +479,6 @@ public class Contacts extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        /*fsv = (FloatingSearchView) findViewById(R.id.search);
-
-        fsv.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
-
-                //get suggestions based on newQuery
-
-                //pass them on to the search view
-                //fsv.swapSuggestions(newSuggestions);
-
-                Log.e(oldQuery, newQuery);
-
-            }
-        });*/
 
         /*searchBar = (EditText) findViewById(R.id.search);
 
@@ -483,10 +500,6 @@ public class Contacts extends AppCompatActivity {
                             al.get(i).number.contains(searchKey)) {
                         searched.add(al.get(i));
                     }
-                    *//**
-                     *
-                     * @param v
-                     *//*
                 }
 
                 mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
@@ -503,32 +516,8 @@ public class Contacts extends AppCompatActivity {
             }
         });
 
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            *//**
-             *
-             * @param v
-             * @param hasFocus
-             *//*
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!firstTimeSearch) {
-                    setTutorial("Search", "Search for a contact to find", searchBar);
-
-                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = enter.edit();
-                    editor.putBoolean("search", true);
-                    editor.apply();
-
-                    firstTimeSearch = true;
-                }
-            }
-        });
-
         searchBar.setOnLongClickListener(new View.OnLongClickListener() {
-            *//**
-             *//**
-             *
-             * *//*
+
             @Override
             public boolean onLongClick(View v) {
 
@@ -547,6 +536,58 @@ public class Contacts extends AppCompatActivity {
         alphabetScroller.requestFocus();
 
         themeChanged();
+
+        String upAgain = "\nPress and hold to bring up again";
+
+        if (!firstTimeSearch) {
+
+            SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = enter.edit();
+            editor.putBoolean("search", true);
+            editor.apply();
+
+            firstTimeSearch = true;
+
+            new TapTargetSequence(this)
+                    .targets(
+                            TapTarget.forView(findViewById(R.id.searchBars), "Search", "Search for a contact to find" + upAgain)
+                                    .targetCircleColor(R.color.deep_orange_50)
+                                    .outerCircleColor(R.color.accent)
+                                    .textColor(R.color.white)
+                                    .descriptionTextColor(R.color.white)
+                                    .cancelable(false),
+                            TapTarget.forView(findViewById(R.id.bmb), "Menu", "Want to\nAdd a Contact? Call Someone? Start a Group Chat?" + upAgain)
+                                    .targetCircleColor(R.color.deep_orange_50)
+                                    .outerCircleColor(R.color.accent)
+                                    .textColor(R.color.white)
+                                    .descriptionTextColor(R.color.white)
+                                    .cancelable(false),
+                            TapTarget.forView(findViewById(R.id.toolbar), "Settings", "Change the Theme and Go into Settings")
+                                    .targetCircleColor(R.color.deep_orange_50)
+                                    .outerCircleColor(R.color.accent)
+                                    .textColor(R.color.white)
+                                    .descriptionTextColor(R.color.white)
+                                    .cancelable(false))
+                    .listener(new TapTargetSequence.Listener() {
+                        // This listener will tell us when interesting(tm) events happen in regards
+                        // to the sequence
+                        @Override
+                        public void onSequenceFinish() {
+                            // Yay
+                        }
+
+                        @Override
+                        public void onSequenceStep(TapTarget lastTarget) {
+                            // Perfom action for the current target
+                        }
+
+                        @Override
+                        public void onSequenceCanceled(TapTarget lastTarget) {
+                            // Boo
+                        }
+                    }).start();
+
+        }
 
     }
 
@@ -648,14 +689,16 @@ public class Contacts extends AppCompatActivity {
      */
 
     public void setTutorial(String title, String description, View v) {
-        new TapTargetView.Builder(Contacts.this) // The activity that hosts this view
-                .title(title) // Specify the title text
-                .description(description + "\nPress and hold to bring up again") // Specify the description text
-                .cancelable(true)
-                .drawShadow(true)
-                .outerCircleColor(R.color.lavender_indigo)
-                .targetCircleColor(R.color.paris_daisy)
-                .listener(new TapTargetView.Listener() {
+
+        TapTargetView.showFor(this,
+                TapTarget.forView(v, title, description + "\nPress and hold to bring up again")
+                        .cancelable(true)
+                        .drawShadow(true)
+                        .tintTarget(true)
+                        .transparentTarget(false)
+                        .outerCircleColor(R.color.primary)
+                        .targetCircleColor(R.color.primary_dark),
+                new TapTargetView.Listener() {
                     @Override
                     public void onTargetClick(TapTargetView view) {
                         view.dismiss(true);
@@ -665,9 +708,53 @@ public class Contacts extends AppCompatActivity {
                     public void onTargetLongClick(TapTargetView view) {
 
                     }
-                })
-                .showFor(v);
+                });
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.wordChange:
+
+                Intent callIntent = new Intent(this, ListOfWords.class);
+                startActivity(callIntent);
+
+                return true;
+
+            case R.id.themes:
+
+                Intent settings = ScoopSettingsActivity.createIntent(this, "Settings");
+                startActivityForResult(settings, 201);
+
+                return true;
+
+            case R.id.settings:
+
+                Intent settingsIntent = new Intent(this, Settings1Activity.class);
+                startActivityForResult(settingsIntent, 201);
+
+                return true;
+
+            case R.id.testPage:
+
+                Intent tester = new Intent(this, FloatingActionTester.class);
+                startActivity(tester);
+
+                return true;
+
+            default:
+                /**
+                 *
+                 * @param phoneNumber
+                 * @param message
+                 */
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 
@@ -853,16 +940,16 @@ public class Contacts extends AppCompatActivity {
             case R.id.settings:
 
                 Intent settingsIntent = new Intent(this, Settings1Activity.class);
-                startActivity(settingsIntent);
+                startActivityForResult(settingsIntent, 201);
 
                 return true;
 
-            /*case R.id.testPage:
+            case R.id.testPage:
 
                 Intent tester = new Intent(this, FloatingActionTester.class);
                 startActivity(tester);
 
-                return true;*/
+                return true;
 
             default:
                 /**
@@ -1006,7 +1093,7 @@ public class Contacts extends AppCompatActivity {
 
         int numTheme = Integer.parseInt(themer);
 
-        setTheme(numTheme==2 ? R.style.NightTheme1 : R.style.LightTheme);
+        setTheme(numTheme==2 ? R.style.BlueTheme : R.style.LightTheme);
         //boolean ? (if true) : (if false);
         return themer+"";
     }
@@ -1047,9 +1134,6 @@ public class Contacts extends AppCompatActivity {
         lastTheme = Integer.parseInt(prefs.getString("themeID", "-1"));
         //Intent settingIntent = new Intent(this, SettingsActivity.class);
         //startActivityForResult(settingIntent, 201);
-
-        Intent settings = ScoopSettingsActivity.createIntent(this, "Settings");
-        startActivityForResult(settings, 201);
         //startActivity(settings);
     }
 

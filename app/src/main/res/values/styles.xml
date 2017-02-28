@@ -1,11 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="rectColor">@color/pure_gray</item>
+        <item name="receivingRectColor">@color/red_a700</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -41,8 +43,19 @@
     </style>
 
 
+    <style name="NightTheme1" parent="Theme.AppCompat.NoActionBar">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary_color</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_color_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/colorAccent</item>
+    </style>
+
+
     <!-- inherit from the material theme -->
-    <style name="NightTheme1" parent="android:ThemeOverlay.Material.ActionBar">
+    <style name="BlueTheme" parent="android:ThemeOverlay.Material.ActionBar">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
         <item name="android:colorPrimary">@color/primary</item>
@@ -50,6 +63,11 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@color/accent</item>
+
+        <item name="android:colorBackground">@color/light_blue_a700</item>
+
+        <item name="rectColor">@color/blue_500</item>
+        <item name="receivingRectColor">@color/light_blue_500</item>
     </style>
 
     <!-- This will set the fade in animation on all your activities by default -->
@@ -92,7 +110,10 @@
     </style>
 
     <style name="Theme.NightTheme.DayNight.NightMODE" parent="Theme.AppCompat.NoActionBar">
+
         <item name="colorAccent">@color/charcoal</item>
+        <item name="rectColor">?colorPrimary</item>
+        <item name="receivingRectColor">@color/charcoal</item>
 
     </style>
 
@@ -101,6 +122,18 @@
         <item name="colorPrimary">@color/charcoal</item>
         <item name="colorPrimaryDark">@color/charcoal</item>
         <item name="colorAccent">@color/charcoal</item>
+    </style>
+
+
+    <style name="GoldTheme" parent="Theme.AppCompat.NoActionBar">
+
+        <item name="colorAccent">@color/sahara</item>
+        <item name="rectColor">@color/banana_yellow</item>
+        <item name="receivingRectColor">@color/charcoal</item>
+        <item name="android:colorBackground">@color/corn</item>
+        <item name="colorPrimary">@color/corn</item>
+        <item name="colorPrimaryDark">@color/sahara</item>
+
     </style>
 
 

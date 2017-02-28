@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ftinc.scoop.Scoop;
+import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -212,18 +213,15 @@ public class ListOfWords extends AppCompatActivity {
 
 
     public void setTutorial(final String title, final String description, View v) {
-        new TapTargetView.Builder(ListOfWords.this) // The activity that hosts this view
-                .title(title) // Specify the title text
-                .description(description + "\nPress and hold to bring up again") // Specify the description text
-                .cancelable(true)
-                .drawShadow(true)
-                .outerCircleColor(R.color.lavender_indigo)
-                .targetCircleColor(R.color.paris_daisy)
-                .listener(new TapTargetView.Listener() {
-                    /**
-                     *
-                     * @param view
-                     */
+        TapTargetView.showFor(this,
+                TapTarget.forView(v, title, description + "\nPress and hold to bring up again")
+                        .cancelable(true)
+                        .drawShadow(true)
+                        .tintTarget(true)
+                        .transparentTarget(false)
+                        .outerCircleColor(R.color.primary)
+                        .targetCircleColor(R.color.primary_dark),
+                new TapTargetView.Listener() {
                     @Override
                     public void onTargetClick(TapTargetView view) {
                         view.dismiss(true);
@@ -233,25 +231,21 @@ public class ListOfWords extends AppCompatActivity {
                     public void onTargetLongClick(TapTargetView view) {
 
                     }
-                })
-                .showFor(v);
+                });
 
         v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                new TapTargetView.Builder(ListOfWords.this) // The activity that hosts this view
-                        .title(title) // Specify the title text
-                        .description(description + "\nPress and hold to bring up again") // Specify the description text
-                        .cancelable(true)
-                        .drawShadow(true)
-                        .outerCircleColor(R.color.lavender_indigo)
-                        .targetCircleColor(R.color.paris_daisy)
-                        .listener(new TapTargetView.Listener() {
-                            /**
-                             *
-                             * @param view
-                             */
+                TapTargetView.showFor(ListOfWords.this,
+                        TapTarget.forView(v, title, description + "\nPress and hold to bring up again")
+                                .cancelable(true)
+                                .drawShadow(true)
+                                .tintTarget(true)
+                                .transparentTarget(false)
+                                .outerCircleColor(R.color.primary)
+                                .targetCircleColor(R.color.primary_dark),
+                        new TapTargetView.Listener() {
                             @Override
                             public void onTargetClick(TapTargetView view) {
                                 view.dismiss(true);
@@ -261,8 +255,7 @@ public class ListOfWords extends AppCompatActivity {
                             public void onTargetLongClick(TapTargetView view) {
 
                             }
-                        })
-                        .showFor(v);
+                        });
 
 
                 return false;

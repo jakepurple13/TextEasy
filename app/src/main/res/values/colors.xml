@@ -12,7 +12,7 @@
     <color name="yellow_sea">#F29D3A</color>
     <color name="paris_daisy">#FFEE55</color>
 
-
+    <color name="pure_blue">#0000FF</color>
 
     <color name="textColors">#6C9EF8</color>
 
@@ -34,6 +34,10 @@
     <color name="pure_gray">#bbbbbb</color>
 
     <color name="super_light_blue">#AFD2F6</color>
+
+    <color name="banana_yellow">#FFDD27</color>
+    <color name="corn">#F0CB00</color>
+    <color name="sahara">#BA9F0B</color>
 
     <!--FastScroller colors-->
     <!--<color name="alphabet_background_color">#3F51B5</color>-->

@@ -9,24 +9,24 @@
             android:title="Words"
             app:showAsAction="never" />
 
-        <!--<item
+        <item
              android:id="@+id/testPage"
              android:icon="@android:drawable/btn_radio"
              android:title="Test"
-             app:showAsAction="never" />-->
+             app:showAsAction="never" />
 
 
         <item
             android:id="@+id/themes"
             android:icon="@android:drawable/ic_menu_gallery"
             android:title="Theme"
-            app:showAsAction="always" />
+            app:showAsAction="ifRoom" />
 
         <item
             android:id="@+id/settings"
             android:icon="@android:drawable/ic_menu_preferences"
             android:title="Settings"
-            app:showAsAction="always" />
+            app:showAsAction="ifRoom" />
 
 
 
