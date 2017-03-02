@@ -20,7 +20,7 @@
             android:autoLink="all"
             android:background="@drawable/myrect"
             android:elevation="5dp"
-            android:paddingEnd="0dp"
+            android:paddingEnd="10dp"
             android:paddingStart="10dp"
             android:text="Large Text"
             android:layout_gravity="right"
