@@ -69,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
@@ -256,8 +257,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
         bmb.setButtonEnum(ButtonEnum.Ham);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
 
         HamButton.Builder contactAdd = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_add)
@@ -277,6 +278,21 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Met a new friend? Add their Contact info!");
 
         bmb.addBuilder(contactAdd);
+
+        HamButton.Builder sendAText = new HamButton.Builder()
+                .normalImageRes(android.R.drawable.sym_action_chat)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        mMaterialDialog.setTitle("WIP");
+                        mMaterialDialog.setMessage("WIP");
+                        mMaterialDialog.show();
+                    }
+                })
+                .normalText("Send a Text")
+                .subNormalText("Send a text to a number that's not in your contacts");
+
+        bmb.addBuilder(sendAText);
 
         HamButton.Builder phoneCall = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_call)
@@ -857,7 +873,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
      *
      */
     public class InfoCompare implements Comparator<ContactInfo> {
-
         public int compare(ContactInfo e1, ContactInfo e2) {
             return e1.name.compareTo(e2.name);
         }
@@ -885,7 +900,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             Cursor cursor = cr.query(uri,
                     new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
             if (cursor == null) {
-                return null;
+                return phoneNumber;
             }
             String contactName = null;
             if (cursor.moveToFirst()) {
@@ -895,6 +910,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
+
+            if(contactName==null) {
+                contactName = phoneNumber;
+            }
+
             return contactName;
         }
 
@@ -904,7 +924,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
          */
         @Override
         public String toString() {
-            return name + ": " + number + "\n" + text;
+            return name + ": " + PhoneNumberUtils.formatNumber(number, Locale.getDefault().getCountry()) + "\n" + text;
         }
 
     }

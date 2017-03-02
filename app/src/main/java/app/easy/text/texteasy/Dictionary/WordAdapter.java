@@ -4,11 +4,6 @@ package app.easy.text.texteasy.Dictionary;
  * Created by Jacob on 9/27/16.
  */
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +14,6 @@ import com.viethoa.RecyclerViewFastScroller;
 
 import java.util.ArrayList;
 
-import app.easy.text.texteasy.ContactList.Contacts;
-import app.easy.text.texteasy.Messages.MainActivity;
 import app.easy.text.texteasy.R;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> implements RecyclerViewFastScroller.BubbleTextGetter  {
@@ -85,7 +78,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mytextview, parent, false);
+                .inflate(R.layout.chatmessageyou, parent, false);
         // set the view's size, margins, paddings and layout parameters
         /**
          *

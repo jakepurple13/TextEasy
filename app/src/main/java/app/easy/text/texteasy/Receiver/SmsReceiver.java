@@ -35,6 +35,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     }
 
+    private static SmsListener mListener;
 
     /**
      *
@@ -90,6 +91,10 @@ public class SmsReceiver extends BroadcastReceiver {
             notification(from, message, context);
 
         }
+    }
+
+    public static void bindListener(SmsListener listener) {
+        mListener = listener;
     }
 
     /**

@@ -134,7 +134,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                //.inflate(R.layout.mytextview, parent, false);
+                //.inflate(R.layout.chatmessageyou, parent, false);
                 .inflate(R.layout.contactview, parent, false);
         // set the view's size, margins, paddings and layout parameters
             /**

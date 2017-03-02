@@ -634,17 +634,25 @@ public class MainActivity extends AppCompatActivity {
      */
     private void sendSMS(String phoneNumber, String message) {
 
-        String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
+        String SENT = "SENT_SMS_ACTION";
+        String DELIVERED = "DELIVERED_SMS_ACTION";
 
-        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,
-                new Intent(SENT), 0);
+        Intent sentIntent = new Intent(SENT);
+
+        PendingIntent sentPI = PendingIntent.getBroadcast(getApplicationContext(),0,sentIntent,0);
+
+        //PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,
+          //      new Intent(SENT), 0);
+
+        Intent deliveryIntent = new Intent(DELIVERED);
+
+        PendingIntent deliver = PendingIntent.getBroadcast (getApplicationContext (), 0,deliveryIntent,0);
 
         PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0,
                 new Intent(DELIVERED), 0);
 
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
+        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliver);
 
         updateList("You: " + translate.translate(message), 2, true);
 

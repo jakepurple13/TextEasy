@@ -61,7 +61,7 @@
             app:maxSuggestionsCount="5"
             app:placeholder="Search Contacts"
             app:navIconEnabled="true"
-            app:navIconDrawable="@drawable/sendbutton"
+            app:navIconDrawable="@android:drawable/ic_menu_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/searchBars" >

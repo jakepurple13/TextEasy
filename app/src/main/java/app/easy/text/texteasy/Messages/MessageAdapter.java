@@ -2,9 +2,7 @@ package app.easy.text.texteasy.Messages;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,35 +38,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        /**
-         * 
-         * @param v 
-         */
+
         public TextView mTextView;
 
-
-        /**
-         * 
-         * @param v 
-         */
         public ViewHolder(View v) {
             super(v);
-    /**
-     * 
-     * @param myDataset 
-     * @param in 
-     */
             mTextView = (TextView) v.findViewById(R.id.textView);
 
 
         }
+
+
     }
 
-    /**
-     * 
-     * @param parent 
-     * @param viewType 
-     */
+
     // Provide a suitable constructor (depends on the kind of dataset)
     /**
      * 
@@ -85,13 +68,28 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                         int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mytextview, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+        View v;
+        if(viewType==1) {
+            // create a new view
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.chatmessageyou, parent, false);
+            // set the view's size, margins, paddings and layout parameters
+        } else {
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.chatmessagethem, parent, false);
+        }
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int fromTo = mDataset.get(position).fromTo;
+        //from == 1
+        //to == everything else
+
+        return fromTo;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -106,25 +104,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
         holder.mTextView.setText(mDataset.get(position).toString());
-    /**
-     * 
-     * @param viewToAnimate 
-     * @param position 
-     * @param type 
-     */
 
         //ScaleDrawable background = (ScaleDrawable) holder.mTextView.getBackground();
 
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
-            bgShape.setColor(getColored(R.color.pure_gray)); //blue
+            //bgShape.setColor(getColored(R.color.pure_gray)); //blue
             //bgShape.setColor(R.color.dark_color); //blue
             holder.mTextView.setGravity(Gravity.LEFT);
-
-            //background.setTileModeX(new );//holder.mTextView.getMaxWidth());
-
-            //holder.mTextView.setBackground(background);
 
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
