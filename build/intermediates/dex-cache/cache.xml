@@ -367,7 +367,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="6d59b2d96ba8d3415220d31d89522a4e18a1b7f1">
+        sha1="ba73d4dffc6fc240daf017d6c1f54220ff659f7f">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
     </item>
     <item

@@ -121,14 +121,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Settings.Settings1Activity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_settings1" />
         <activity
             android:name=".Tester.AboutAndCont"
             android:label="About"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".About.DevAbout" />
+        <activity android:name=".About.DevAbout"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".About.AboutScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MaterialAboutActivity" />
         <activity android:name=".Tester.FloatingActionTester"></activity>
     </application>

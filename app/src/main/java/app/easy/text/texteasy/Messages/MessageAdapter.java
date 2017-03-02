@@ -119,10 +119,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             //bgShape.setColor(getColored(R.color.pure_gray)); //gray
             holder.mTextView.setGravity(Gravity.RIGHT);
+        }
 
-            if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
-                holder.mTextView.setTextColor(Color.WHITE);
-            }
+        if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
+            holder.mTextView.setTextColor(Color.WHITE);
         }
 
         setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
