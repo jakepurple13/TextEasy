@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="MaterialSearchBar-0.6">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.mancj/MaterialSearchBar/0.6/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.mancj/MaterialSearchBar/0.6/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/fc6699d086fabef945e766f34e06cc76e68273b7/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/fc6699d086fabef945e766f34e06cc76e68273b7/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

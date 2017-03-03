@@ -4,8 +4,8 @@
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.daniel-stoneuk/material-about-library/1.7.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.daniel-stoneuk/material-about-library/1.7.1/res" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.daniel-stoneuk/material-about-library/1.7.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/7eea035c9c002986a1ebc9602985e9ec6dfa9db8/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/7eea035c9c002986a1ebc9602985e9ec6dfa9db8/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

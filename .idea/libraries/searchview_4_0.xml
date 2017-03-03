@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="searchview-4.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lapism/searchview/4.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lapism/searchview/4.0/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/ae5a3ce87f52b8821369f1bc4d2db0da7ffc8ee5/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/ae5a3ce87f52b8821369f1bc4d2db0da7ffc8ee5/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

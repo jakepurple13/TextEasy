@@ -49,10 +49,12 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -431,6 +433,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void updateList(String message, int fromTo, Date d) {
+        al.add(0, new TextInfo(message, fromTo, d));
+        mAdapter = new MessageAdapter(al, MainActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.scrollToPosition(al.size() - 1);
+        /**
+         *
+         */
+    }
+
+
     public void updateList(String message, int fromTo, boolean sent) {
         al.add(new TextInfo(message, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
@@ -445,6 +458,8 @@ public class MainActivity extends AppCompatActivity {
         String text;
         int fromTo; //1 is from
         //2 is to
+
+        Date dateOfText;
 
         /**
          * @param text
@@ -465,6 +480,12 @@ public class MainActivity extends AppCompatActivity {
         public TextInfo(String text, int fromTo) {
             this.text = text;
             this.fromTo = fromTo;
+        }
+
+        public TextInfo(String text, int fromTo, Date dateOfText) {
+            this.text = text;
+            this.fromTo = fromTo;
+            this.dateOfText = dateOfText;
         }
 
         /**
@@ -741,10 +762,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     jarray.put(result);
 
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(Long.parseLong(result.getString("date")));
+                    Log.w("cal", cal.toString());
+                    Date d = cal.getTime();
+
                     if(result.getString("address").equals(phoneNumber) && result.getString("type").equals("2")) {
-                        updateList("You: " + result.getString("body"), Integer.parseInt(result.getString("type")));
+                        updateList("You: " + translate.translate(result.getString("body")), Integer.parseInt(result.getString("type")),d);
                     } else if(result.getString("address").equals("+1"+phoneNumber) && result.getString("type").equals("1")) {
-                        updateList(CONTACT_NAME + ": " + result.getString("body"), Integer.parseInt(result.getString("type")));
+                        updateList(CONTACT_NAME + ": " + translate.translate(result.getString("body")), Integer.parseInt(result.getString("type")),d);
                     }
 
                     result = new JSONObject();

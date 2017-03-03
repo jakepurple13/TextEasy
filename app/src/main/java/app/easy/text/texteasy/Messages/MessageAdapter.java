@@ -14,7 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import app.easy.text.texteasy.R;
 
@@ -40,11 +43,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // each data item is just a string in this case
 
         public TextView mTextView;
+        public TextView dateView;
 
         public ViewHolder(View v) {
             super(v);
             mTextView = (TextView) v.findViewById(R.id.textView);
-
+            dateView = (TextView) v.findViewById(R.id.dateOfText);
 
         }
 
@@ -72,11 +76,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if(viewType==1) {
             // create a new view
             v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.chatmessageyou, parent, false);
+                    .inflate(R.layout.chatmessagethem, parent, false);
             // set the view's size, margins, paddings and layout parameters
         } else {
             v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.chatmessagethem, parent, false);
+                    .inflate(R.layout.chatmessageyou, parent, false);
         }
 
         ViewHolder vh = new ViewHolder(v);
@@ -92,6 +96,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return fromTo;
     }
 
+
+    boolean isHidden = true;
+
     // Replace the contents of a view (invoked by the layout manager)
     /**
      * 
@@ -101,13 +108,29 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * 
      */
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
         holder.mTextView.setText(mDataset.get(position).toString());
 
-        //ScaleDrawable background = (ScaleDrawable) holder.mTextView.getBackground();
+        String pattern = "hh:mm:ss a MM/dd/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date date = new Date();
+        try {
+            date = format.parse(mDataset.get(position).dateOfText.toString());
+            //System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            date = new Date(System.currentTimeMillis());
+        }
+        // formatting
+        //System.out.println(format.format(new Date()));
+
+        holder.dateView.setText(format.format(date));
+
+        holder.dateView.setVisibility(View.GONE);
 
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
@@ -124,6 +147,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
             holder.mTextView.setTextColor(Color.WHITE);
         }
+
+        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isHidden) {
+                    holder.dateView.setVisibility(View.VISIBLE);
+                    isHidden = false;
+                } else {
+                    holder.dateView.setVisibility(View.GONE);
+                    isHidden = true;
+                }
+            }
+        });
 
         setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
 

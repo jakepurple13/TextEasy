@@ -64,6 +64,10 @@ import com.nightonke.boommenu.OnBoomListener;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.viethoa.RecyclerViewFastScroller;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,6 +80,7 @@ import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.Tester.FloatingActionTester;
+import app.easy.text.texteasy.Translator;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import me.drakeet.materialdialog.MaterialDialog;
 import me.everything.providers.android.telephony.Sms;
@@ -101,7 +106,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     FloatingSearchView fsv;
 
     ArrayList<ContactInfo> al = new ArrayList<>();
-    //Translator translate = new Translator(this);
+    Translator translate;// = new Translator(this);
     EditText searchBar;
     String searchKey = "";
     ArrayList<ContactInfo> searched;
@@ -150,6 +155,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        translate = new Translator(this);
+
         pt = new ProgressTask(Contacts.this);
         pt.execute();
 
@@ -161,7 +168,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         //String syncConnPref = sharedPref.getString(SettingsActivity., "");
         //setTheme(getApplicationInfo().getThemeId());
         //System.err.println(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultTheme", "0"));
-
 
         mMaterialDialog = new MaterialDialog(Contacts.this)
                 .setTitle("MaterialDialog")
@@ -628,6 +634,85 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     }
 
 
+    public String getsms(String phoneNumber) {
+        JSONObject result = null;
+        JSONArray jarray = null;
+        String link[] = {"content://sms/inbox", "content://sms/sent", "content://sms/draft"};
+
+        String text = " ";
+
+
+        try {
+
+            jarray = new JSONArray();
+
+            result = new JSONObject();
+            Uri uri = Uri.parse("content://sms/");
+            String whereAddress = "address = '" + phoneNumber + "'";
+            Cursor c = getContentResolver().query(uri, null, null, null, null);
+
+            // Read the sms data and store it in the list
+            if (c.moveToFirst()) {
+
+                for (int i = 0; i < c.getCount(); i++) {
+
+                    result.put("body", c.getString(c.getColumnIndexOrThrow("body")).toString());
+
+                    result.put("date", c.getString(c.getColumnIndexOrThrow("date")).toString());
+                    result.put("read", c.getString(c.getColumnIndexOrThrow("read")).toString());
+                    result.put("type", c.getString(c.getColumnIndexOrThrow("type")).toString());
+                    if ((c.getString(c.getColumnIndexOrThrow("type")).toString()).equals("3")) {
+                        //Cursor cur= getContentResolver().query("", null, null ,null,null);
+                        //startManagingCursor(cur);
+
+                        String threadid = c.getString(c.getColumnIndexOrThrow("thread_id")).toString();
+                        Cursor cur = getContentResolver().query(Uri.parse("content://mms-sms/conversations?simple=true"), null, "_id =" + threadid, null, null);
+
+                        if (cur.moveToFirst()) {
+                            String recipientId = cur.getString(cur.getColumnIndexOrThrow("recipient_ids")).toString();
+                            cur = getContentResolver().query(Uri.parse("content://mms-sms/canonical-addresses"), null, "_id = " + recipientId, null, null);
+                            if (cur.moveToFirst()) {
+                                String address = cur.getString(cur.getColumnIndexOrThrow("address")).toString();
+                                result.put("address", address);
+                                cur.close();
+                            }
+                        }
+
+                    } else {
+                        result.put("address", c.getString(c.getColumnIndexOrThrow("address")).toString());
+                    }
+                    jarray.put(result);
+
+                    if(result.getString("address").equals(phoneNumber) && result.getString("type").equals("2")) {
+                        text = result.getString("body");
+                    } else if(result.getString("address").equals("+1"+phoneNumber) && result.getString("type").equals("1")) {
+                        text = result.getString("body");
+                    }
+
+                    result = new JSONObject();
+
+                    c.moveToNext();
+                }
+            }
+            c.close();
+
+            result.put("smslist", jarray);
+            //result = new JSONObject(jarray.toString());
+
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        Log.d("MainActivity", result.toString());
+
+        return text;
+    }
+
+
     public void getAllContacts() {
         long startnow;
         long endnow;
@@ -649,20 +734,38 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             //Log.d("con ", "name " + contactName + " number" + contactNumber);
 
-            //String whereAddress = "address = '" + contactNumber + "'";
-            //Cursor c = cr.query(uris, proj, whereAddress, null, "date desc limit 1");
-            //Log.wtf("QWE", c.getCount() + "");
             String text = " ";
-            /*if (c.isNull(0) == false) {
-                *//*do {
+
+            /*Uri myMessage = Uri.parse("content://sms/");
+
+            ContentResolver cr1 = getContentResolver();
+            Cursor c = cr1.query(myMessage, new String[] { "_id",
+                            "address", "date", "body", "read" }, null,
+                    null, null);
+            getSmsLogs(c, this);
+
+            String num = sms_num.get(sms_num.size()-1);
+            String body = sms_body.get(sms_num.size()-1);
+
+            Log.d(num, body);*/
+
+            /*String whereAddress = "address = '" + contactNumber + "'";
+            Cursor c = cr.query(uris, proj, whereAddress, null, "date desc limit 1");
+            //Log.wtf("QWE", c.getCount() + "");
+
+            if (c.isNull(0) == false) {
+                do {
                     text = c.getString(c.getColumnIndex("body"));
                     Log.w("ASD", text);
                     text = translate.translate(text);
-                } while (c.moveToNext());*//*
+                } while (c.moveToNext());
                 text = c.getString(c.getColumnIndex("body"));
                 Log.w("ASD", text);
                 text = translate.translate(text);
             }*/
+
+            //text = body;
+            //text = translate.translate(text);
 
             al.add(new ContactInfo(contactName, contactNumber, text));
             //c.close();
@@ -697,6 +800,43 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         }
 
     }
+
+    public static final ArrayList<String> sms_num = new ArrayList<String>();
+    public static final ArrayList<String> sms_body = new ArrayList<String>();
+
+
+    public void getSmsLogs(Cursor c, Context con) {
+
+        if (sms_num.size() > 0) {
+            sms_num.clear();
+            sms_body.clear();
+        }
+
+        try {
+
+            if (c.moveToFirst()) {
+                do {
+                    Log.d("error", "" + c.getString(c.getColumnIndexOrThrow("address")));
+                    if (c.getString(c.getColumnIndexOrThrow("address")) == null) {
+                        c.moveToNext();
+                        continue;
+                    }
+
+                    String Number = c.getString(c.getColumnIndexOrThrow("address")).toString();
+                    String Body = c.getString(c.getColumnIndexOrThrow("body")).toString();
+
+                    sms_num.add(Number);
+
+                    sms_body.add(Body);
+                } while (c.moveToNext());
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * @param title

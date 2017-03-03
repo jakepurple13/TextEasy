@@ -4,8 +4,8 @@
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.amlcurran.showcaseview/library/5.4.3/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.amlcurran.showcaseview/library/5.4.3/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.amlcurran.showcaseview/library/5.4.3/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/2dcec55680bd145c2001af4160897fedf793eb1b/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/2dcec55680bd145c2001af4160897fedf793eb1b/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
