@@ -50,17 +50,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     public void notification(String message, Context context) {
 
+
+
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.doublerainbow);
+                        //.setLargeIcon(R.drawable.texteasyicon)
+                        .setSmallIcon(R.drawable.texteasyicon);
+
+        Translator translate = new Translator(this);
+
 
         mBuilder.setContentTitle("TextEasy");
-        mBuilder.setContentText(message);
+        mBuilder.setContentText(translate.translate(message));
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(translate.translate(message)));
 
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
         mBuilder.setAutoCancel(true);
         mBuilder.setVibrate(new long[]{1000, 1000});
+
+        mBuilder.setColor(R.color.white);
+
+
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context, Contacts.class);

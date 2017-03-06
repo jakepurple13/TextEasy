@@ -136,6 +136,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
         mBuilder.setContentTitle(getContactName(context, from));
         mBuilder.setContentText(message);
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(message));
 
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);

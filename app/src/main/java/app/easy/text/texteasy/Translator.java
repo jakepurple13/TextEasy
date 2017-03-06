@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import app.easy.text.texteasy.Dictionary.Lingo;
 
@@ -38,6 +41,11 @@ public class Translator {
          * Put all words into hashmap here
          *
          */
+
+
+
+
+
         SharedPreferences load = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
         firsttime = load.getBoolean("FirstLoad", true);
 
@@ -113,6 +121,18 @@ public class Translator {
     public String translate(String words) {
 
         String[] sentence = words.split(" ");
+
+        /*Collection<String> hmValues = hm.values();
+
+        Object[] sHM = hmValues.toArray();
+
+        for(int i=0;i<sHM.length;i++) {
+            if(words.matches(".*" + sHM[i].toString() + ".*")) {
+                Log.i("daskljfha", sHM[i].toString());
+            }
+        }*/
+
+
 
         for(int i=0;i<sentence.length;i++) {
             if(hm.containsKey(sentence[i])) {

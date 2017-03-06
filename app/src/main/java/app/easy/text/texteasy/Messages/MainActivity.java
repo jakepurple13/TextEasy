@@ -244,6 +244,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecyclerView.scrollToPosition(al.size() - 1);
+            }
+        });
+
         mSmallBang = SmallBang.attach2Window(this);
 
         send.setOnClickListener(new View.OnClickListener() {

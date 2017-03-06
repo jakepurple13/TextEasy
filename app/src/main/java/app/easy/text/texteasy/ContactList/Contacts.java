@@ -263,8 +263,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
         bmb.setButtonEnum(ButtonEnum.Ham);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_5);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_5);
 
         HamButton.Builder contactAdd = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_add)
@@ -284,6 +284,20 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Met a new friend? Add their Contact info!");
 
         bmb.addBuilder(contactAdd);
+
+        HamButton.Builder settings = new HamButton.Builder()
+                .normalImageRes(android.R.drawable.ic_menu_preferences)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        Intent settingsIntent = new Intent(Contacts.this, Settings1Activity.class);
+                        startActivityForResult(settingsIntent, 201);
+                    }
+                })
+                .normalText("Settings")
+                .subNormalText("Go to the Settings Menu");
+
+        bmb.addBuilder(settings);
 
         HamButton.Builder sendAText = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.sym_action_chat)
@@ -725,7 +739,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         String selection = ContactsContract.Contacts.HAS_PHONE_NUMBER;
-        Cursor cursor = cr.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,   ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}, selection, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+        Cursor cursor = cr.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME},
+                selection,
+                null,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
 
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
