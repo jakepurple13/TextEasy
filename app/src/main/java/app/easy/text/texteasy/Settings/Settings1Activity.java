@@ -175,7 +175,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                 || DefaultPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
                 || SettingsThemePreferenceFragment.class.getName().equals(fragmentName)
-                || ThemePreferenceFragment.class.getName().equals(fragmentName);
+                || ThemePreferenceFragment.class.getName().equals(fragmentName)
+                || FeedbackPreferenceFragment.class.getName().equals(fragmentName)
+                || NewAbbreviationsPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -378,6 +380,72 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
 
             startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+            getActivity().finish();
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            //bindPreferenceSummaryToValue(findPreference("example_text"));
+            //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), Settings1Activity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class FeedbackPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Scoop.getInstance().apply(getActivity());
+            setHasOptionsMenu(true);
+
+            String url = getResources().getString(R.string.feedback_link);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+            getActivity().finish();
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            //bindPreferenceSummaryToValue(findPreference("example_text"));
+            //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), Settings1Activity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class NewAbbreviationsPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Scoop.getInstance().apply(getActivity());
+            setHasOptionsMenu(true);
+
+            String url = getResources().getString(R.string.abbrev_link);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

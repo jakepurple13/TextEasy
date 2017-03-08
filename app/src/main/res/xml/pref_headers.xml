@@ -27,4 +27,14 @@
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/gotoSettings" />
 
+    <header
+        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$FeedbackPreferenceFragment"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/feedbackWord" />
+
+    <header
+        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$NewAbbreviationsPreferenceFragment"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/abbrevWord" />
+
 </preference-headers>

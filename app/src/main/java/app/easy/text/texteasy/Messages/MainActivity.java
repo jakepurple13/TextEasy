@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
+import android.support.v4.app.RemoteInput;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -87,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     SmallBang mSmallBang;
 
     Translator translate;
+
+    private static final String KEY_TEXT_REPLY = "key_text_reply";
 
     private static MainActivity inst;
 
@@ -841,6 +844,14 @@ public class MainActivity extends AppCompatActivity {
         String themer = prefs.getString("themeID", "0");
         setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
         //boolean ? (if true) : (if false);
+    }
+
+    private CharSequence getMessageText(Intent intent) {
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+        if (remoteInput != null) {
+            return remoteInput.getCharSequence(KEY_TEXT_REPLY);
+        }
+        return null;
     }
 
 }

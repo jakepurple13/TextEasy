@@ -142,6 +142,7 @@
     <orderEntry type="library" exported="" name="providers-core-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="transition-25.2.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-10.0.1" level="project" />
+    <orderEntry type="library" exported="" name="constraint-layout-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="AlphabetIndex-Fast-Scroll-RecyclerView-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-clearcut-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-lite-10.0.1" level="project" />
@@ -158,6 +159,7 @@
     <orderEntry type="library" exported="" name="support-media-compat-25.2.0" level="project" />
     <orderEntry type="library" exported="" name="scoops-core-1.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
+    <orderEntry type="library" exported="" name="constraint-layout-solver-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-ads-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-25.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-25.2.0" level="project" />

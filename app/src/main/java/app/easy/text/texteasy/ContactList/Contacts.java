@@ -97,6 +97,8 @@ import me.everything.providers.core.Data;
 public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
 
+    public static final String NOTIFICATION_REPLY = "notification_reply";
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -890,12 +892,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     public boolean onMenuItemClick(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.wordChange:
+            /*case R.id.wordChange:
 
                 Intent callIntent = new Intent(this, ListOfWords.class);
                 startActivity(callIntent);
 
-                return true;
+                return true;*/
 
             case R.id.themes:
 
@@ -911,12 +913,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
                 return true;
 
-            case R.id.testPage:
+            /*case R.id.testPage:
 
                 Intent tester = new Intent(this, FloatingActionTester.class);
                 startActivity(tester);
 
-                return true;
+                return true;*/
 
             default:
                 /**
@@ -1102,12 +1104,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.wordChange:
+            /*case R.id.wordChange:
 
                 Intent callIntent = new Intent(this, ListOfWords.class);
                 startActivity(callIntent);
 
-                return true;
+                return true;*/
 
             case R.id.themes:
 
@@ -1122,12 +1124,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
                 return true;
 
-            case R.id.testPage:
+            /*case R.id.testPage:
 
                 Intent tester = new Intent(this, FloatingActionTester.class);
                 startActivity(tester);
 
-                return true;
+                return true;*/
 
             default:
                 /**

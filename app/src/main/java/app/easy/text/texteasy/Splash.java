@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ftinc.scoop.Scoop;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import app.easy.text.texteasy.ContactList.Contacts;
 import tyrantgit.explosionfield.ExplosionField;
@@ -70,6 +71,8 @@ public class Splash extends AppCompatActivity {
         mSmallBang = SmallBang.attach2Window(this);
 
         iv = (ImageView) findViewById(R.id.imageView);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("tests");
 
         //mExplosionField = ExplosionField.attach2Window(Splash.this);
         //addListener(findViewById(R.id.imageView));

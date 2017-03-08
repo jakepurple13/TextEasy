@@ -4,11 +4,13 @@ package app.easy.text.texteasy;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.RemoteInput;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
+import android.support.v4.app.RemoteInput;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -16,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import app.easy.text.texteasy.ContactList.Contacts;
+import app.easy.text.texteasy.Receiver.NotificationReceiver;
 
 /**
  * Created by Jacob on 9/26/16.
@@ -23,6 +26,8 @@ import app.easy.text.texteasy.ContactList.Contacts;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     String TAG = "SERVICE";
+
+    private static final String KEY_TEXT_REPLY = "key_text_reply";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -61,16 +66,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         mBuilder.setContentTitle("TextEasy");
-        mBuilder.setContentText(translate.translate(message));
+        mBuilder.setContentText(translate.translate(message) + "\nClick here to give Feedback.");
         mBuilder.setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(translate.translate(message)));
 
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
         mBuilder.setAutoCancel(true);
-        mBuilder.setVibrate(new long[]{1000, 1000});
-
+        //mBuilder.setVibrate(new long[]{1000, 1000});
+        mBuilder.setDefaults(Notification.DEFAULT_ALL);
         mBuilder.setColor(R.color.white);
+
+
+
+        String url = getResources().getString(R.string.feedback_link);
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
 
 
 
@@ -93,12 +104,55 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
         mBuilder.setContentIntent(resultPendingIntent);
+
+
+
+        Intent received = new Intent(context, NotificationReceiver.class);
+        received.putExtra("Number", "2017854423");
+        received.putExtra("cancel", false);
+
+        //Provide receiver class to handle the response
+        PendingIntent detailsPendingIntent = PendingIntent.getBroadcast(
+                context,
+                0,
+                received,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        String replyLabel = "Reply to text";
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+                .setLabel(replyLabel)
+                .build();
+
+        NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(
+                R.drawable.texteasyicon, replyLabel, detailsPendingIntent)
+                .addRemoteInput(remoteInput)
+                .setAllowGeneratedReplies(true)
+                .build();
+
+
+        Intent cancelled = new Intent(context, NotificationReceiver.class);
+        cancelled.putExtra("cancel", true);
+
+        PendingIntent cancelIntent = PendingIntent.getBroadcast(
+                context,
+                0,
+                cancelled,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        //mBuilder.addAction(replyAction);
+        mBuilder.addAction(android.R.drawable.ic_notification_clear_all, "Cancel", cancelIntent);
+
+
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
 
     }
+
+
 
 
 }
