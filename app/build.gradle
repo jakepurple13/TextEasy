@@ -29,11 +29,6 @@ dependencies {
 
 
 
-
-
-
-
-
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
     compile 'com.lapism:searchview:4.0'
     compile 'com.github.mancj:MaterialSearchBar:0.6'
@@ -64,6 +59,11 @@ dependencies {
     compile 'com.52inc:scoops:1.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
+
+
+
+
+
 }
 
 // ADD THIS AT THE BOTTOM

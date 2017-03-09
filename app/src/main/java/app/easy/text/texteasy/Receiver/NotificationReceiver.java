@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.RemoteInput;
 import android.support.v7.app.NotificationCompat;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import app.easy.text.texteasy.Messages.MainActivity;
 
@@ -49,7 +50,16 @@ public class NotificationReceiver extends BroadcastReceiver {
                     getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(112, mBuilder.build());*/
 
-                sendSMS(phoneNumber, id.toString(), context);
+                String toSend;
+
+                if(id==null) {
+                    toSend = remoteInput.getCharSequence(Intent.EXTRA_TEXT).toString();
+                    Log.i("dsakfj", "onReceive: " + toSend);
+                } else {
+                    toSend = id.toString();
+                }
+
+                sendSMS(phoneNumber, toSend, context);
 
                 NotificationManager mNotificationManager =
                         (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

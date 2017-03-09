@@ -658,7 +658,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Person?", person + "HERE");
 
                 String text = body;
-                //TODO: LOOK AT DIS
+                //TOD: LOOK AT DIS
                 Log.w("Text from MainActivity", type + "\t" + text);
                 text = translate.translate(text);
                 String place;
@@ -794,10 +794,8 @@ public class MainActivity extends AppCompatActivity {
             //result = new JSONObject(jarray.toString());
 
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

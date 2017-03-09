@@ -3,6 +3,15 @@
 
     <item
         is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/wearEasy/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dfca403c20653ac4f16a9127b58d1a133a7508e0">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/wearEasy/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_139542099ae1f83ad3c071b6a23247410e362e8e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
@@ -16,8 +25,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="fe58fffe0abadd4f87a816bbfc3851fdeee884a5">
+        sha1="f56049f2412ab5f47b899d70939544d8e0850d04">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/wearEasy/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/wearEasy/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_6c4a4e54d43082c5ba57fbfd40d9067d6d1b413f/classes.dex" />
     </item>
 
 </items>

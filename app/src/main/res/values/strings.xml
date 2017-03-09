@@ -117,7 +117,19 @@
     <string name="themeChanged" translatable="false">Change Themes</string>
     <string name="gotoSettings" translatable="false">Colorblind Mode</string>
 
+    <string name="hello">Hello World!</string>
+    <string name="title">Hello Notification!</string>
+    <string name="notification_posted">Notification posted</string>
 
+
+    <string-array name="reply_choices">
+        <item>Yes</item>
+        <item>No</item>
+        <item>Maybe</item>
+        <item>Hello</item>
+        <item>Good Bye</item>
+        <item>Can\'t Talk Now</item>
+    </string-array>
 
 
 </resources>

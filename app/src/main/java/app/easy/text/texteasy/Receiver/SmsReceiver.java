@@ -200,12 +200,14 @@ public class SmsReceiver extends BroadcastReceiver {
         mBuilder.setContentIntent(resultPendingIntent);
 
 
+        //--------------Action-----------
+
         Intent received = new Intent(context, NotificationReceiver.class);
         received.putExtra("Number", from);
         received.putExtra("cancel", false);
 
         //Provide receiver class to handle the response
-        PendingIntent detailsPendingIntent = PendingIntent.getBroadcast(
+        PendingIntent receivedPendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
                 received,
@@ -218,7 +220,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 .build();
 
         NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(
-                R.drawable.texteasyicon, replyLabel, detailsPendingIntent)
+                R.drawable.texteasyicon, replyLabel, receivedPendingIntent)
                 .addRemoteInput(remoteInput)
                 .setAllowGeneratedReplies(true)
                 .build();
@@ -238,10 +240,50 @@ public class SmsReceiver extends BroadcastReceiver {
         mBuilder.addAction(replyAction);
         mBuilder.addAction(android.R.drawable.ic_notification_clear_all, "Cancel", cancelIntent);
 
+        //--------------Action-----------
+        //Watch Actions---------------------------
+
+
+        // Create a WearableExtender to add functionality for wearables
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setHintHideIcon(true)
+                        .setContentIcon(R.drawable.texteasyicon);
+
+
+        String[] choices = context.getResources().getStringArray(R.array.reply_choices);
+        choices[0] = "Yes";
+        choices[1] = "No";
+
+
+        RemoteInput remoteInput1 = new RemoteInput.Builder(Intent.EXTRA_TEXT)
+                .setLabel("Reply")
+                .setChoices(choices)
+                .build();
+
+        NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(
+                R.drawable.texteasyicon, replyLabel, receivedPendingIntent);
+        actionBuilder.addRemoteInput(remoteInput1);
+        actionBuilder.setAllowGeneratedReplies(true);
+
+        wearableExtender.addAction(actionBuilder.build());
+
+
+        mBuilder.extend(wearableExtender);
+
+
+
+        //Watch Actions---------------------------
+
+
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
+
+
+
+
     }
 
 

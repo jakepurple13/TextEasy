@@ -52,6 +52,8 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
@@ -212,7 +214,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
                 if (!firstTimeAddContact) {
 
-                    setTutorial("Add Contact", "Add a contact", fab);
+                    //setTutorial("Add Contact", "Add a contact", fab);
 
                     SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = enter.edit();
@@ -586,7 +588,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
             firstTimeSearch = true;
 
-            new TapTargetSequence(this)
+            /*new TapTargetSequence(this)
                     .targets(
                             TapTarget.forView(findViewById(R.id.searchBars), "Search", "Search for a contact to find" + upAgain)
                                     .targetCircleColor(R.color.deep_orange_50)
@@ -623,12 +625,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                         public void onSequenceCanceled(TapTarget lastTarget) {
                             // Boo
                         }
-                    }).start();
+                    }).start();*/
 
         }
 
     }
-
 
 
 
@@ -716,10 +717,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             //result = new JSONObject(jarray.toString());
 
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -866,7 +865,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
     public void setTutorial(String title, String description, View v) {
 
-        TapTargetView.showFor(this,
+        /*TapTargetView.showFor(this,
                 TapTarget.forView(v, title, description + "\nPress and hold to bring up again")
                         .cancelable(true)
                         .drawShadow(true)
@@ -884,7 +883,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                     public void onTargetLongClick(TapTargetView view) {
 
                     }
-                });
+                });*/
 
     }
 

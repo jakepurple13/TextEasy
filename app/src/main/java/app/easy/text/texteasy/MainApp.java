@@ -39,8 +39,6 @@ public class MainApp extends Application {
                     .initialize();
         }
 
-        //TODO: put in a handler that'll play something every ten seconds for a minute
-
 
     }
 

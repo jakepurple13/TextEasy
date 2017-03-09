@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.RemoteInput;
@@ -66,9 +65,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         mBuilder.setContentTitle("TextEasy");
-        mBuilder.setContentText(translate.translate(message) + "\nClick here to give Feedback.");
-        mBuilder.setStyle(new NotificationCompat.BigTextStyle()
-                .bigText(translate.translate(message)));
+        mBuilder.setContentText(translate.translate(message));
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(translate.translate(message)));
+
 
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
@@ -105,14 +104,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 );
         mBuilder.setContentIntent(resultPendingIntent);
 
-
+        //Actions---------------------------
 
         Intent received = new Intent(context, NotificationReceiver.class);
         received.putExtra("Number", "2017854423");
         received.putExtra("cancel", false);
 
         //Provide receiver class to handle the response
-        PendingIntent detailsPendingIntent = PendingIntent.getBroadcast(
+        PendingIntent receivedPendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
                 received,
@@ -125,7 +124,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .build();
 
         NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(
-                R.drawable.texteasyicon, replyLabel, detailsPendingIntent)
+                R.drawable.texteasyicon, replyLabel, receivedPendingIntent)
                 .addRemoteInput(remoteInput)
                 .setAllowGeneratedReplies(true)
                 .build();
@@ -144,6 +143,54 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //mBuilder.addAction(replyAction);
         mBuilder.addAction(android.R.drawable.ic_notification_clear_all, "Cancel", cancelIntent);
 
+        //Actions---------------------------
+        //Watch Actions---------------------------
+
+        received.putExtra("Number", "2017854423");
+        received.putExtra("cancel", false);
+
+        //Provide receiver class to handle the response
+        PendingIntent receivedPendingIntents = PendingIntent.getBroadcast(
+                context,
+                0,
+                received,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        // Create a WearableExtender to add functionality for wearables
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setHintHideIcon(true)
+                        .setContentIcon(R.drawable.texteasyicon);
+
+
+        String[] choices = context.getResources().getStringArray(R.array.reply_choices);
+
+        //String[] choices = new String[2];
+        choices[0] = "Yes";
+        choices[1] = "No";
+
+        RemoteInput remoteInput1 = new RemoteInput.Builder(Intent.EXTRA_TEXT)
+                .setLabel("Reply")
+                .setChoices(choices)
+                .build();
+
+        NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(
+                R.drawable.texteasyicon, replyLabel, receivedPendingIntents);
+        actionBuilder.addRemoteInput(remoteInput1);
+        actionBuilder.setAllowGeneratedReplies(true);
+
+        wearableExtender.addAction(actionBuilder.build());
+        //wearableExtender.addPage(mBuilder.build());
+
+
+        mBuilder.extend(wearableExtender);
+
+
+
+
+
+        //Watch Actions---------------------------
 
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
