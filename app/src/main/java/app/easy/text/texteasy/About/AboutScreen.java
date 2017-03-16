@@ -93,8 +93,8 @@ public class AboutScreen extends MaterialAboutActivity {
         SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(AboutScreen.this);
         num = load.getInt("GSBug", 0);
 
-        String georgeName = num>79 ? "<font color=\"#FFD700\">George Samuels</font>" : "George Samuels";
-        String georgeText = num>79 ? "<font color=\"#FFD700\">Came up with App Name</font>" : "Came up with App Name";
+        String georgeName = num>=79 ? "<font color=\"#FFD700\">George Samuels</font>" : "George Samuels";
+        String georgeText = num>=79 ? "<font color=\"#FFD700\">Came up with App Name</font>" : "Came up with App Name";
 
         contTeam.addItem(new MaterialAboutActionItem.Builder()
                 .text(Html.fromHtml(georgeName))
@@ -125,9 +125,9 @@ public class AboutScreen extends MaterialAboutActivity {
                 })
                 .build());
 
-        contTeam.addItem(new MaterialAboutActionItem.Builder()
+        /*contTeam.addItem(new MaterialAboutActionItem.Builder()
                 .text("Ryou")
-                .subText("Spriter")
+                .subText("Helped with the German words")
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
@@ -140,26 +140,45 @@ public class AboutScreen extends MaterialAboutActivity {
                     }
                 })
                 .icon(R.mipmap.ic_launcher)
-                .build());
+                .build());*/
 
+        addPerson(contTeam, "Ryou", "Helped with the German words", "Thank you for the german words!");
 
+        addPerson(contTeam, "Carlie", "Helped with the English words", "Thank you for the english words");
+
+        addPerson(contTeam, "Ian", "Helped with the English words", "Thank you for the english words");
+
+        addPerson(contTeam, "Kit", "Helped with the English words", "Thank you for the english words");
 
         MaterialAboutCard.Builder specialThanks = new MaterialAboutCard.Builder();
 
         specialThanks.title("Special Thanks");
 
-        specialThanks.addItem(new MaterialAboutActionItem.Builder()
-                .text("Dr. Jean Coppola")
-                .subText("Mentor and Great Professor")
+        addPerson(specialThanks, "Dr. Jean Coppola", "Mentor and Great Professor",
+                "Thank you so much for being there for and with us." +
+                        " Helping us learn and introduce us to so much, it means a lot to us.");
+
+
+
+
+        return new MaterialAboutList(devTeam.build(), contTeam.build(), specialThanks.build());
+
+    }
+
+
+    public void addPerson(MaterialAboutCard.Builder macb, final String name, String subText, final String description) {
+
+        macb.addItem(new MaterialAboutActionItem.Builder()
+                .text(name)
+                .subText(subText)
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
                     @Override
                     public void onClick() {
 
                         // You can change the message anytime. before show
-                        mMaterialDialog.setTitle("Dr. Coppola");
+                        mMaterialDialog.setTitle(name);
                         // You can change the message anytime. after show
-                        mMaterialDialog.setMessage("Thank you so much for being there for and with us." +
-                                " Helping us learn and introduce us to so much, it means a lot to us.");
+                        mMaterialDialog.setMessage(description);
                         mMaterialDialog.show();
                     }
                 })
@@ -167,9 +186,8 @@ public class AboutScreen extends MaterialAboutActivity {
                 .build());
 
 
-        return new MaterialAboutList(devTeam.build(), contTeam.build(), specialThanks.build());
-
     }
+
 
     @Override
     protected CharSequence getActivityTitle() {

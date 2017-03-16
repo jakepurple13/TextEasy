@@ -73,7 +73,7 @@ public class Splash extends AppCompatActivity {
         iv = (ImageView) findViewById(R.id.imageView);
 
         //TODO: GET RID OF THIS BEFORE PUBLISHING
-        FirebaseMessaging.getInstance().subscribeToTopic("tests");
+        //FirebaseMessaging.getInstance().subscribeToTopic("tests");
 
         //mExplosionField = ExplosionField.attach2Window(Splash.this);
         //addListener(findViewById(R.id.imageView));

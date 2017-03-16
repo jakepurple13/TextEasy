@@ -146,7 +146,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //Actions---------------------------
         //Watch Actions---------------------------
 
-        received.putExtra("Number", "2017854423");
+        received.putExtra("Number", "number");
         received.putExtra("cancel", false);
 
         //Provide receiver class to handle the response
@@ -180,7 +180,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         actionBuilder.addRemoteInput(remoteInput1);
         actionBuilder.setAllowGeneratedReplies(true);
 
-        wearableExtender.addAction(actionBuilder.build());
+        //wearableExtender.addAction(actionBuilder.build());
         //wearableExtender.addPage(mBuilder.build());
 
 

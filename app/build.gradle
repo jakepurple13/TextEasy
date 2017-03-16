@@ -8,8 +8,8 @@ android {
         applicationId "app.easy.text.texteasy"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 6
-        versionName "6.0"
+        versionCode 7
+        versionName "6.1"
     }
     buildTypes {
         release {
@@ -33,7 +33,7 @@ dependencies {
     compile 'com.lapism:searchview:4.0'
     compile 'com.github.mancj:MaterialSearchBar:0.6'
     compile 'com.github.daniel-stoneuk:material-about-library:1.7.1'
-    compile 'com.github.jrvansuita:MaterialAbout:+'
+    compile 'com.github.jrvansuita:MaterialAbout:0.1.2'
     compile 'com.github.rey5137:material:1.2.4'
     compile 'com.balysv.materialmenu:material-menu:2.0.0'
     compile 'com.nightonke:boommenu:2.0.7'
