@@ -106,8 +106,6 @@ public class AboutScreen extends MaterialAboutActivity {
 
                         num++;
 
-
-
                         if(num==79) {
                             // You can change the message anytime. before show
                             mMaterialDialog.setTitle("Easter Egg Unlocked");
@@ -184,7 +182,6 @@ public class AboutScreen extends MaterialAboutActivity {
                 })
                 .icon(R.mipmap.ic_launcher)
                 .build());
-
 
     }
 

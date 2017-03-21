@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="app.easy.text.texteasy">
 
-
-
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -14,7 +12,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 
     <application
         android:name=".MainApp"
@@ -134,13 +131,26 @@
             android:name=".About.AboutScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MaterialAboutActivity" />
-        <activity android:name=".Tester.FloatingActionTester" />
-        <activity android:name=".Receiver.NotificationActivity"></activity>
+        <activity
+            android:name=".Settings.StatisticsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Receiver.NotificationActivity" />
 
         <receiver
             android:name=".Receiver.NotificationReceiver"
             android:enabled="true"
             android:exported="false" />
+        <receiver android:name=".Settings.StatisticsWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/statistics_widget_info" />
+        </receiver>
+
+        <activity android:name=".Tester.BlankTestingActivity"></activity>
     </application>
 
 </manifest>

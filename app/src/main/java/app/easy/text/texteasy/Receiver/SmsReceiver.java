@@ -140,7 +140,7 @@ public class SmsReceiver extends BroadcastReceiver {
         if (cursor == null) {
             return null;
         }
-        String contactName = null;
+        String contactName = phoneNumber;
         if (cursor.moveToFirst()) {
             contactName = cursor.getString(cursor
                     .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));

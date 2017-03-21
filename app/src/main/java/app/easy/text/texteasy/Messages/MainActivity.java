@@ -4,6 +4,7 @@ package app.easy.text.texteasy.Messages;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,12 +35,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 
 import org.json.JSONArray;
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
     String CONTACT_NAME;
 
+    RelativeLayout rl;
+
 
     /**
      * /**
@@ -163,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+
+        rl = (RelativeLayout) findViewById(R.id.confettiContain);
 
         materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
@@ -266,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!(message.getText().toString().length() < 1)) {
 
-                    SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences load = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
                     int num = load.getInt("DotNum", 0);
 
                     if (num >= 25) {
@@ -285,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
 
                     achievements(num);
 
-                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = enter.edit();
                     editor.putInt("DotNum", num);
                     editor.apply();
@@ -355,10 +363,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("dak;sfj", "achievements: " + tens);
 
-        /**
-         *
-         * @param v
-         */
         if (num <= tens) {
             amount = num % tens;
         } else {
@@ -387,48 +391,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void anotherAchieve(String title, String message) {
 
+        CommonConfetti.rainingConfetti(rl, new int[] { Color.BLACK, Color.BLUE, Color.MAGENTA })
+                .oneShot()
+                .setTouchEnabled(true);
 
         mMaterialDialog.setTitle(title);
         mMaterialDialog.setMessage(message);
         mMaterialDialog.show();
-
-
-        /*dialog = new Dialog(this);
-    *//**
-         *
-         *//*
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setContentView(R.layout.achievement_window);
-        *//**
-         *
-         * @param text
-         *//*
-        dialog.setTitle(title);
-
-        achievementIcon = (ImageView) dialog.findViewById(R.id.achieveicon);
-        TextView tv = (TextView) dialog.findViewById(R.id.achievetexet);
-
-        Button closeButton = (Button) dialog.findViewById(R.id.achievebutton);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-
-        tv.setText(message);
-
-        dialog.show();
-
-        mSmallBang.bang(achievementIcon);*/
-
-        /**
-         *
-         */
     }
 
 
@@ -571,6 +540,17 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
 
+            case R.id.editContact:
+
+                long idContact = getContactID(phoneNumber);
+                Intent i = new Intent(Intent.ACTION_EDIT);
+                Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, idContact);
+                i.setData(contactUri);
+                i.putExtra("finishActivityOnSaveCompleted", true);
+                startActivity(i);
+
+                return true;
+
             default:
                 /**
                  *
@@ -601,6 +581,25 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             contactName = cursor.getString(cursor
                     .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return contactName;
+    }
+
+    public long getContactID(String phoneNumber) {
+        ContentResolver cr = getContentResolver();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(phoneNumber));
+        Cursor cursor = getApplicationContext().getContentResolver().query(uri, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+        if (cursor == null) {
+            return 0;
+        }
+        long contactName = 0;
+        if (cursor.moveToFirst()) {
+            contactName = cursor.getLong(cursor
+                    .getColumnIndex(ContactsContract.PhoneLookup.CONTACT_ID));
         }
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();

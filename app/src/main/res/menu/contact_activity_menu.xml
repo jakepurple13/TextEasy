@@ -7,13 +7,13 @@
             android:id="@+id/wordChange"
             android:icon="@android:drawable/ic_menu_agenda"
             android:title="Words"
-            app:showAsAction="never" />
+            app:showAsAction="never" />-->
 
         <item
              android:id="@+id/testPage"
              android:icon="@android:drawable/btn_radio"
              android:title="Test"
-             app:showAsAction="never" />-->
+             app:showAsAction="never" />
 
 
         <item

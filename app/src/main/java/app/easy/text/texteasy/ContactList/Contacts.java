@@ -81,7 +81,8 @@ import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.About.AboutScreen;
-import app.easy.text.texteasy.Tester.FloatingActionTester;
+import app.easy.text.texteasy.Tester.AboutAndCont;
+import app.easy.text.texteasy.Tester.BlankTestingActivity;
 import app.easy.text.texteasy.Translator;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -818,6 +819,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             listOfNames+=mAlphabetItems.get(i);
         }
 
+        SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = enter.edit();
+        editor.putInt("numOfContacts", al.size());
+        editor.apply();
+
     }
 
     public static final ArrayList<String> sms_num = new ArrayList<String>();
@@ -912,12 +918,13 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
                 return true;
 
-            /*case R.id.testPage:
+            case R.id.testPage:
 
-                Intent tester = new Intent(this, FloatingActionTester.class);
+                Intent tester = new Intent(this, BlankTestingActivity.class);
+                tester.putExtra("contactNum", al.size());
                 startActivity(tester);
 
-                return true;*/
+                return true;
 
             default:
                 /**

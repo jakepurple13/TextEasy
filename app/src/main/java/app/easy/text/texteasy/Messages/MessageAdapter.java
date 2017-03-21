@@ -14,10 +14,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import app.easy.text.texteasy.R;
 
@@ -25,6 +27,7 @@ import app.easy.text.texteasy.R;
  * Created by Jacob on 9/12/16.
  */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+    private static final String TAG = "MessageAdapter";
     private ArrayList<MainActivity.TextInfo> mDataset;
 
     MainActivity in;
@@ -115,18 +118,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.mTextView.setText(mDataset.get(position).toString());
 
         String pattern = "hh:mm:ss a MM/dd/yyyy";
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        Date date = new Date();
-        try {
-            date = format.parse(mDataset.get(position).dateOfText.toString());
-            //System.out.println(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+        Date date;
+
+        date = mDataset.get(position).dateOfText;
+        //In case it becomes null, which only happens for a sent text
+        if(date==null) {
             date = new Date(System.currentTimeMillis());
         }
-        // formatting
-        //System.out.println(format.format(new Date()));
 
         holder.dateView.setText(format.format(date));
 
