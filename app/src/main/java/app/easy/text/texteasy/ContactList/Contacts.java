@@ -138,6 +138,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
     MaterialDialog mMaterialDialog;
 
+    public String messageToPass = "";
+
     /**
      * @param savedInstanceState
      */
@@ -168,6 +170,9 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         searched = new ArrayList<>();
         /**Ask User for Location Premisson and Accounts**/
         //AskPermission();
+
+
+
 
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         //String syncConnPref = sharedPref.getString(SettingsActivity., "");
@@ -628,6 +633,22 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                         }
                     }).start();*/
 
+        }
+
+        // Get the intent that started this activity
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        try {
+            // Figure out what to do based on the intent type
+            if (intent.getType().equals("text/plain")) {
+                // Handle intents with text ...
+                messageToPass = intent.getStringExtra(Intent.EXTRA_TEXT);
+                mMaterialDialog.setTitle("Share");
+                mMaterialDialog.setMessage("Pick a Contact to share with");
+                mMaterialDialog.show();
+            }
+        } catch(NullPointerException e) {
+            Log.e("Contacts Line 183", "onCreate: " + e);
         }
 
     }

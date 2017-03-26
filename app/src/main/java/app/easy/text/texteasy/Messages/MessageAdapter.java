@@ -11,6 +11,8 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -126,6 +128,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // - replace the contents of the view with that element
 
         holder.mTextView.setText(mDataset.get(position).toString());
+        holder.mTextView.setLinksClickable(true);
 
         String pattern = "hh:mm:ss a MM/dd/yyyy";
         SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());

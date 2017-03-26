@@ -49,6 +49,9 @@
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
             </intent-filter>
+
+
+
         </activity>
 
         <!-- BroadcastReceiver that listens for incoming SMS messages -->
@@ -108,9 +111,18 @@
         </activity>
         <activity
             android:name=".ContactList.Contacts"
-            android:label="@string/title_activity_contacts"
+            android:label="TextEasy"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+
+
+            </activity>
         <activity
             android:name=".Dictionary.ListOfWords"
             android:label="Dictionary of Acronyms"

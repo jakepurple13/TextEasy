@@ -39,21 +39,21 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2dae71e9df247b2bbddebcb6ddcbbe295680679e">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/.android/build-cache/cbe0f1410f6a144c2835cc8ed08f7e0bccb02534/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="23a2f2c8b39a0d679ce90a771dac4cb29ee27638">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9504ae1d9f2c21bca8bb2e90a562ba67c331b03f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7ab60f20ceb9b94d814da72e761ef2e4e1bc2c0c">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
     </item>
     <item
         is-multidex="true"

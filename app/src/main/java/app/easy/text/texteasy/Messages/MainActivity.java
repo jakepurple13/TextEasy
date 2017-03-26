@@ -211,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Receiver name:" + info.activityInfo.name + "; priority=" + info.priority);
         }*/
 
+
+
         phoneNumber = getIntent().getStringExtra("Number");
         try {
             Log.w("Number", phoneNumber);
@@ -352,6 +354,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getsms();
+
+        String shared = getIntent().getStringExtra("MessageToPass");
+
+        message.setText(shared);
 
     }
 

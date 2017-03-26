@@ -197,6 +197,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(in, MainActivity.class);
                 intent.putExtra("Number", mDataset.get(position).number);
+                intent.putExtra("MessageToPass", in.messageToPass);
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(in.getApplicationContext(), R.anim.back_to_contacts,R.anim.from_contacts).toBundle();
                 in.startActivity(intent, bndlanimation);
