@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditTextPreference
+        android:defaultValue="Number"
+        android:key="phone_number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:phoneNumber="true"
+        android:title="Edit text preference" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="model_number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Edit text preference" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="version_number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Edit text preference" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="battery_life"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Edit text preference" />
+    <EditTextPreference
+        android:defaultValue="1"
+        android:key="stroke_width_choice"
+        android:numeric="integer"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Border Width" />
+
+
+</PreferenceScreen>

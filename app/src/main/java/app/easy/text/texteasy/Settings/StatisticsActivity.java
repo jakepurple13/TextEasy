@@ -1,23 +1,31 @@
 package app.easy.text.texteasy.Settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
 import com.github.anastr.speedviewlib.ProgressiveGauge;
 import com.github.anastr.speedviewlib.base.Gauge;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.xenione.digit.TabDigit;
 
+import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Splash;
+import is.arontibo.library.ElasticDownloadView;
 
 public class StatisticsActivity extends AppCompatActivity implements Runnable {
 
@@ -47,6 +55,10 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
 
     ProgressiveGauge progressiveGauge;
 
+    private MaterialMenuDrawable materialMenu;
+
+    Button next;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +66,35 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
         Scoop.getInstance().apply(this);
 
         setContentView(R.layout.activity_statistics);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.statTool);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle your drawable state here
+                materialMenu.animateIconState(MaterialMenuDrawable.IconState.CHECK);
+                onBackPressed();
+            }
+        });
+
+        materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
+        materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
+        toolbar.setNavigationIcon(materialMenu);
+
+
+        next = (Button) findViewById(R.id.nextStat);
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(StatisticsActivity.this, StatisticsPage2.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                finish();
+            }
+        });
 
 
         //Texts Sent------------------
@@ -68,9 +109,10 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
 
         // change speed to 50 Km/h
         progressiveGauge.speedTo(numOfContacts);
-        progressiveGauge.setTrembleDegree(0);
         progressiveGauge.setUnit("Contacts");
         progressiveGauge.setSpeedTextPosition(Gauge.Position.BOTTOM_RIGHT);
+        progressiveGauge.setWithTremble(false);
+        progressiveGauge.setSpeedometerColor(R.color.lavender_indigo);
 
 
         //Contacts---------------

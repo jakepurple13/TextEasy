@@ -150,7 +150,8 @@
                 android:resource="@xml/statistics_widget_info" />
         </receiver>
 
-        <activity android:name=".Tester.BlankTestingActivity"></activity>
+        <activity android:name=".Tester.BlankTestingActivity" />
+        <activity android:name=".Settings.StatisticsPage2"></activity>
     </application>
 
 </manifest>

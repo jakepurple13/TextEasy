@@ -8,14 +8,19 @@
         android:title="@string/aboutSettings" />
 
     <header
+        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$DefaultPreferenceFragment"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:title="@string/makeDefault" />
+
+    <header
         android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications" />
 
     <header
-        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$DefaultPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/makeDefault" />
+        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$ShowNumberFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="Personal Information" />
 
     <header
         android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$ThemePreferenceFragment"
@@ -41,5 +46,8 @@
         android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$NewAbbreviationsPreferenceFragment"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="@string/abbrevWord" />
+
+
+
 
 </preference-headers>

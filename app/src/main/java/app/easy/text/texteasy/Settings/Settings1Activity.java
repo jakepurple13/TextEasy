@@ -4,12 +4,16 @@ package app.easy.text.texteasy.Settings;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -19,13 +23,17 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
+import com.rey.material.widget.TextView;
 
 import app.easy.text.texteasy.About.AboutScreen;
+import app.easy.text.texteasy.MainApp;
 import app.easy.text.texteasy.R;
 
 import java.util.List;
@@ -132,6 +140,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
         setupActionBar();
 
+
+
     }
 
 
@@ -178,7 +188,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                 || ThemePreferenceFragment.class.getName().equals(fragmentName)
                 || FeedbackPreferenceFragment.class.getName().equals(fragmentName)
                 || NewAbbreviationsPreferenceFragment.class.getName().equals(fragmentName)
-                || StatisticsPreferenceFragment.class.getName().equals(fragmentName);
+                || StatisticsPreferenceFragment.class.getName().equals(fragmentName)
+                || ShowNumberFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -497,6 +508,126 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    /**
+     * This fragment shows general preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class ShowNumberFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Scoop.getInstance().apply(getActivity());
+            addPreferencesFromResource(R.xml.show_number);
+            setHasOptionsMenu(true);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            //bindPreferenceSummaryToValue(findPreference("example_text"));
+            //bindPreferenceSummaryToValue(findPreference("example_list"));
+
+            TelephonyManager tm = (TelephonyManager) this.getContext().getSystemService(TELEPHONY_SERVICE);
+            String number = tm.getLine1Number();
+
+            EditTextPreference phoneNumber = (EditTextPreference) findPreference("phone_number");
+            phoneNumber.setTitle("My number: " + number);
+            phoneNumber.setSelectable(false);
+
+
+            EditTextPreference modelNumber = (EditTextPreference) findPreference("model_number");
+            modelNumber.setTitle("Device: " + getDeviceName());
+            modelNumber.setSelectable(false);
+
+            EditTextPreference versionNumber = (EditTextPreference) findPreference("version_number");
+            versionNumber.setTitle("Version: " + Build.VERSION.RELEASE);
+            versionNumber.setSelectable(false);
+
+            IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            Intent batteryStatus = this.getContext().registerReceiver(null, ifilter);
+
+            int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+            int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+
+            float batteryPct = level / (float)scale;
+
+            EditTextPreference batteryLife = (EditTextPreference) findPreference("battery_life");
+            batteryLife.setTitle("Battery Life: " + ((int) (batteryPct*100)) + "%");
+            batteryLife.setSelectable(false);
+
+            EditTextPreference strokeWidthChoice = (EditTextPreference) findPreference("stroke_width_choice");
+
+            SharedPreferences settings = strokeWidthChoice.getPreferenceManager().getDefaultSharedPreferences(this.getContext());
+            String defaultValue = settings.getString("stroke_width_choice", "1");
+            strokeWidthChoice.setDefaultValue(defaultValue);
+
+            strokeWidthChoice.setTitle("Border Width: " + defaultValue);
+
+            strokeWidthChoice.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                    Log.e("asdfsadfasdfsafafs", "onPreferenceChange: " + newValue);
+                    SharedPreferences.Editor editor = preference.getEditor();
+                    editor.putString("stroke_width_choice", newValue+"");
+                    editor.apply();
+
+                    preference.setTitle("Stroke Width: " + newValue);
+
+                    return false;
+                }
+            });
+
+        }
+
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), Settings1Activity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    /** Returns the consumer friendly device name */
+    public static String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            return capitalize(model);
+        }
+        return capitalize(manufacturer) + " " + model;
+    }
+
+    private static String capitalize(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return str;
+        }
+        char[] arr = str.toCharArray();
+        boolean capitalizeNext = true;
+
+        StringBuilder phrase = new StringBuilder();
+        for (char c : arr) {
+            if (capitalizeNext && Character.isLetter(c)) {
+                phrase.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+                continue;
+            } else if (Character.isWhitespace(c)) {
+                capitalizeNext = true;
+            }
+            phrase.append(c);
+        }
+
+        return phrase.toString();
     }
 
 }

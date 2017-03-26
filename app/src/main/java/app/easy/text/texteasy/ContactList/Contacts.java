@@ -268,8 +268,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
         bmb.setButtonEnum(ButtonEnum.Ham);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_5);
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_5);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
 
         HamButton.Builder contactAdd = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_add)
@@ -317,7 +317,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .normalText("Send a Text")
                 .subNormalText("Send a text to a number that's not in your contacts");
 
-        bmb.addBuilder(sendAText);
+        //bmb.addBuilder(sendAText);
 
         HamButton.Builder phoneCall = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_call)
@@ -345,7 +345,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .normalText("Set up a Group Chat")
                 .subNormalText("Coming Soon!");
 
-        bmb.addBuilder(groupChat);
+        //bmb.addBuilder(groupChat);
 
         bmb.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -819,6 +819,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             listOfNames+=mAlphabetItems.get(i);
         }
 
+
+
         SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = enter.edit();
         editor.putInt("numOfContacts", al.size());
@@ -1020,16 +1022,19 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
             alphabetScroller.setAdapter(mAdapter);
 
-            /**
-             *
-             * @param permsRequestCode
-             * @param permissions
-             * @param grantResults
-             */
-
-            /**
-             *
-             */
+            if(al.size()<=1) {
+                mMaterialDialog.setTitle("Achievement Unlocked!");
+                mMaterialDialog.setMessage("Forever Alone!\nCongrats! Here is the emotional support number for you!");
+                mMaterialDialog.setPositiveButton("Call for support", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:18007842433"));
+                        startActivity(callIntent);
+                    }
+                });
+                mMaterialDialog.show();
+            }
         }
 
 

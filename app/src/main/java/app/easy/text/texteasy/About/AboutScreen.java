@@ -4,16 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
 import com.ftinc.scoop.Scoop;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 import app.easy.text.texteasy.R;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -26,31 +30,12 @@ public class AboutScreen extends MaterialAboutActivity {
 
     int num = 0;
 
-    MaterialDialog mMaterialDialog;
+    MaterialStyledDialog mSDialog;
 
     @Override
     protected MaterialAboutList getMaterialAboutList(Context context) {
 
         Scoop.getInstance().apply(this);
-
-        mMaterialDialog = new MaterialDialog(AboutScreen.this)
-                .setTitle("MaterialDialog")
-                .setMessage("Hello world!")
-                .setCanceledOnTouchOutside(true)
-                .setPositiveButton("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mMaterialDialog.dismiss();
-                    }
-                })
-                .setNegativeButton("CANCEL", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mMaterialDialog.dismiss();
-                    }
-                });
-
-
 
         MaterialAboutCard.Builder devTeam = new MaterialAboutCard.Builder();
 
@@ -107,11 +92,30 @@ public class AboutScreen extends MaterialAboutActivity {
                         num++;
 
                         if(num==79) {
-                            // You can change the message anytime. before show
-                            mMaterialDialog.setTitle("Easter Egg Unlocked");
-                            // You can change the message anytime. after show
-                            mMaterialDialog.setMessage("You have unlocked the Gold Theme");
-                            mMaterialDialog.show();
+                            mSDialog = new MaterialStyledDialog.Builder(AboutScreen.this)
+                                    .setTitle("Easter Egg Unlocked")
+                                    .setDescription("You have unlocked the Gold Theme")
+                                    //.setStyle(Style.HEADER_WITH_ICON)
+                                    .setStyle(Style.HEADER_WITH_TITLE)
+                                    .withDialogAnimation(true)
+                                    .setIcon(R.drawable.texteasyicon)
+                                    .setScrollable(true)
+                                    .setPositiveText("OK")
+                                    .setNegativeText("CANCEL")
+                                    .onPositive(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                                            mSDialog.dismiss();
+                                        }
+                                    })
+                                    .onNegative(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                                            mSDialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+
                         } else if(num<79) {
                             Toast.makeText(AboutScreen.this, num+"",Toast.LENGTH_SHORT).show();
                         }
@@ -173,11 +177,29 @@ public class AboutScreen extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
 
-                        // You can change the message anytime. before show
-                        mMaterialDialog.setTitle(name);
-                        // You can change the message anytime. after show
-                        mMaterialDialog.setMessage(description);
-                        mMaterialDialog.show();
+                        mSDialog = new MaterialStyledDialog.Builder(AboutScreen.this)
+                                .setTitle(name)
+                                .setDescription(description)
+                                //.setStyle(Style.HEADER_WITH_ICON)
+                                .setStyle(Style.HEADER_WITH_TITLE)
+                                .withDialogAnimation(true)
+                                .setScrollable(true)
+                                .setIcon(R.drawable.texteasyicon)
+                                .setPositiveText("OK")
+                                .setNegativeText("CANCEL")
+                                .onPositive(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                                        mSDialog.dismiss();
+                                    }
+                                })
+                                .onNegative(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                                        mSDialog.dismiss();
+                                    }
+                                })
+                                .show();
                     }
                 })
                 .icon(R.mipmap.ic_launcher)

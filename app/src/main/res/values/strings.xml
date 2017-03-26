@@ -111,7 +111,7 @@
     <!--ca-app-pub-8950844463555971/-->
     <!--ca-app-pub-3940256099942544/6300978111-->
 
-    <string name="aboutSettings">About</string>
+    <string name="aboutSettings">About Us</string>
     <string name="pref_header_notifications" translatable="false">Notifications</string>
     <string name="makeDefault" translatable="false">Make TextEasy Default Messaging App</string>
     <string name="themeChanged" translatable="false">Change Themes</string>
@@ -133,5 +133,10 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+
+    <string-array name="message_details">
+        <item>Copy</item>
+        <item>Read Aloud</item>
+    </string-array>
 
 </resources>

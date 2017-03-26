@@ -1,8 +1,15 @@
 package app.easy.text.texteasy.Messages;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +19,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -130,16 +140,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.dateView.setText(format.format(date));
 
         holder.dateView.setVisibility(View.GONE);
+        SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(in);
+        String num = load.getString("stroke_width_choice", "1");
+        if(num.equals("Default value"))
+            num = "1";
+
 
         if(mDataset.get(position).fromTo==1) { //from
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             //bgShape.setColor(getColored(R.color.pure_gray)); //blue
             //bgShape.setColor(R.color.dark_color); //blue
+            bgShape.setStroke(Integer.parseInt(num), Color.BLACK);
             holder.mTextView.setGravity(Gravity.LEFT);
 
         } else { //to
             GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
             //bgShape.setColor(getColored(R.color.pure_gray)); //gray
+            bgShape.setStroke(Integer.parseInt(num), Color.BLACK);
             holder.mTextView.setGravity(Gravity.RIGHT);
         }
 
@@ -160,8 +177,73 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             }
         });
 
+
+        holder.mTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                Vibrator vibrator = (Vibrator) in.getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(50);
+
+                new MaterialDialog.Builder(in)
+                        .title("Details")
+                        .items(R.array.message_details)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                if(text.equals("Copy")) {
+                                    copyText(mDataset.get(position).defaultText);
+                                } else if(text.equals("Read Aloud")) {
+                                    readAloud(mDataset.get(position).defaultText);
+                                }
+                                dialog.hide();
+                            }
+                        })
+                        .show();
+                return false;
+            }
+        });
+
         setAnimation(holder.mTextView, position, mDataset.get(position).fromTo);
 
+
+    }
+    TextToSpeech tts;
+    public void readAloud(final String text) {
+        tts = new TextToSpeech(in, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak(text);
+
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+    }
+
+    private void speak(String text){
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    public void copyText(String text) {
+        //the clipboard manager
+        ClipboardManager clipboard = (ClipboardManager)
+                in.getSystemService(Context.CLIPBOARD_SERVICE);
+        //the data to clip
+        ClipData clip = ClipData.newPlainText("simple text", text);
+        // Set the clipboard's primary clip.
+        clipboard.setPrimaryClip(clip);
+        Vibrator vibrator = (Vibrator) in.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(50);
+
+        Toast.makeText(in, "Text Copied", Toast.LENGTH_SHORT).show();
     }
 
 

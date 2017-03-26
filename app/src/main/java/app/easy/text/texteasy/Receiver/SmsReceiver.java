@@ -70,7 +70,7 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
 
             if (!inst.isDestroyed()) {
-                inst.updateList(getContactName(context, from) + ": " + message, 1, true);
+                inst.updateList(getContactName(context, from) + ": " + message, message, 1, true);
             }
 
         } catch (NullPointerException e) {
@@ -79,7 +79,7 @@ public class SmsReceiver extends BroadcastReceiver {
             try {
 
                 if (!inst.isDestroyed()) {
-                    inst.updateList(from + ": " + message, 1, true);
+                    inst.updateList(from + ": " + message, message, 1, true);
                 }
 
             } catch(NullPointerException e1) {

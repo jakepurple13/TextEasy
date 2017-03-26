@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
+import android.support.annotation.NonNull;
 import android.support.v4.app.RemoteInput;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,10 +39,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 
@@ -62,6 +66,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.ContactList.ContactAdapter;
 import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.R;
@@ -99,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
     public int lastPosition = 0;
 
     MaterialDialog mMaterialDialog;
+
+    MaterialStyledDialog mSDialog;
 
     ExplosionField mExplosionField;
 
@@ -395,14 +402,34 @@ public class MainActivity extends AppCompatActivity {
                 .oneShot()
                 .setTouchEnabled(true);
 
-        mMaterialDialog.setTitle(title);
-        mMaterialDialog.setMessage(message);
-        mMaterialDialog.show();
+        mSDialog = new MaterialStyledDialog.Builder(MainActivity.this)
+                .setTitle(title)
+                .setDescription(message)
+                .setStyle(Style.HEADER_WITH_ICON)
+                //.setStyle(Style.HEADER_WITH_TITLE)
+                .withDialogAnimation(true)
+                .setScrollable(true)
+                .setIcon(R.drawable.texteasyicon)
+                .setPositiveText("OK")
+                .setNegativeText("CANCEL")
+                .onPositive(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                        mSDialog.dismiss();
+                    }
+                })
+                .onNegative(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                        mSDialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 
-    public void updateList(String message, int fromTo) {
-        al.add(0, new TextInfo(message, fromTo));
+    public void updateList(String message, String defaultMessage, int fromTo) {
+        al.add(0, new TextInfo(message, defaultMessage, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
@@ -412,8 +439,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void updateList(String message, int fromTo, Date d) {
-        al.add(0, new TextInfo(message, fromTo, d));
+    public void updateList(String message, String defaultMessage, int fromTo, Date d) {
+        al.add(0, new TextInfo(message, defaultMessage, fromTo, d));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
@@ -423,8 +450,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void updateList(String message, int fromTo, boolean sent) {
-        al.add(new TextInfo(message, fromTo));
+    public void updateList(String message, String defaultMessage, int fromTo, boolean sent) {
+        al.add(new TextInfo(message, defaultMessage, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
@@ -437,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
         String text;
         int fromTo; //1 is from
         //2 is to
-
+        String defaultText;
         Date dateOfText;
 
         /**
@@ -456,15 +483,23 @@ public class MainActivity extends AppCompatActivity {
          * @param text
          * @param fromTo
          */
-        public TextInfo(String text, int fromTo) {
+        public TextInfo(String text, String defaultText, int fromTo) {
             this.text = text;
             this.fromTo = fromTo;
+            this.defaultText = defaultText;
         }
 
         public TextInfo(String text, int fromTo, Date dateOfText) {
             this.text = text;
             this.fromTo = fromTo;
             this.dateOfText = dateOfText;
+        }
+
+        public TextInfo(String text, String defaultText, int fromTo, Date dateOfText) {
+            this.text = text;
+            this.fromTo = fromTo;
+            this.dateOfText = dateOfText;
+            this.defaultText = defaultText;
         }
 
         /**
@@ -667,7 +702,7 @@ public class MainActivity extends AppCompatActivity {
                     place = getContactName(c.getString(2)) + ": " + text;
                 }
 
-                updateList(place, Integer.parseInt(type));
+                updateList(place, text, Integer.parseInt(type));
 
             } while (c.moveToNext());
         }
@@ -714,7 +749,7 @@ public class MainActivity extends AppCompatActivity {
                         q = 2;
                     }
 
-                    updateList(type + ": " + number + ": " + body, q);
+                    updateList(type + ": " + number + ": " + body, body, q);
 
                     c.moveToNext();
                 }
@@ -777,9 +812,9 @@ public class MainActivity extends AppCompatActivity {
                     Date d = cal.getTime();
 
                     if(result.getString("address").equals(phoneNumber) && result.getString("type").equals("2")) {
-                        updateList("You: " + translate.translate(result.getString("body")), Integer.parseInt(result.getString("type")),d);
+                        updateList("You: " + translate.translate(result.getString("body")), translate.translate(result.getString("body")), Integer.parseInt(result.getString("type")),d);
                     } else if(result.getString("address").equals("+1"+phoneNumber) && result.getString("type").equals("1")) {
-                        updateList(CONTACT_NAME + ": " + translate.translate(result.getString("body")), Integer.parseInt(result.getString("type")),d);
+                        updateList(CONTACT_NAME + ": " + translate.translate(result.getString("body")), translate.translate(result.getString("body")), Integer.parseInt(result.getString("type")),d);
                     }
 
                     result = new JSONObject();
@@ -821,7 +856,7 @@ public class MainActivity extends AppCompatActivity {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliver);
 
-        updateList("You: " + translate.translate(message), 2, true);
+        updateList("You: " + translate.translate(message), translate.translate(message), 2, true);
 
         //Change menu icon back to arrow
         new Handler().postDelayed(new Runnable() {
@@ -850,6 +885,9 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
+
+
+
 
 }
 

@@ -3,9 +3,11 @@ package app.easy.text.texteasy.ContactList;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +26,7 @@ import com.viethoa.RecyclerViewFastScroller;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.Messages.MainActivity;
 import app.easy.text.texteasy.R;
 import in.myinnos.alphabetsindexfastscrollrecycler.utilities_fs.StringMatcher;
@@ -160,9 +163,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     /**
      * 
      */
+
+        SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(in);
+        String num = load.getString("stroke_width_choice", "1");
+
         GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
         //bgShape.setColor(getColored(R.color.pure_gray)); //gray
         //bgShape.setSize(30, 15);
+        if(num.equals("Default value"))
+            num = "1";
+        bgShape.setStroke(Integer.parseInt(num), Color.BLACK);
 
         holder.mTextView.setText(mDataset.get(position).toString());
 

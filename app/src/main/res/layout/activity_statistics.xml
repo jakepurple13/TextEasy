@@ -5,8 +5,23 @@
     android:id="@+id/activity_floating_action_tester"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="16dp"
     tools:context="app.easy.text.texteasy.Settings.StatisticsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/statBar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/statTool"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
 
     <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
@@ -21,8 +36,8 @@
         tools:layout_constraintLeft_creator="1"
         digit:layout_constraintLeft_toLeftOf="parent"
         digit:layout_constraintTop_toTopOf="parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/statBar" />
 
     <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tabDigit2"
@@ -37,7 +52,8 @@
         digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
         digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
         android:layout_marginLeft="43dp"
-        android:layout_marginTop="0dp" />
+        android:layout_alignBottom="@+id/tabDigit4"
+        android:layout_below="@+id/statBar" />
 
     <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tabDigit3"
@@ -52,7 +68,8 @@
         digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
         digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
         android:layout_marginLeft="86dp"
-        android:layout_marginTop="0dp" />
+        android:layout_alignBottom="@+id/tabDigit4"
+        android:layout_below="@+id/statBar" />
 
     <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tabDigit4"
@@ -67,7 +84,8 @@
         digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
         digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
         android:layout_marginLeft="129dp"
-        android:layout_marginTop="0dp" />
+        android:layout_alignBottom="@+id/tabDigit6"
+        android:layout_below="@+id/statBar" />
 
 
 
@@ -84,7 +102,8 @@
         digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
         digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
         android:layout_marginLeft="172dp"
-        android:layout_marginTop="0dp" />
+        android:layout_alignBottom="@+id/tabDigit4"
+        android:layout_below="@+id/statBar" />
 
     <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tabDigit6"
@@ -99,7 +118,8 @@
         digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
         digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
         android:layout_marginLeft="215dp"
-        android:layout_marginTop="0dp" />
+        android:layout_alignBottom="@+id/tabDigit1"
+        android:layout_below="@+id/statBar" />
 
     <TextView
         android:id="@+id/textView4"
@@ -108,7 +128,8 @@
         android:text="Texts Sent Using TextEasy"
         tools:layout_editor_absoluteX="274dp"
         tools:layout_editor_absoluteY="16dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/statBar"
+        android:gravity="center"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/tabDigit6" />
 
@@ -116,12 +137,18 @@
         android:id="@+id/progressiveGauge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
-        android:layout_toStartOf="@+id/textView4"
-        android:layout_alignEnd="@+id/tabDigit6" />
+        app:sv_speedTextFormat="INTEGER"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tabDigit2" />
 
-
-
+    <Button
+        android:id="@+id/nextStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Next" />
 
 
 </RelativeLayout>
