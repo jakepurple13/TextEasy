@@ -531,21 +531,28 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
 
+            //User's phone number
+
             TelephonyManager tm = (TelephonyManager) this.getContext().getSystemService(TELEPHONY_SERVICE);
             String number = tm.getLine1Number();
 
             EditTextPreference phoneNumber = (EditTextPreference) findPreference("phone_number");
-            phoneNumber.setTitle("My number: " + number);
+            phoneNumber.setTitle("My Number: " + number);
             phoneNumber.setSelectable(false);
 
+            //Device Model
 
             EditTextPreference modelNumber = (EditTextPreference) findPreference("model_number");
             modelNumber.setTitle("Device: " + getDeviceName());
             modelNumber.setSelectable(false);
 
+            //Android version number
+
             EditTextPreference versionNumber = (EditTextPreference) findPreference("version_number");
-            versionNumber.setTitle("Version: " + Build.VERSION.RELEASE);
+            versionNumber.setTitle("Android Version: " + Build.VERSION.RELEASE);
             versionNumber.setSelectable(false);
+
+            //Battery Life
 
             IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
             Intent batteryStatus = this.getContext().registerReceiver(null, ifilter);
@@ -558,6 +565,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             EditTextPreference batteryLife = (EditTextPreference) findPreference("battery_life");
             batteryLife.setTitle("Battery Life: " + ((int) (batteryPct*100)) + "%");
             batteryLife.setSelectable(false);
+
+            //border width
 
             EditTextPreference strokeWidthChoice = (EditTextPreference) findPreference("stroke_width_choice");
 
