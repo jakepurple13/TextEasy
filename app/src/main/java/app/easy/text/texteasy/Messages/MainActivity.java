@@ -930,6 +930,9 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String text = result.get(0);
+                    for (int i = 0; i < result.size(); i++) {
+                        //Log.d("jhgfds", "onActivityResult: " + result.get(i));
+                    }
                     message.setText(message.getText().toString().trim() + " " + text);
                 }
                 break;

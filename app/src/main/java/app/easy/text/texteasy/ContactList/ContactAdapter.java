@@ -1,13 +1,16 @@
 package app.easy.text.texteasy.ContactList;
 
 import android.app.ActivityOptions;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,8 +26,11 @@ import android.widget.TextView;
 
 import com.viethoa.RecyclerViewFastScroller;
 
+import org.json.JSONException;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.Messages.MainActivity;
@@ -195,19 +201,62 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
              */
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(in, MainActivity.class);
-                intent.putExtra("Number", mDataset.get(position).number);
-                intent.putExtra("MessageToPass", in.messageToPass);
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(in.getApplicationContext(), R.anim.back_to_contacts,R.anim.from_contacts).toBundle();
-                in.startActivity(intent, bndlanimation);
+
+                if(mDataset.get(position).facebook) {
+                    Uri uri = Uri.parse("fb-messenger://user/");
+
+                    uri = ContentUris.withAppendedId(uri,Long.parseLong(mDataset.get(position).number));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    in.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(in, MainActivity.class);
+                    intent.putExtra("Number", mDataset.get(position).number);
+                    intent.putExtra("MessageToPass", in.messageToPass);
+                    Bundle bndlanimation =
+                            ActivityOptions.makeCustomAnimation(in.getApplicationContext(), R.anim.back_to_contacts, R.anim.from_contacts).toBundle();
+                    in.startActivity(intent, bndlanimation);
+                }
             }
         };
 
         holder.mTextView.setOnClickListener(von);
 
+        holder.mTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                readAloud(mDataset.get(position).toString());
+
+                return false;
+            }
+        });
+
         setAnimation(holder.mTextView, position);
 
+    }
+
+    TextToSpeech tts;
+    public void readAloud(final String text) {
+        tts = new TextToSpeech(in, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak(text);
+
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+    }
+
+    private void speak(String text){
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void setAnimation(View viewToAnimate, int position) {

@@ -3,6 +3,7 @@ package app.easy.text.texteasy.Messages;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.json.JSONException;
+
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,6 +37,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Tester.BlankTestingActivity;
 
 /**
  * Created by Jacob on 9/12/16.
@@ -194,10 +198,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                if(text.equals("Copy")) {
+                                if(text.equals("Copy Text")) {
                                     copyText(mDataset.get(position).defaultText);
                                 } else if(text.equals("Read Aloud")) {
                                     readAloud(mDataset.get(position).defaultText);
+                                } else if(text.equals("Share with FaceBook Messenger")) {
+                                    shareWithFBMessenger(mDataset.get(position).defaultText);
                                 }
                                 dialog.hide();
                             }
@@ -217,7 +223,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.US);
+                    int result = tts.setLanguage(Locale.getDefault());
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
@@ -247,6 +253,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         vibrator.vibrate(50);
 
         Toast.makeText(in, "Text Copied", Toast.LENGTH_SHORT).show();
+    }
+
+    public void shareWithFBMessenger(String text) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.facebook.orca");
+
+        try {
+            in.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(in, "Please install Facebook Messenger", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

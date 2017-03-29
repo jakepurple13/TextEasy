@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1019953559222",
+    "firebase_url": "https://texteasy-143519.firebaseio.com",
+    "project_id": "texteasy-143519",
+    "storage_bucket": "texteasy-143519.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019953559222:android:8ef28a109ad2292f",
+        "android_client_info": {
+          "package_name": "app.easy.text.texteasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019953559222-a5vrv1fts1t0gr979b911lts8la72em9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy2ZpuX-NeP_WhReEkvplv60TRkfpaOWE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

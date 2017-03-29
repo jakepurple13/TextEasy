@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.easy.text.texteasy.Tester.LoginAcitivities">
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <br.com.bloder.magic.view.MagicButton
+        android:id="@+id/google_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:magic_button_size="50dp"
+        app:button_icon="@drawable/common_google_signin_btn_icon_dark_normal"
+        app:button_icon_width="25dp"
+        app:button_icon_height="25dp"
+        app:hide_text="Google"
+        app:hide_text_size="8dp"
+        app:hide_text_color="@android:color/black"
+        app:icon_button_color="#FFFFFF"
+        app:expandable_area_color="#515151"
+        android:layout_above="@+id/facebook_login_button"
+        android:layout_alignStart="@+id/facebook_login_button" />
+
+</RelativeLayout>

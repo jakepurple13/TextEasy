@@ -57,7 +57,6 @@
         android:src="@drawable/ic_mic"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_recycler_view"
-        android:layout_toStartOf="@+id/button"
-        android:text="ImageButton" />
+        android:layout_toStartOf="@+id/button" />
 
 </RelativeLayout>

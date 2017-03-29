@@ -3,6 +3,7 @@ package app.easy.text.texteasy.ContactList;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +41,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -821,6 +826,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         endnow = android.os.SystemClock.uptimeMillis();
         Log.d("END", "TimeForContacts " + (endnow - startnow) + " ms");
 
+        getFaceBookStuff();
 
         ArrayList<String> mAlphabetItems = new ArrayList<>();
         List<String> strAlphabets = new ArrayList<>();
@@ -1030,13 +1036,19 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                     .colors(colors)
                     .build());
 
+            if(dialog!=null) {
+                dialog.dismiss();
+            }
             dialog.show();
         }
 
-
         @Override
         protected void onPostExecute(final Boolean success) {
+            super.onPostExecute(success);
             dialog.hide();
+            if(dialog!=null) {
+                dialog.dismiss();
+            }
             dialog.dismiss();
             Collections.sort(al, new InfoCompare());
             mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
@@ -1074,12 +1086,20 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         String name;
         String text;
         String number;
-
+        boolean facebook;
 
         public ContactInfo(String name, String number, String text) {
             this.name = name;
             this.number = PhoneNumberUtils.normalizeNumber(number);
             this.text = text;
+            facebook = false;
+        }
+
+        public ContactInfo(String name, String number, String text, boolean facebook) {
+            this.name = name;
+            this.number = PhoneNumberUtils.normalizeNumber(number);
+            this.text = text;
+            this.facebook = facebook;
         }
 
         /**
@@ -1348,6 +1368,50 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         //startActivityForResult(settingIntent, 201);
         //startActivity(settings);
     }
+
+    public void getFaceBookStuff() {
+        /* make the API call */
+        String fbID = AccessToken.getCurrentAccessToken().getUserId();
+        Log.e("IDIDIDIDIDIIDID", fbID);
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + fbID + "/friends",
+                //"/" + fbID + "/taggable_friends",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                            /* handle the result */
+
+                        try {
+                            //Log.i(TAG, "onCompleted: " + response.getJSONObject().getJSONArray("data").getString(0));
+                            final JSONArray arr = response.getJSONObject().getJSONArray("data");
+                            List<String> list = new ArrayList<String>();
+                            for (int i = 0; i < arr.length(); i++) {
+                                list.add(arr.getJSONObject(i).getString("name"));
+
+                            }
+
+                            for (int i = 0; i < list.size(); i++) {
+                                al.add(new ContactInfo("Facebook: " + list.get(i),
+                                        arr.getJSONObject(0).getString("id"), " ", true));
+                                Log.v("asdlfkjh", list.get(i));
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+                        alphabetScroller.setAdapter(mAdapter);
+
+                    }
+                }
+        ).executeAsync();
+
+    }
+
 
 }
 

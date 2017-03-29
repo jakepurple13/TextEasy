@@ -27,4 +27,29 @@
         android:layout_height="wrap_content"
         android:text="afollestad"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/logInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/two"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/facebookLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/two"
+        android:layout_centerVertical="true"
+        android:text="Facebook" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/facebookLogin"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

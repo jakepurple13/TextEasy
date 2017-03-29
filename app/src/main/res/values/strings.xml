@@ -135,8 +135,12 @@
 
 
     <string-array name="message_details">
-        <item>Copy</item>
+        <item>Copy Text</item>
         <item>Read Aloud</item>
+        <item>Share with FaceBook Messenger</item>
     </string-array>
+
+    <string name="facebook_app_id">294900847607567</string>
+    <string name="fb_login_protocol_scheme">fb294900847607567</string>
 
 </resources>

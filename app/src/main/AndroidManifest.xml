@@ -33,7 +33,26 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="app.easy.text.texteasy.Dictionary.Lingo" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Messages.MainActivity"
             android:screenOrientation="portrait">
@@ -49,9 +68,6 @@
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
             </intent-filter>
-
-
-
         </activity>
 
         <!-- BroadcastReceiver that listens for incoming SMS messages -->
@@ -114,15 +130,14 @@
             android:label="TextEasy"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
             </intent-filter>
-
-
-            </activity>
+        </activity>
         <activity
             android:name=".Dictionary.ListOfWords"
             android:label="Dictionary of Acronyms"
@@ -163,7 +178,9 @@
         </receiver>
 
         <activity android:name=".Tester.BlankTestingActivity" />
-        <activity android:name=".Settings.StatisticsPage2"></activity>
+        <activity android:name=".Settings.StatisticsPage2" />
+        <activity android:name=".Tester.GoogleSignInActivity" />
+        <activity android:name=".Tester.LoginAcitivities"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="magic-1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/fbbb08c91c2b8db876b3eabc1621adf258358d42/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/fbbb08c91c2b8db876b3eabc1621adf258358d42/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.bloder/magic/1.1/489ab81f01490ac24a97f5658a524977b5abc1d7/magic-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
