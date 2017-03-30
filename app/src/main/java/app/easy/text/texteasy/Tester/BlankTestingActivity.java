@@ -353,7 +353,7 @@ public class BlankTestingActivity extends AppCompatActivity implements
         fbID = AccessToken.getCurrentAccessToken().getUserId();
         addToText(fbID);
 
-
+        Log.d("Line 356", AccessToken.USER_ID_KEY);
 
     }
 
@@ -382,6 +382,8 @@ public class BlankTestingActivity extends AppCompatActivity implements
                         // ...
                     }
                 });
+
+        Log.d("Line 386", mAuth.getCurrentUser().getProviderId());
     }
 
     public void addToText(String text) {

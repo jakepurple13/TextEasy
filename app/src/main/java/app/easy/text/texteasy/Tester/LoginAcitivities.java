@@ -16,6 +16,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.ftinc.scoop.Scoop;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -55,9 +56,16 @@ public class LoginAcitivities extends AppCompatActivity implements GoogleApiClie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Scoop.getInstance().apply(this);
         setContentView(R.layout.activity_login_acitivities);
 
-        fbID = AccessToken.getCurrentAccessToken().getUserId();
+        try {
+
+            fbID = AccessToken.getCurrentAccessToken().getUserId();
+
+        } catch(NullPointerException e) {
+
+        }
 
         mAuth = FirebaseAuth.getInstance();
 

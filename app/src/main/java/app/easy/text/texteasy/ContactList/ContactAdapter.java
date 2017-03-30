@@ -24,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.facebook.Profile;
 import com.viethoa.RecyclerViewFastScroller;
 
 import org.json.JSONException;
@@ -203,11 +204,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             public void onClick(View v) {
 
                 if(mDataset.get(position).facebook) {
+
+                    String s = "https://www.facebook.com/app_scoped_user_id/" + mDataset.get(position).number;//264254410443692";
+
                     Uri uri = Uri.parse("fb-messenger://user/");
 
-                    uri = ContentUris.withAppendedId(uri,Long.parseLong(mDataset.get(position).number));
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    //uri = ContentUris.withAppendedId(uri,Long.parseLong(mDataset.get(position).number));
+
+                    uri = ContentUris.withAppendedId(uri,Long.parseLong("100006154636052"));
+                    //Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    //in.startActivity(intent);
+                    final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(s));
                     in.startActivity(intent);
+
                 } else {
                     Intent intent = new Intent(in, MainActivity.class);
                     intent.putExtra("Number", mDataset.get(position).number);

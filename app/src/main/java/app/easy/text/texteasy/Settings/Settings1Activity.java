@@ -35,6 +35,7 @@ import com.rey.material.widget.TextView;
 import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.MainApp;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Tester.LoginAcitivities;
 
 import java.util.List;
 import java.util.Locale;
@@ -189,7 +190,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                 || FeedbackPreferenceFragment.class.getName().equals(fragmentName)
                 || NewAbbreviationsPreferenceFragment.class.getName().equals(fragmentName)
                 || StatisticsPreferenceFragment.class.getName().equals(fragmentName)
-                || ShowNumberFragment.class.getName().equals(fragmentName);
+                || ShowNumberFragment.class.getName().equals(fragmentName)
+                || LoginPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -637,6 +639,37 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
         }
 
         return phrase.toString();
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class LoginPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Scoop.getInstance().apply(getActivity());
+            setHasOptionsMenu(true);
+
+            Intent i = new Intent(this.getContext(), LoginAcitivities.class);
+            startActivity(i);
+            getActivity().finish();
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            //bindPreferenceSummaryToValue(findPreference("example_text"));
+            //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), Settings1Activity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 }

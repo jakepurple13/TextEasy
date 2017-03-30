@@ -43,8 +43,11 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
+import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -59,6 +62,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
@@ -1038,8 +1042,9 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
             if(dialog!=null) {
                 dialog.dismiss();
+            } else {
+                dialog.show();
             }
-            dialog.show();
         }
 
         @Override
@@ -1369,48 +1374,146 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         //startActivity(settings);
     }
 
+
+
     public void getFaceBookStuff() {
+
+
+
         /* make the API call */
-        String fbID = AccessToken.getCurrentAccessToken().getUserId();
-        Log.e("IDIDIDIDIDIIDID", fbID);
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/" + fbID + "/friends",
-                //"/" + fbID + "/taggable_friends",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                            /* handle the result */
+        try {
+            String fbID = AccessToken.getCurrentAccessToken().getUserId();
+            Profile profile = Profile.getCurrentProfile();
+            Log.e("IDIDIDIDIDIIDID", fbID);
 
-                        try {
-                            //Log.i(TAG, "onCompleted: " + response.getJSONObject().getJSONArray("data").getString(0));
-                            final JSONArray arr = response.getJSONObject().getJSONArray("data");
-                            List<String> list = new ArrayList<String>();
-                            for (int i = 0; i < arr.length(); i++) {
-                                list.add(arr.getJSONObject(i).getString("name"));
-
-                            }
-
-                            for (int i = 0; i < list.size(); i++) {
-                                al.add(new ContactInfo("Facebook: " + list.get(i),
-                                        arr.getJSONObject(0).getString("id"), " ", true));
-                                Log.v("asdlfkjh", list.get(i));
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+            GraphRequest request = GraphRequest.newMeRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+                            // Application code
+                            Log.d("adskjfhakljsdhfjdasf", "onCompleted() returned: " + response.toString());
                         }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,link");
+            request.setParameters(parameters);
+            request.executeAsync();
+
+            final String TAG = "gello world";
 
 
-                        mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
-                        alphabetScroller.setAdapter(mAdapter);
 
-                    }
+            GraphRequest data_request = GraphRequest.newMeRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject json_object,
+                                GraphResponse response) {
+
+                            try {
+                                // convert Json object into Json array
+                                Log.i(TAG, "onCompleted: " + response.toString());
+                                Log.i(TAG, "Next Line: " + json_object.toString());
+                                JSONArray posts = json_object.getJSONObject("likes").
+                                optJSONArray("data");
+
+                                for (int i = 0; i < posts.length(); i++) {
+
+                                    JSONObject post = posts.optJSONObject(i);
+                                    String id = post.optString("id");
+                                    String category = post.optString("category");
+                                    String name = post.optString("name");
+                                    int count = post.optInt("likes");
+                                    // print id, page name and number of like of facebook page
+                                    Log.e("id -", id+" name -"+name+ " category-"+
+                                            category+ " likes count -" + count);
+                                }
+
+                            } catch(Exception e){
+
+                            }
+                        }
+                    });
+            Bundle permission_param = new Bundle();
+            // add the field to get the details of liked pages
+            permission_param.putString("fields", "likes{id,category,name,location,likes}");
+            data_request.setParameters(permission_param);
+            data_request.executeAsync();
+
+
+
+
+
+            GraphRequestBatch batch = new GraphRequestBatch(
+                    GraphRequest.newMeRequest(
+                            AccessToken.getCurrentAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(
+                                        JSONObject jsonObject,
+                                        GraphResponse response) {
+                                    // Application code for user
+                                    Log.v("ME", response.toString());
+                                }
+                            }),
+                    GraphRequest.newMyFriendsRequest(
+                            AccessToken.getCurrentAccessToken(),
+                            new GraphRequest.GraphJSONArrayCallback() {
+                                @Override
+                                public void onCompleted(
+                                        JSONArray jsonArray,
+                                        GraphResponse response) {
+                                    // Application code for users friends
+                                    Log.v("FRIEND", response.toString());
+
+                                    try {
+                                        //Log.i(TAG, "onCompleted: " + response.getJSONObject().getJSONArray("data").getString(0));
+                                        final JSONArray arr = response.getJSONObject().getJSONArray("data");
+                                        List<String> list = new ArrayList<String>();
+                                        for (int i = 0; i < arr.length(); i++) {
+                                            list.add(arr.getJSONObject(i).getString("name"));
+
+                                        }
+
+                                        for (int i = 0; i < list.size(); i++) {
+                                            al.add(new ContactInfo("Facebook: " + list.get(i),
+                                                    arr.getJSONObject(0).getString("id"), " ", true));
+                                            Log.v("asdlfkjh", list.get(i));
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+                                    alphabetScroller.setAdapter(mAdapter);
+
+                                }
+                            })
+            );
+            batch.addCallback(new GraphRequestBatch.Callback() {
+                @Override
+                public void onBatchCompleted(GraphRequestBatch graphRequests) {
+                    // Application code for when the batch finishes
                 }
-        ).executeAsync();
+            });
+            batch.executeAsync();
+
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
+
+
 
 
 }
