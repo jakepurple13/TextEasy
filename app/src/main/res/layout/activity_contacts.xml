@@ -57,11 +57,11 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.mancj.materialsearchbar.MaterialSearchBar
-            app:speechMode="false"
-            app:maxSuggestionsCount="5"
-            app:placeholder="Search Contacts"
-            app:navIconEnabled="true"
-            app:navIconDrawable="@android:drawable/ic_menu_search"
+            app:mt_speechMode="false"
+            app:mt_maxSuggestionsCount="5"
+            app:mt_placeholder="Search Contacts"
+            app:mt_navIconEnabled="true"
+            app:mt_navIconDrawable="@android:drawable/ic_menu_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/searchBars" >

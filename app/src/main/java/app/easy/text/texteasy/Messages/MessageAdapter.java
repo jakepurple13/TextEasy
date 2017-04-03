@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Vibrator;
@@ -131,8 +132,28 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
+
+
         holder.mTextView.setText(mDataset.get(position).toString());
         holder.mTextView.setLinksClickable(true);
+
+        try {
+
+            String checkText = mDataset.get(position).defaultText.substring(0, 3);
+
+
+
+            if(checkText.equalsIgnoreCase("/me".trim())) {
+                String newText = mDataset.get(position).text.replace("/me", "");
+                Log.d(TAG, "onBindViewHolder: " + newText);
+                holder.mTextView.setText(newText);
+                holder.mTextView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+            }
+
+
+        } catch(StringIndexOutOfBoundsException e) {
+
+        }
 
         String pattern = "hh:mm:ss a MM/dd/yyyy";
         SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
@@ -183,6 +204,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 }
             }
         });
+
+
 
 
         holder.mTextView.setOnLongClickListener(new View.OnLongClickListener() {

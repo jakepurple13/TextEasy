@@ -27,7 +27,7 @@ dependencies {
 
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
     compile 'com.lapism:searchview:4.0'
-    compile 'com.github.mancj:MaterialSearchBar:0.6'
+    compile 'com.github.mancj:MaterialSearchBar:0.7'
     compile 'com.github.daniel-stoneuk:material-about-library:1.7.1'
     compile 'com.github.jrvansuita:MaterialAbout:0.1.2'
     compile 'com.github.rey5137:material:1.2.4'
@@ -69,6 +69,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.github.bloder:magic:1.1'
+
+
 }
 
 // ADD THIS AT THE BOTTOM

@@ -152,6 +152,8 @@ public class AboutScreen extends MaterialAboutActivity {
 
         addPerson(contTeam, "Kit", "Helped with the English words", "Thank you for the english words");
 
+        addPerson(contTeam, "Gerry", "Gave some ideas", "Thank you for your ideas");
+
         MaterialAboutCard.Builder specialThanks = new MaterialAboutCard.Builder();
 
         specialThanks.title("Special Thanks");

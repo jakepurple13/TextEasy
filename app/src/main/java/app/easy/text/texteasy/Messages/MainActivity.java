@@ -873,7 +873,7 @@ public class MainActivity extends AppCompatActivity {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliver);
 
-        updateList("You: " + translate.translate(message), translate.translate(message), 2, true);
+        updateList("You: " + translate.translate(message.trim()), translate.translate(message), 2, true);
 
         //Change menu icon back to arrow
         new Handler().postDelayed(new Runnable() {

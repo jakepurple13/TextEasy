@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -95,12 +96,15 @@ public class BlankTestingActivity extends AppCompatActivity implements
     private static final int PROTOCOL_VERSION = 20150314;
     private static final String YOUR_APP_ID = "[YOUR_FACEBOOK_APP_ID]";
     private static final int SHARE_TO_MESSENGER_REQUEST_CODE = 1;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blank_testing);
+
+
+
+
+
 
         // ...
         mAuth = FirebaseAuth.getInstance();
