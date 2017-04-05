@@ -1,11 +1,10 @@
-package app.easy.text.texteasy.Settings;
+package app.easy.text.texteasy.Settings.Statistics;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
@@ -22,10 +20,7 @@ import com.github.anastr.speedviewlib.base.Gauge;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.xenione.digit.TabDigit;
 
-import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.R;
-import app.easy.text.texteasy.Splash;
-import is.arontibo.library.ElasticDownloadView;
 
 public class StatisticsActivity extends AppCompatActivity implements Runnable {
 

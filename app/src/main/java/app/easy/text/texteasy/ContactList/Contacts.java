@@ -1,6 +1,7 @@
 package app.easy.text.texteasy.ContactList;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -65,6 +66,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.mooveit.library.Fakeit;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
@@ -92,7 +94,9 @@ import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.Tester.AboutAndCont;
 import app.easy.text.texteasy.Tester.BlankTestingActivity;
+import app.easy.text.texteasy.Tester.ContactInfoTest;
 import app.easy.text.texteasy.Translator;
+import dmax.dialog.SpotsDialog;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import me.drakeet.materialdialog.MaterialDialog;
 import me.everything.providers.android.telephony.Sms;
@@ -148,6 +152,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     MaterialDialog mMaterialDialog;
 
     public String messageToPass = "";
+
+    boolean testingVariable = true;
 
     /**
      * @param savedInstanceState
@@ -760,6 +766,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
 
     public void getAllContacts() {
+        // Default locale is en
+        Fakeit.init(this);
         long startnow;
         long endnow;
         //getTexts();
@@ -817,7 +825,18 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             //text = body;
             //text = translate.translate(text);
 
-            al.add(new ContactInfo(contactName, contactNumber, text));
+
+
+            if(testingVariable) {
+
+                al.add(new ContactInfo(Fakeit.name().name(),
+                        Fakeit.phone().formats(),
+                        ""));
+
+            } else {
+                al.add(new ContactInfo(contactName, contactNumber, text));
+            }
+
             //c.close();
 
             //al.add(new ContactInfo(contactName, contactNumber, "Hello"));
@@ -830,9 +849,16 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         endnow = android.os.SystemClock.uptimeMillis();
         Log.d("END", "TimeForContacts " + (endnow - startnow) + " ms");
 
+
+
+        if(testingVariable)
+            al.add(new ContactInfo("The Master Programmer", "2017854423", ""));
+
+
+
         getFaceBookStuff();
 
-        ArrayList<String> mAlphabetItems = new ArrayList<>();
+       /* ArrayList<String> mAlphabetItems = new ArrayList<>();
         List<String> strAlphabets = new ArrayList<>();
         for (int i = 0; i < al.size(); i++) {
             String name = al.get(i).name;
@@ -848,7 +874,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
         for(int i=0;i<mAlphabetItems.size();i++) {
             listOfNames+=mAlphabetItems.get(i);
-        }
+        }*/
 
 
 
@@ -977,9 +1003,9 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
      *
      */
     private class ProgressTask extends AsyncTask<String, Void, Boolean> {
-        private Dialog dialog;
         private Contacts activity;
         private Context context;
+        AlertDialog dialog1;
 
 
         /**
@@ -988,7 +1014,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         public ProgressTask(Contacts activity) {
             this.activity = activity;
             context = activity;
-            dialog = new Dialog(context);
+            dialog1 = new SpotsDialog(context);
         }
 
 
@@ -1018,44 +1044,38 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
 
         protected void onPreExecute() {
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            /**
-             *
-             * @param phoneNumber
-             */
-            dialog.setCancelable(false);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            dialog.setContentView(R.layout.dialogload);
 
-            ProgressBar mProgress = (ProgressBar) dialog.findViewById(R.id.load_and_wait);
+            dialog1.show();
 
-            int[] colors = {
-                    Color.rgb(255, 238, 85),
-                    Color.rgb(242, 157, 58),
-                    Color.rgb(198, 62, 62),
-                    Color.rgb(159, 83, 242)
-            };
-
-            mProgress.setIndeterminateDrawable(new FoldingCirclesDrawable.Builder(Contacts.this)
-                    .colors(colors)
-                    .build());
-
-            if(dialog!=null) {
-                dialog.dismiss();
-            } else {
-                dialog.show();
-            }
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             super.onPostExecute(success);
-            dialog.hide();
-            if(dialog!=null) {
-                dialog.dismiss();
-            }
-            dialog.dismiss();
+            dialog1.hide();
+
+
+
             Collections.sort(al, new InfoCompare());
+
+            ArrayList<String> mAlphabetItems = new ArrayList<>();
+            List<String> strAlphabets = new ArrayList<>();
+            for (int i = 0; i < al.size(); i++) {
+                String name = al.get(i).name;
+                if (name == null || name.trim().isEmpty())
+                    continue;
+
+                String word = name.substring(0, 1);
+                if (!strAlphabets.contains(word)) {
+                    strAlphabets.add(word);
+                    mAlphabetItems.add(word);
+                }
+            }
+
+            for(int i=0;i<mAlphabetItems.size();i++) {
+                listOfNames+=mAlphabetItems.get(i);
+            }
+
             mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
 
             alphabetScroller.setAdapter(mAdapter);

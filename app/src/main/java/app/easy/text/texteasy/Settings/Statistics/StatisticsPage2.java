@@ -1,4 +1,4 @@
-package app.easy.text.texteasy.Settings;
+package app.easy.text.texteasy.Settings.Statistics;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,16 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ftinc.scoop.Scoop;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
-import app.easy.text.texteasy.ContactList.Contacts;
 import app.easy.text.texteasy.R;
-import app.easy.text.texteasy.Splash;
-import is.arontibo.library.ElasticDownloadView;
 import me.drakeet.materialdialog.MaterialDialog;
 
 public class StatisticsPage2 extends AppCompatActivity {
@@ -75,6 +71,11 @@ public class StatisticsPage2 extends AppCompatActivity {
 
         SharedPreferences load2 = PreferenceManager.getDefaultSharedPreferences(this);
         int g = load2.getInt("GSBug", 0);
+
+        SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this);
+        int num = load.getInt("roles", 0);
+
+
 
         ap = (ArcProgress) findViewById(R.id.arc_progress);
         ap.setTextColor(Color.YELLOW);

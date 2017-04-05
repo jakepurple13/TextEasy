@@ -30,15 +30,12 @@ import android.view.MenuItem;
 
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
-import com.rey.material.widget.TextView;
 
 import app.easy.text.texteasy.About.AboutScreen;
-import app.easy.text.texteasy.MainApp;
 import app.easy.text.texteasy.R;
-import app.easy.text.texteasy.Tester.LoginAcitivities;
+import app.easy.text.texteasy.Settings.Statistics.StatisticsActivity;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

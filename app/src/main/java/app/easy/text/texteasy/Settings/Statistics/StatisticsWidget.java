@@ -1,4 +1,4 @@
-package app.easy.text.texteasy.Settings;
+package app.easy.text.texteasy.Settings.Statistics;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

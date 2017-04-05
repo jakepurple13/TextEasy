@@ -143,4 +143,14 @@
     <string name="facebook_app_id">294900847607567</string>
     <string name="fb_login_protocol_scheme">fb294900847607567</string>
 
+    <string-array name="arc_colors">
+        <item>#394948</item>
+        <item>#5a7874</item>
+        <item>#499092</item>
+        <item>#43abae</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

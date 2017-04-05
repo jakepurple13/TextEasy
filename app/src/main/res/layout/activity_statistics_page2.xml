@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.easy.text.texteasy.Settings.StatisticsPage2">
+    tools:context="app.easy.text.texteasy.Settings.Statistics.StatisticsPage2">
 
 
     <android.support.design.widget.AppBarLayout
@@ -48,6 +48,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="Easter Egg Page" />
+
+
+
 
 
 </RelativeLayout>

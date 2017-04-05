@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Tester.BlankTestingActivity;
 
@@ -132,8 +133,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-
-
         holder.mTextView.setText(mDataset.get(position).toString());
         holder.mTextView.setLinksClickable(true);
 
@@ -141,13 +140,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             String checkText = mDataset.get(position).defaultText.substring(0, 3);
 
-
-
             if(checkText.equalsIgnoreCase("/me".trim())) {
                 String newText = mDataset.get(position).text.replace("/me", "");
                 Log.d(TAG, "onBindViewHolder: " + newText);
                 holder.mTextView.setText(newText);
                 holder.mTextView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+
+                SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(in);
+                int num = load.getInt("roles", 0);
+
+                if(num<1)
+                    Toast.makeText(in, "Achievement Unlocked! RP", Toast.LENGTH_SHORT).show();
+
+                SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(in);
+                SharedPreferences.Editor editor = enter.edit();
+                num+=1;
+                editor.putInt("roles", num);
+                editor.apply();
+
             }
 
 

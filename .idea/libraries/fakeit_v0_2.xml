@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="fakeit-v0.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/2d96cf216bc01d291155bf06fa19a58ae944d82a/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/2d96cf216bc01d291155bf06fa19a58ae944d82a/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

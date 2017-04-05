@@ -159,7 +159,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MaterialAboutActivity" />
         <activity
-            android:name=".Settings.StatisticsActivity"
+            android:name=".Settings.Statistics.StatisticsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Receiver.NotificationActivity" />
 
@@ -167,7 +167,7 @@
             android:name=".Receiver.NotificationReceiver"
             android:enabled="true"
             android:exported="false" />
-        <receiver android:name=".Settings.StatisticsWidget">
+        <receiver android:name=".Settings.Statistics.StatisticsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -178,9 +178,10 @@
         </receiver>
 
         <activity android:name=".Tester.BlankTestingActivity" />
-        <activity android:name=".Settings.StatisticsPage2" />
+        <activity android:name=".Settings.Statistics.StatisticsPage2" />
         <activity android:name=".Tester.GoogleSignInActivity" />
-        <activity android:name=".Tester.LoginAcitivities"></activity>
+        <activity android:name=".Settings.LoginAcitivities" />
+        <activity android:name=".Tester.testingtwo"></activity>
     </application>
 
 </manifest>

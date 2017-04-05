@@ -12,12 +12,93 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/5ca72e3ec7129898f84229356868515a6826449e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5397da86b1b1e28f447c266e3e7403883d6990a0">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_43df7c17d3bf418eb540f08061830b4f0fcbaf7c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/7c5a541e59d0961f0f77ecc865a5b0f4116215c3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf94678214d9ab43a8deb5df90d0b3e6d619ff1e">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b1556d2141b8ca71e2b47eaeb42d50e95ae2fd7b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.1/98e484e67f913e934559f7f55f0c94be5593f03c/kotlin-stdlib-1.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="98e484e67f913e934559f7f55f0c94be5593f03c">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/kotlin-stdlib-1.1.1_30ec2716872cfc7206ca8c447982042457ae38b7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="d0893e8d7ef95d283745a0967f1d2307e8a0db0c">
+        sha1="a7e82d5721b8b7e7b46d02d947c46e85b7fabdf0">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f37df36185807ed9b1f39e1dcda4046ea745a14c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/569f9939c1ff8448bce2cc7dd1cd5ea02291a24b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3a4a7c9d84bdc3ee653287519d03b21eba876ee1">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5a7d6ba8904f9186dd31b6fd445d133da5e408cc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.1.1/e3be78b463658ae5a8c8b446b811671998c91f5/kotlin-stdlib-jre7-1.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0e3be78b463658ae5a8c8b446b811671998c91f5">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/kotlin-stdlib-jre7-1.1.1_dc9789c58101cb5607083e893e3c5c3d24a5ce2b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/4bf28eb904bbc40fd85b66d1110ad9e68a380618/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c33db5975995f68c52b66bd4e3e988de0453cc24">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d8efb7cee25c26ee7ce30364fdebf45c330591ef/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="919f0dfe192fb4e063e7dacadee7f8bb9a2672a9">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/annotations-13.0_74a7096d18aeeca23d418789a5047727fd913959/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/2d96cf216bc01d291155bf06fa19a58ae944d82a/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c83e905503f8f9f1c7cdcabf63096b68c2ca452d">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_317b239c297369196864573401f15c10d38d85fb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Jacob/.gradle/caches/modules-2/files-2.1/com.github.bmoliveira/snake-yaml/v1.18-android/b32e2afc73ed8ea4eb83000a3addf14c5399474b/snake-yaml-v1.18-android.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b32e2afc73ed8ea4eb83000a3addf14c5399474b">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/snake-yaml-v1.18-android_53789b7b9e3b7c2b2588f5d3aa78ed7a44bf7568/classes.dex" />
     </item>
 
 </items>

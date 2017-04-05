@@ -5,7 +5,7 @@
     android:id="@+id/activity_floating_action_tester"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.easy.text.texteasy.Settings.StatisticsActivity">
+    tools:context="app.easy.text.texteasy.Settings.Statistics.StatisticsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

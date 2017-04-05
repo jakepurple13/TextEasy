@@ -1,4 +1,4 @@
-package app.easy.text.texteasy.Tester;
+package app.easy.text.texteasy.Settings;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

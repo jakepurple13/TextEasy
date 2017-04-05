@@ -300,7 +300,7 @@ public class BlankTestingActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 //mMaterialDialog.show();
                 //revokeAccess();
-                Intent i = new Intent(BlankTestingActivity.this, LoginAcitivities.class);
+                Intent i = new Intent(BlankTestingActivity.this, testingtwo.class);
                 startActivity(i);
             }
         });

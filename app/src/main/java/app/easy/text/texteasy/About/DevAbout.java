@@ -52,7 +52,7 @@ public class DevAbout extends AppCompatActivity {
             brief = "My name is Jacob Rein and I am the developer of this app.\nThis project is one that I will always cherish." +
                     " The amount of hours I've put into this app is more than I'd want to say. I" +
                     " hope that you, the one reading/using this app, can feel at least a little, " +
-                    "amazingness that had gone into the creation of this app.";
+                    "amazing-ness that had gone into the creation of this app.";
         } else {
             name = "Jack Lu";
             subtitle = "Graphic Designer";
