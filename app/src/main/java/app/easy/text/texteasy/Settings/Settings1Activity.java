@@ -138,8 +138,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
         setupActionBar();
 
-
-
     }
 
 
@@ -213,7 +211,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             // guidelines.
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
-
+            //goto the about screen
             Intent i = new Intent(this.getContext(), AboutScreen.class);
             startActivity(i);
             getActivity().finish();
@@ -285,9 +283,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("example_text"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
 
+            //make app default
             final String myPackageName = getActivity().getPackageName();
             if (!Telephony.Sms.getDefaultSmsPackage(getActivity()).equals(myPackageName)) {
 
@@ -309,7 +306,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
             if (requestCode == 201) {
 
                 getActivity().finish();
@@ -319,7 +315,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onActivityResult(requestCode, resultCode, data);
 
         }
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -344,7 +339,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             Scoop.getInstance().apply(getActivity());
             setHasOptionsMenu(true);
-
+            //goto the super cool scoop theme activity
             Intent settings = ScoopSettingsActivity.createIntent(getActivity(), "Change Theme");
             startActivityForResult(settings, 201);
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -358,7 +353,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
             if (requestCode == 201) {
 
                 getActivity().finish();
@@ -368,7 +362,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onActivityResult(requestCode, resultCode, data);
 
         }
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -419,7 +412,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             Scoop.getInstance().apply(getActivity());
             setHasOptionsMenu(true);
-
+            //goto the feedback form
             String url = getResources().getString(R.string.feedback_link);
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
@@ -432,7 +425,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
         }
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -452,7 +444,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             Scoop.getInstance().apply(getActivity());
             setHasOptionsMenu(true);
-
+            //goto the new abbreviations form
             String url = getResources().getString(R.string.abbrev_link);
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
@@ -485,7 +477,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             Scoop.getInstance().apply(getActivity());
             setHasOptionsMenu(true);
-
+            //goto the statistics activity
             Intent i = new Intent(this.getContext(), StatisticsActivity.class);
             startActivity(i);
             getActivity().finish();
@@ -645,7 +637,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             Scoop.getInstance().apply(getActivity());
             setHasOptionsMenu(true);
-
+            //goto the login activities
             Intent i = new Intent(this.getContext(), LoginAcitivities.class);
             startActivity(i);
             getActivity().finish();

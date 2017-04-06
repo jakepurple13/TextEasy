@@ -137,10 +137,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.mTextView.setLinksClickable(true);
 
         try {
-
+            //deals with the imagination easter egg
             String checkText = mDataset.get(position).defaultText.substring(0, 3);
 
             if(checkText.equalsIgnoreCase("/me".trim())) {
+                //if it starts with /me than make the text italicize and get rid of the /me
                 String newText = mDataset.get(position).text.replace("/me", "");
                 Log.d(TAG, "onBindViewHolder: " + newText);
                 holder.mTextView.setText(newText);
@@ -157,9 +158,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 num+=1;
                 editor.putInt("roles", num);
                 editor.apply();
-
             }
-
 
         } catch(StringIndexOutOfBoundsException e) {
 
@@ -214,9 +213,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 }
             }
         });
-
-
-
 
         holder.mTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

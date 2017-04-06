@@ -22,29 +22,13 @@ import app.easy.text.texteasy.Dictionary.Lingo;
  */
 public class Translator {
 
-
-
+    //The dictionary
     LinkedHashMap<String, String> hm;
     boolean firsttime;
 
-    /**
-     * 
-     */
-    /**
-     * 
-     */
     public Translator(Context context) {
 
         hm = new LinkedHashMap<>();
-        /**
-         *
-         * Put all words into hashmap here
-         *
-         */
-
-
-
-
 
         SharedPreferences load = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
         firsttime = load.getBoolean("FirstLoad", true);
@@ -60,7 +44,6 @@ public class Translator {
             } else {
                 is = new InputStreamReader(context.getResources().openRawResource(R.raw.wordlist));
             }
-
 
             BufferedReader br = new BufferedReader(is);
 
@@ -102,44 +85,28 @@ public class Translator {
                 hm.put(ll.get(i).getWord(), ll.get(i).getMeaning());
             }
 
-            Log.w("HM KEYS", hm.keySet().toString());
-            Log.e("Split", "-----------------");
-            Log.w("HM ENTRIES", hm.entrySet().toString());
+            //Log.w("HM KEYS", hm.keySet().toString());
+            //Log.e("Split", "-----------------");
+            //Log.w("HM ENTRIES", hm.entrySet().toString());
 
 
         }
 
-
-
-
     }
 
-    /**
-     * 
-     * @param words 
-     */
     public String translate(String words) {
-
+        //split the sentence apart
         String[] sentence = words.split(" ");
-
-        /*Collection<String> hmValues = hm.values();
-
-        Object[] sHM = hmValues.toArray();
-
-        for(int i=0;i<sHM.length;i++) {
-            if(words.matches(".*" + sHM[i].toString() + ".*")) {
-                Log.i("daskljfha", sHM[i].toString());
-            }
-        }*/
-
-
-
+        //go through each element
         for(int i=0;i<sentence.length;i++) {
+            //if the dictionary contains the word
             if(hm.containsKey(sentence[i])) {
+                //change it out with the new translated one
                 sentence[i] = hm.get(sentence[i]) + " (" + sentence[i] + ")";
             }
         }
 
+        //Build the sentence back together
         String text = "";
 
         for(int i=0;i<sentence.length;i++) {

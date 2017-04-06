@@ -17,7 +17,7 @@ public class MainApp extends Application {
 
         SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this);
         int num = load.getInt("GSBug", 0);
-
+        //This is for if the easter egg is going to work
         if(num>=79) {
             // Initialize Scoop
             Scoop.waffleCone()

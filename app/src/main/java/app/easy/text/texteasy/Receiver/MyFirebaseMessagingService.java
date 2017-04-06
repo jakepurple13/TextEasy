@@ -1,4 +1,4 @@
-package app.easy.text.texteasy;
+package app.easy.text.texteasy.Receiver;
 
 
 import android.app.Notification;
@@ -17,7 +17,9 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import app.easy.text.texteasy.ContactList.Contacts;
+import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Receiver.NotificationReceiver;
+import app.easy.text.texteasy.Translator;
 
 /**
  * Created by Jacob on 9/26/16.
@@ -54,16 +56,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     public void notification(String message, Context context) {
 
-
-
+        //start the notification
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                         //.setLargeIcon(R.drawable.texteasyicon)
                         .setSmallIcon(R.drawable.texteasyicon);
-
+        //Get the translator working
         Translator translate = new Translator(this);
 
-
+        //small set up
         mBuilder.setContentTitle("TextEasy");
         mBuilder.setContentText(translate.translate(message));
         mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(translate.translate(message)));
@@ -76,13 +77,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mBuilder.setDefaults(Notification.DEFAULT_ALL);
         mBuilder.setColor(R.color.white);
 
-
-
+        //if this is pressed, go to feedback
         String url = getResources().getString(R.string.feedback_link);
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
-
-
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context, Contacts.class);
@@ -183,12 +181,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //wearableExtender.addAction(actionBuilder.build());
         //wearableExtender.addPage(mBuilder.build());
 
-
         mBuilder.extend(wearableExtender);
-
-
-
-
 
         //Watch Actions---------------------------
 

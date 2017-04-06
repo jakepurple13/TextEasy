@@ -45,7 +45,7 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
     private boolean mPause = true;
 
     String num;
-
+    //digits for the tabs
     int ht = 0;
     int tt = 0;
     int ot = 0;
@@ -53,18 +53,18 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
     int t = 0;
     int o = 0;
 
+    //speedometer
     ProgressiveGauge progressiveGauge;
 
     private MaterialMenuDrawable materialMenu;
-
+    //next page >.> probably should change this to a fragment and sliding activity <.<
     Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //SCOOP! Deals with the theme
         Scoop.getInstance().apply(this);
-
         setContentView(R.layout.activity_statistics);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.statTool);
@@ -82,7 +82,6 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
         materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
         toolbar.setNavigationIcon(materialMenu);
-
 
         next = (Button) findViewById(R.id.nextStat);
 
@@ -107,7 +106,7 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
 
         progressiveGauge.setMaxSpeed((int) (numOfContacts*1.5));
 
-        // change speed to 50 Km/h
+        // changes speed to contacts
         progressiveGauge.speedTo(numOfContacts);
         progressiveGauge.setUnit("Contacts");
         progressiveGauge.setSpeedTextPosition(Gauge.Position.BOTTOM_RIGHT);

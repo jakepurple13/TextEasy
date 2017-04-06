@@ -731,12 +731,10 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             jarray = new JSONArray();
-
             result = new JSONObject();
             Uri uri = Uri.parse("content://sms/");
             String whereAddress = "address = '" + phoneNumber + "'";
             Cursor c = getContentResolver().query(uri, null, null, null, null);
-
 
             // Read the sms data and store it in the list
             if (c.moveToFirst()) {
@@ -744,7 +742,6 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < c.getCount(); i++) {
 
                     result.put("body", c.getString(c.getColumnIndexOrThrow("body")).toString());
-
                     result.put("date", c.getString(c.getColumnIndexOrThrow("date")).toString());
                     result.put("read", c.getString(c.getColumnIndexOrThrow("read")).toString());
                     result.put("type", c.getString(c.getColumnIndexOrThrow("type")).toString());
@@ -801,6 +798,7 @@ public class MainActivity extends AppCompatActivity {
 
         return result;
     }
+
     //SENDS THE SMS
     private void sendSMS(String phoneNumber, String message) {
 

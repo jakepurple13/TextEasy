@@ -170,7 +170,6 @@ public class SmsReceiver extends BroadcastReceiver {
 
         mBuilder.setGroup("TextEasy");
 
-
         mBuilder.setOnlyAlertOnce(true);
         mBuilder.setLights(Color.BLUE, 5000, 500);
         mBuilder.setAutoCancel(true);
@@ -225,8 +224,6 @@ public class SmsReceiver extends BroadcastReceiver {
                 .setAllowGeneratedReplies(true)
                 .build();
 
-
-
         Intent cancelled = new Intent(context, NotificationReceiver.class);
         cancelled.putExtra("cancel", true);
 
@@ -250,11 +247,9 @@ public class SmsReceiver extends BroadcastReceiver {
                         .setHintHideIcon(true)
                         .setContentIcon(R.drawable.texteasyicon);
 
-
         String[] choices = context.getResources().getStringArray(R.array.reply_choices);
         choices[0] = "Yes";
         choices[1] = "No";
-
 
         RemoteInput remoteInput1 = new RemoteInput.Builder(Intent.EXTRA_TEXT)
                 .setLabel("Reply")
@@ -268,22 +263,14 @@ public class SmsReceiver extends BroadcastReceiver {
 
         wearableExtender.addAction(actionBuilder.build());
 
-
         mBuilder.extend(wearableExtender);
 
-
-
         //Watch Actions---------------------------
-
 
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
-
-
-
-
     }
 
 

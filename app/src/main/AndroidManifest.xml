@@ -94,7 +94,7 @@
 
         <!-- Service that delivers messages from the phone "quick response" -->
         <service
-            android:name=".HeadlessSmsSendService"
+            android:name=".Receiver.HeadlessSmsSendService"
             android:exported="true"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>
@@ -108,7 +108,7 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name=".Receiver.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

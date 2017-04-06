@@ -1,4 +1,4 @@
-package app.easy.text.texteasy;
+package app.easy.text.texteasy.Receiver;
 
 import android.app.Service;
 import android.content.Intent;
@@ -44,15 +44,8 @@ public class HeadlessSmsSendService extends Service {
 
         Toast.makeText(this, "GOT IT", Toast.LENGTH_LONG).show();
 
-    /**
-     * 
-     */
     }
 
-
-    /**
-     * 
-     */
     @Override
     public void onDestroy() {
     /**
