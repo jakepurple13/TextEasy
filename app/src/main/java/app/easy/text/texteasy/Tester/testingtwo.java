@@ -29,7 +29,7 @@ import java.util.List;
 import app.easy.text.texteasy.R;
 import eu.long1.spacetablayout.SpaceTabLayout;
 
-public class testingtwo extends AppCompatActivity implements Gota.OnRequestPermissionsBack {
+public class testingtwo extends AppCompatActivity {
 
     SpaceTabLayout tabLayout;
 
@@ -125,13 +125,6 @@ public class testingtwo extends AppCompatActivity implements Gota.OnRequestPermi
             @Override
             public void onClick(View v) {
                 if(tabLayout.getCurrentPosition()==4) {
-
-                    new Gota.Builder(testingtwo.this)
-                            .withPermissions(perms)
-                            .requestId(1)
-                            .setListener(testingtwo.this)
-                            .check();
-
                     //((TextView) tabLayout.getTabFiveView().findViewById(R.id.textView7)).setText("HELLOEadsf");
                 }
             }
@@ -169,14 +162,5 @@ public class testingtwo extends AppCompatActivity implements Gota.OnRequestPermi
                 });
     }
 
-    @Override
-    public void onRequestBack(int requestId, @NonNull GotaResponse gotaResponse) {
-        if(gotaResponse.hasDeniedPermission()) {
-            new Gota.Builder(testingtwo.this)
-                    .withPermissions(gotaResponse.deniedPermissions())
-                    .requestId(1)
-                    .setListener(testingtwo.this)
-                    .check();
-        }
-    }
+
 }

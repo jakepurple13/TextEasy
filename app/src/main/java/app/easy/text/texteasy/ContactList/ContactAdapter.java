@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -181,7 +182,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             num = "1";
         bgShape.setStroke(Integer.parseInt(num), Color.BLACK);
 
-        holder.mTextView.setText(mDataset.get(position).toString());
+        holder.mTextView.setText(Html.fromHtml(mDataset.get(position).toString()));
 
         if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
             holder.mTextView.setTextColor(Color.WHITE);

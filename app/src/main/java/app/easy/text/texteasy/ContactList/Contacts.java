@@ -43,6 +43,8 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -61,9 +63,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,6 +82,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
 import me.everything.providers.core.Data;
+
+import static android.R.attr.id;
 
 /**
  *
@@ -93,14 +100,10 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    RecyclerViewFastScroller fastScroller;
     IndexFastScrollRecyclerView alphabetScroller;
-
-    FloatingSearchView fsv;
 
     ArrayList<ContactInfo> al = new ArrayList<>();
     Translator translate;// = new Translator(this);
-    EditText searchBar;
     String searchKey = "";
     ArrayList<ContactInfo> searched;
     ProgressTask pt;
@@ -110,7 +113,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
      * @param savedInstanceState
      */
     boolean firstTimeSearch = false;
-    FloatingActionButton fab;
+    //FloatingActionButton fab;
 
     Dialog feed;
 
@@ -135,39 +138,24 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //currentTheme = setThemed();
-
         super.onCreate(savedInstanceState);
-
         Scoop.getInstance().apply(this);
-
         setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Ad initializer! Yay!
         MobileAds.initialize(getApplicationContext(), String.valueOf(R.string.ad_code));
 
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
+        //Get the translator running
         translate = new Translator(this);
-
+        //This is to get the contacts
         pt = new ProgressTask(Contacts.this);
         pt.execute();
-
+        //Search list
         searched = new ArrayList<>();
-        /**Ask User for Location Premisson and Accounts**/
-        //AskPermission();
-
-
-
-
-        //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        //String syncConnPref = sharedPref.getString(SettingsActivity., "");
-        //setTheme(getApplicationInfo().getThemeId());
-        //System.err.println(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultTheme", "0"));
 
         mMaterialDialog = new MaterialDialog(Contacts.this)
                 .setTitle("MaterialDialog")
@@ -186,77 +174,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                     }
                 });
 
-
-
-
+        //These are to get first time data
         SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
         firstTimeAddContact = load.getBoolean("add contact", false);
-
         firstTimeSearch = load.getBoolean("search", false);
 
-
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            /**
-             *
-             * @param view
-             */
-            @Override
-            public void onClick(View view) {
-
-                //Add here
-
-                if (!firstTimeAddContact) {
-
-                    //setTutorial("Add Contact", "Add a contact", fab);
-
-                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = enter.edit();
-                    editor.putBoolean("add contact", true);
-                    editor.apply();
-
-                    firstTimeAddContact = true;
-
-                } else {
-
-                    // Creates a new Intent to insert a contact
-                    Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-                    // Sets the MIME type to match the Contacts Provider
-                    intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                    startActivity(intent);
-
-                    //al.clear();
-                    /**
-                     *
-                     * @param v
-                     */
-                    //readContacts();
-                    Collections.sort(al, new InfoCompare());
-                    mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
-                    alphabetScroller.setAdapter(mAdapter);
-
-                }
-
-            }
-        });
-
-        fab.setOnLongClickListener(new View.OnLongClickListener() {
-            /**
-             *
-             * @param v
-             */
-            @Override
-            public boolean onLongClick(View v) {
-
-                setTutorial("Add Contact", "Add a contact", fab);
-
-                return false;
-            }
-        });
-
-        fab.setVisibility(View.GONE);
 
         //---------------BOOM---------------------
 
@@ -265,7 +187,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         bmb.setButtonEnum(ButtonEnum.Ham);
         bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
         bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
-
+        //Add contact
         HamButton.Builder contactAdd = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_add)
                 .listener(new OnBMClickListener() {
@@ -284,7 +206,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Met a new friend? Add their Contact info!");
 
         bmb.addBuilder(contactAdd);
-
+        //Goto settings
         HamButton.Builder settings = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_preferences)
                 .listener(new OnBMClickListener() {
@@ -298,7 +220,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Go to the Settings Menu");
 
         bmb.addBuilder(settings);
-
+        //WIP (Work in Progress)
         HamButton.Builder sendAText = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.sym_action_chat)
                 .listener(new OnBMClickListener() {
@@ -313,7 +235,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Send a text to a number that's not in your contacts");
 
         //bmb.addBuilder(sendAText);
-
+        //Call someone
         HamButton.Builder phoneCall = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.ic_menu_call)
                 .listener(new OnBMClickListener() {
@@ -326,7 +248,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .normalText("Call Someone");
 
         bmb.addBuilder(phoneCall);
-
+        //WIP (Work in Progress)
         HamButton.Builder groupChat = new HamButton.Builder()
                 .normalImageRes(android.R.drawable.sym_action_chat)
                 .listener(new OnBMClickListener() {
@@ -341,77 +263,41 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Coming Soon!");
 
         //bmb.addBuilder(groupChat);
+        //First time
+        if (!firstTimeAddContact) {
 
-        bmb.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+            SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = enter.edit();
+            editor.putBoolean("add contact", true);
+            editor.apply();
 
-                setTutorial("See More Options", "Add a Contact\nCall Someone\nGroup Chat", bmb);
-                return false;
-            }
-        });
+            firstTimeAddContact = true;
+
+            TapTargetView.showFor(this,
+                    TapTarget.forView(bmb, "Settings", "Click here for more options")
+                            .cancelable(true)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .transparentTarget(false)
+                            .outerCircleColor(R.color.primary)
+                            .targetCircleColor(R.color.primary_dark),
+                    new TapTargetView.Listener() {
+                        @Override
+                        public void onTargetClick(TapTargetView view) {
+                            view.dismiss(true);
+                        }
+
+                        @Override
+                        public void onTargetLongClick(TapTargetView view) {
+
+                        }
+                    });
+
+        }
+
+
 
         //---------------BOOM---------------------
-        /**
-         *
-         * @param s
-         * @param start
-         * @param count
-         * @param after
-         */
-
-
-       /* FloatingActionButton feedback = (FloatingActionButton) findViewById(R.id.feedback);
-
-        feedback.setVisibility(View.GONE);
-
-        feedback.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
-
-        feedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                feed = new Dialog(Contacts.this);
-
-                feed.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                *//**
-                 *
-                 * @param phoneNumber
-                 *//*
-                feed.setCancelable(true);
-                feed.setContentView(R.layout.feed_back);
-
-                Button send = (Button) feed.findViewById(R.id.send);
-
-                Button cancel = (Button) feed.findViewById(R.id.dontsend);
-
-                final SimpleRatingBar srb = (SimpleRatingBar) feed.findViewById(R.id.ratingBar);
-
-                final EditText comments = (EditText) feed.findViewById(R.id.commentfield);
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        feed.dismiss();
-                    }
-                });
-
-                send.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String text = "";
-
-
-
-                    }
-                });
-
-                feed.show();
-
-            }
-        });*/
-
 
         alphabetScroller = (IndexFastScrollRecyclerView) findViewById(R.id.contactScroller);
 
@@ -420,21 +306,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         mLayoutManager = new LinearLayoutManager(this);
 
         alphabetScroller.setLayoutManager(mLayoutManager);
-
+        //Search Bar set up
         searchBars = (MaterialSearchBar) findViewById(R.id.searchBars);
-
         searchBars.setTextColor(R.color.black);
-
         searchBars.setSpeechMode(false);
-
-        //searchBars.setHint("Search");
-
-        //searchBars.setPlaceHolder("Search");
-
         searchBars.setMaxSuggestionCount(5);
-
         searchBars.inflateMenu(R.menu.contact_activity_menu);
-
         searchBars.getMenu().setOnMenuItemClickListener(this);
 
         searchBars.addTextChangeListener(new TextWatcher() {
@@ -445,10 +322,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
             @Override
             public void onTextChanged(CharSequence s, int i3, int i1, int i2) {
-
+                //All this is to search
                 searched.clear();
                 searchKey = s.toString();
                 System.out.println(searchKey);
+                //We search both number and name
                 for (int i = 0; i < al.size(); i++) {
                     if (al.get(i).name.toUpperCase().contains(searchKey.toUpperCase()) ||
                             al.get(i).number.contains(searchKey)) {
@@ -456,27 +334,25 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                     }
 
                 }
-
+                //set the adapter for real time searching
                 mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
                 alphabetScroller.setAdapter(mAdapter);
 
+                //this is for the suggestion list
                 List<String> suggestions = new ArrayList<>();
-
+                //As long as the search size isn't 0
                 if(searched.size()!=0) {
-
+                    //Go through and show only 5 suggestions if applicable
                     for (int i = 0; i < 5 && i<searched.size(); i++) {
                         suggestions.add(searched.get(i).name);
                     }
-
+                    //From here, update suggest list
                     searchBars.updateLastSuggestions(suggestions);
-
-
+                    //if the search text is "" then just hide the list
                     if(s.length()==0) {
                         searchBars.hideSuggestionsList();
-                    } else {
-                        //searchBars.showSuggestionsList();
                     }
-
+                //otherwise just hide the list
                 } else {
                     searchBars.hideSuggestionsList();
                 }
@@ -489,6 +365,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             }
         });
 
+        //on the action of searching, just hide the suggestion list.
         searchBars.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -506,124 +383,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             }
         });
 
-        searchBars.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-
-                setTutorial("Search", "Search for a contact to find", searchBars);
-                return false;
-            }
-        });
-
-        /*searchBar = (EditText) findViewById(R.id.search);
-
-        searchBar.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searched.clear();
-                searchKey = s.toString();
-                System.out.println(searchKey);
-                for (int i = 0; i < al.size(); i++) {
-                    if (al.get(i).name.toUpperCase().contains(searchKey.toUpperCase()) ||
-                            al.get(i).number.contains(searchKey)) {
-                        searched.add(al.get(i));
-                    }
-                }
-
-                mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
-                alphabetScroller.setAdapter(mAdapter);
-            }
-
-            *//**
-             *
-             * @param s
-             *//*
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        searchBar.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-
-                setTutorial("Search", "Search for a contact to find", searchBar);
-                return false;
-            }
-        });
-*/
-
-        try {
-            //readContacts();
-        } catch (Exception e) {
-
-        }
-
+        //Have the recyclerview gain focus so the suggestion list for the search bar doesn't come up
         alphabetScroller.requestFocus();
-
-        themeChanged();
-
-        String upAgain = "\nPress and hold to bring up again";
-
-        if (!firstTimeSearch) {
-
-            SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = enter.edit();
-            editor.putBoolean("search", true);
-            editor.apply();
-
-            firstTimeSearch = true;
-
-            /*new TapTargetSequence(this)
-                    .targets(
-                            TapTarget.forView(findViewById(R.id.searchBars), "Search", "Search for a contact to find" + upAgain)
-                                    .targetCircleColor(R.color.deep_orange_50)
-                                    .outerCircleColor(R.color.accent)
-                                    .textColor(R.color.white)
-                                    .descriptionTextColor(R.color.white)
-                                    .cancelable(false),
-                            TapTarget.forView(findViewById(R.id.bmb), "Menu", "Want to\nAdd a Contact? Call Someone? Start a Group Chat?" + upAgain)
-                                    .targetCircleColor(R.color.deep_orange_50)
-                                    .outerCircleColor(R.color.accent)
-                                    .textColor(R.color.white)
-                                    .descriptionTextColor(R.color.white)
-                                    .cancelable(false),
-                            TapTarget.forView(findViewById(R.id.toolbar), "Settings", "Change the Theme and Go into Settings")
-                                    .targetCircleColor(R.color.deep_orange_50)
-                                    .outerCircleColor(R.color.accent)
-                                    .textColor(R.color.white)
-                                    .descriptionTextColor(R.color.white)
-                                    .cancelable(false))
-                    .listener(new TapTargetSequence.Listener() {
-                        // This listener will tell us when interesting(tm) events happen in regards
-                        // to the sequence
-                        @Override
-                        public void onSequenceFinish() {
-                            // Yay
-                        }
-
-                        @Override
-                        public void onSequenceStep(TapTarget lastTarget) {
-                            // Perfom action for the current target
-                        }
-
-                        @Override
-                        public void onSequenceCanceled(TapTarget lastTarget) {
-                            // Boo
-                        }
-                    }).start();*/
-
-        }
 
         // Get the intent that started this activity
         Intent intent = getIntent();
@@ -638,18 +399,19 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 mMaterialDialog.show();
             }
         } catch(NullPointerException e) {
-            Log.e("Contacts Line 183", "onCreate: " + e);
+            Log.e("Contacts Line 667", "onCreate: " + e);
         }
 
     }
 
-
-
+    /*
+    *getTexts
+    *hopefully will be able to get texts
+    */
     public void getTexts() {
         TelephonyProvider tp = new TelephonyProvider(this);
 
         Data<Sms> ds = tp.getSms(TelephonyProvider.Filter.ALL);
-
 
         List<Sms> ls = ds.getList();
 
@@ -659,87 +421,60 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
         }
 
-
     }
 
-
+    /*
+    *getsms
+    *hopefully will be able to get texts
+    */
     public String getsms(String phoneNumber) {
-        JSONObject result = null;
-        JSONArray jarray = null;
-        String link[] = {"content://sms/inbox", "content://sms/sent", "content://sms/draft"};
 
         String text = " ";
 
+        Uri uri = Uri.parse("content://sms/");
 
-        try {
+        ContentResolver contentResolver = getContentResolver();
 
-            jarray = new JSONArray();
+        String sms = "address='"+ phoneNumber + "'";
+        Cursor cursor = contentResolver.query(uri, new String[] { "_id", "body", "date", "address" }, sms, null,   null);
+        String strbody = "";
 
-            result = new JSONObject();
-            Uri uri = Uri.parse("content://sms/");
-            String whereAddress = "address = '" + phoneNumber + "'";
-            Cursor c = getContentResolver().query(uri, null, null, null, null);
-
-            // Read the sms data and store it in the list
-            if (c.moveToFirst()) {
-
-                for (int i = 0; i < c.getCount(); i++) {
-
-                    result.put("body", c.getString(c.getColumnIndexOrThrow("body")).toString());
-
-                    result.put("date", c.getString(c.getColumnIndexOrThrow("date")).toString());
-                    result.put("read", c.getString(c.getColumnIndexOrThrow("read")).toString());
-                    result.put("type", c.getString(c.getColumnIndexOrThrow("type")).toString());
-                    if ((c.getString(c.getColumnIndexOrThrow("type")).toString()).equals("3")) {
-                        //Cursor cur= getContentResolver().query("", null, null ,null,null);
-                        //startManagingCursor(cur);
-
-                        String threadid = c.getString(c.getColumnIndexOrThrow("thread_id")).toString();
-                        Cursor cur = getContentResolver().query(Uri.parse("content://mms-sms/conversations?simple=true"), null, "_id =" + threadid, null, null);
-
-                        if (cur.moveToFirst()) {
-                            String recipientId = cur.getString(cur.getColumnIndexOrThrow("recipient_ids")).toString();
-                            cur = getContentResolver().query(Uri.parse("content://mms-sms/canonical-addresses"), null, "_id = " + recipientId, null, null);
-                            if (cur.moveToFirst()) {
-                                String address = cur.getString(cur.getColumnIndexOrThrow("address")).toString();
-                                result.put("address", address);
-                                cur.close();
-                            }
-                        }
-
-                    } else {
-                        result.put("address", c.getString(c.getColumnIndexOrThrow("address")).toString());
-                    }
-                    jarray.put(result);
-
-                    if(result.getString("address").equals(phoneNumber) && result.getString("type").equals("2")) {
-                        text = result.getString("body");
-                    } else if(result.getString("address").equals("+1"+phoneNumber) && result.getString("type").equals("1")) {
-                        text = result.getString("body");
-                    }
-
-                    result = new JSONObject();
-
-                    c.moveToNext();
-                }
-            }
-            c.close();
-
-            result.put("smslist", jarray);
-            //result = new JSONObject(jarray.toString());
-
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        Calendar cal = Calendar.getInstance();
+        assert cursor != null;
+        if(cursor.moveToFirst()) {
+            strbody = cursor.getString(cursor.getColumnIndex("body"));
+            cal.setTimeInMillis(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow("date")).toString()));
         }
 
-        Log.d("MainActivity", result.toString());
+        //Log.w("cal", cal.toString());
+        Date d = cal.getTime();
 
-        return text;
+        String pattern = "hh:mm:ss a MM/dd/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+
+        cursor.close();
+
+        text = strbody;
+
+        String textColor = "gray";
+
+        //String result = "<br><small><small><font color=\"" + textColor + "\">" + translate.translate(text) +
+          //      "<br>" + format.format(d) + "</font></small></small>";
+
+        String result = "<br><small><small><small>" + translate.translate(text) + "<br>" + format.format(d) + "</small></small></small>";
+
+        if(text.equals("")) {
+            result = "<br>";
+        }
+
+        return result;
     }
 
 
+    /*
+    *getAllContacts
+    *gets all of the contacts
+    */
     public void getAllContacts() {
         // Default locale is en
         Fakeit.init(this);
@@ -749,6 +484,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         Uri uris = Uri.parse("content://sms");
         String[] proj = {"body", "address"};
 
+        //this is to see how long this method takes
         startnow = android.os.SystemClock.uptimeMillis();
         ContentResolver cr = getContentResolver();
 
@@ -760,54 +496,23 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 null,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
 
+        assert cursor != null;
         cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
+        while (!cursor.isAfterLast()) {
 
             String contactNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             //Log.d("con ", "name " + contactName + " number" + contactNumber);
 
-            String text = " ";
+            String text = "";
+            //gets last text
+            text = getsms(contactNumber);
 
-            /*Uri myMessage = Uri.parse("content://sms/");
-
-            ContentResolver cr1 = getContentResolver();
-            Cursor c = cr1.query(myMessage, new String[] { "_id",
-                            "address", "date", "body", "read" }, null,
-                    null, null);
-            getSmsLogs(c, this);
-
-            String num = sms_num.get(sms_num.size()-1);
-            String body = sms_body.get(sms_num.size()-1);
-
-            Log.d(num, body);*/
-
-            /*String whereAddress = "address = '" + contactNumber + "'";
-            Cursor c = cr.query(uris, proj, whereAddress, null, "date desc limit 1");
-            //Log.wtf("QWE", c.getCount() + "");
-
-            if (c.isNull(0) == false) {
-                do {
-                    text = c.getString(c.getColumnIndex("body"));
-                    Log.w("ASD", text);
-                    text = translate.translate(text);
-                } while (c.moveToNext());
-                text = c.getString(c.getColumnIndex("body"));
-                Log.w("ASD", text);
-                text = translate.translate(text);
-            }*/
-
-            //text = body;
-            //text = translate.translate(text);
-
-
-
+            //This is for privacy
             if(testingVariable) {
-
                 al.add(new ContactInfo(Fakeit.name().name(),
                         Fakeit.phone().formats(),
                         ""));
-
             } else {
                 al.add(new ContactInfo(contactName, contactNumber, text));
             }
@@ -824,38 +529,17 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         endnow = android.os.SystemClock.uptimeMillis();
         Log.d("END", "TimeForContacts " + (endnow - startnow) + " ms");
 
-
-
-        if(testingVariable)
+        if(testingVariable) {
             al.add(new ContactInfo("The Master Programmer", "2017854423", ""));
-
-
+        }
 
         getFaceBookStuff();
 
-       /* ArrayList<String> mAlphabetItems = new ArrayList<>();
-        List<String> strAlphabets = new ArrayList<>();
-        for (int i = 0; i < al.size(); i++) {
-            String name = al.get(i).name;
-            if (name == null || name.trim().isEmpty())
-                continue;
-
-            String word = name.substring(0, 1);
-            if (!strAlphabets.contains(word)) {
-                strAlphabets.add(word);
-                mAlphabetItems.add(word);
-            }
-        }
-
-        for(int i=0;i<mAlphabetItems.size();i++) {
-            listOfNames+=mAlphabetItems.get(i);
-        }*/
-
-       if(al.size()==0) {
+        if(al.size()==0) {
            al.add(new ContactInfo("Please goto settings to enable permissions",
                    "Please goto settings to enable permissions",
                    "Please goto settings to enable permissions"));
-       }
+        }
 
 
         SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
@@ -1278,29 +962,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         }
 
 
-    }
-
-
-    public void themeChanged() {
-
-        /*int backColor = currentTheme.equals("2") ? R.color.charcoal : R.color.lavender_indigo;
-
-        fab.setBackgroundTintList(getResources().getColorStateList(backColor));
-
-        int iconColor = currentTheme.equals("2") ? R.color.white : R.color.apple_green;
-
-        fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, iconColor));
-
-        int indexBarColor = currentTheme.equals("2") ? R.color.charcoal : R.color.redred;
-
-        alphabetScroller.setIndexBarColor(getColored(indexBarColor));
-
-        int indexBarTextColor = R.color.white;//currentTheme.equals("2") ? R.color.white : R.color.yellow;
-
-        alphabetScroller.setIndexBarTextColor(getColored(indexBarTextColor));*/
-        if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
-            fab.getDrawable().mutate().setTint(ContextCompat.getColor(this, R.color.white));
-        }
     }
 
 

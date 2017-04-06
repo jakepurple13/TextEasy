@@ -134,32 +134,18 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
             }
         });
 
-        /*if(!(checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
-
-            AskPermission();
-
-            if(check) {
-
-            }
-
-        }*/
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
             case 201:
                 AskPermission();
             default:
-                requestPermissions(perms, 200);
+                AskPermission();
+                //requestPermissions(perms, 200);
         }
 
     }
@@ -171,7 +157,6 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
         switch (permsRequestCode) {
 
             case 200:
-
 
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -259,13 +244,6 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
 
             }
         }, 1000);
-    }
-
-    public void setThemed() {
-        SharedPreferences prefs = getSharedPreferences("theming", MODE_PRIVATE);
-        String themer = prefs.getString("themeID", "0");
-        setTheme(themer.equals("2") ? R.style.NightTheme1 : R.style.LightTheme);
-
     }
 
     @Override
