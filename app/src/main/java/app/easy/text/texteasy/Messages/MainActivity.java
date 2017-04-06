@@ -79,91 +79,63 @@ import me.everything.providers.android.telephony.TelephonyProvider;
 import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
 
-/**
- *
- */
-
-/**
- *
- */
+//Actually displays the texts
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    //All of the texts
     ArrayList<TextInfo> al = new ArrayList<>();
+    //The phone number
     String phoneNumber;
+    //send button
     ImageButton send;
+    //speech to text button
     ImageButton speechToText;
+    //the message
     EditText message;
+    //BANG!
     SmallBang mSmallBang;
-
+    //translator to translate texting acronyms
     Translator translate;
-
+    //this is for replying
     private static final String KEY_TEXT_REPLY = "key_text_reply";
-
+    //an instance of MainActivity used for the adapter
     private static MainActivity inst;
-
+    //last position
     public int lastPosition = 0;
-
+    //A nice looking dialog
     MaterialDialog mMaterialDialog;
-
+    //Another nice looking dialog
     MaterialStyledDialog mSDialog;
-
-    ExplosionField mExplosionField;
-
+    //The drawable for the tool bar
     private MaterialMenuDrawable materialMenu;
-
-    /**
-     *
-     */
-    private Dialog dialog;
-    ImageView achievementIcon;
-
+    //Contact name
     String CONTACT_NAME;
-
+    //The relative layout
     RelativeLayout rl;
 
-
-    /**
-     * /**
-     */
     public static MainActivity instance() {
         return inst;
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
-        /**
-         *
-         * @param savedInstanceState
-         */
         inst = this;
     }
 
 
-    /**
-     *
-     */
     @Override
     protected void onStop() {
         super.onStop();
     }
 
-    /**
-     * @param savedInstanceState
-     */
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //setThemed();
-
         super.onCreate(savedInstanceState);
-
+        //Scoop! Deals with the theme
         Scoop.getInstance().apply(this);
 
         setContentView(R.layout.activity_main);
@@ -205,14 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-       /* Intent intent = new Intent("android.provider.Telephony.SMS_RECEIVED");
-        List<ResolveInfo> infos = getPackageManager().queryBroadcastReceivers(intent, 0);
-        for (ResolveInfo info : infos) {
-            System.out.println("Receiver name:" + info.activityInfo.name + "; priority=" + info.priority);
-        }*/
-
-
-
+        //get the phone number
         phoneNumber = getIntent().getStringExtra("Number");
         try {
             Log.w("Number", phoneNumber);
@@ -220,20 +185,20 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = getIntent();
             Uri data = intent.getData();
-            Log.d("Data", data.toString());
+            //Log.d("Data", data.toString());
             phoneNumber = data.toString().substring(6);
-            Log.d("Data", phoneNumber);
+            //Log.d("Data", phoneNumber);
 
         }
-        //phoneNumber = phoneNumber.replaceAll("(", " ");
+        //Normalize the phone number to make it look like an actual phone number
         phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
-        //phoneNumber = phoneNumber.replaceAll("\\^([0-9]+)", "");
-        Log.w("Number", phoneNumber);
+        //Log.w("Number", phoneNumber);
 
+        //Set the contact name
         CONTACT_NAME = getContactName(phoneNumber);
-
+        //Change the tool bar text to the contact's name
         setTitle(CONTACT_NAME);
-
+        //initialize our translator
         translate = new Translator(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -243,68 +208,61 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        /**
-         *
-         * @param v
-         */
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //ScanSMS(phoneNumber);
-
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
-
+        //scroll to the bottom
         mRecyclerView.scrollToPosition(al.size() - 1);
-
+        //send button
         send = (ImageButton) findViewById(R.id.button);
+        //message
         message = (EditText) findViewById(R.id.editText);
-
+        //when message gains focus, scroll to the bottom of the list
         message.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 mRecyclerView.scrollToPosition(al.size() - 1);
             }
         });
-
+        //when message is pressed, scroll to the bottom of the list
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mRecyclerView.scrollToPosition(al.size() - 1);
             }
         });
-
+        //BANG!
         mSmallBang = SmallBang.attach2Window(this);
-
+        //Our OnClickListener for sending a text
         send.setOnClickListener(new View.OnClickListener() {
-            /**
-             *
-             * @param v
-             */
+
             @Override
             public void onClick(View v) {
-
+                //As long as the text is not ""
                 if (!(message.getText().toString().length() < 1)) {
-
+                    //Some banging fun!
                     SharedPreferences load = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
                     int num = load.getInt("DotNum", 0);
-
+                    //if num if greater than 25 than bang 25. Lags phone if its too much
                     if (num >= 25) {
                         mSmallBang.setDotNumber(25);
                     } else {
+                        //else, we can bang as long as it's under 25
                         mSmallBang.setDotNumber(num);
                     }
-
+                    //Bang!
                     mSmallBang.bang(send);
-
+                    //Send our text!
                     sendSMS(phoneNumber, message.getText().toString());
-
+                    //Reset message text
                     message.setText("");
-
+                    //Add one to num
                     num++;
-
+                    //check if we are at a landmark
                     achievements(num);
-
+                    //update our num variable
                     SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = enter.edit();
                     editor.putInt("DotNum", num);
@@ -344,81 +302,80 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //speech to text button
         speechToText = (ImageButton) findViewById(R.id.speech_button);
-
+        //set the OnClickListener
         speechToText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startSpeechToText();
             }
         });
-
+        //Get our texts!
         getsms();
-
+        //are we sharing anything?
         String shared = getIntent().getStringExtra("MessageToPass");
-
+        //set the message text to what we want to share
         message.setText(shared);
 
     }
 
-    /**
-     * @param num
-     */
+    /*
+    * achievements
+    * YAY!
+    * num - (int) - the number of texts sent
+    */
     public void achievements(int num) {
 
-        Log.e("Amount", num + "");
-        /**
-         *
-         * @param title
-         * @param message
-         */
-
+        //Log.e("Amount", num + "");
+        //number for calculations
         int amount;
-
+        //digits in num
         int digits = String.valueOf(num).length();
 
-        Log.e("asd", digits + "");
-
+        //Log.e("asd", digits + "");
+        //ten
         int tens = 10;
-
+        //number of digits
         for (int i = 1; i < digits; i++) {
             tens *= 10;
         }
 
-        Log.d("dak;sfj", "achievements: " + tens);
-
+        //Log.d("dak;sfj", "achievements: " + tens);
+        //if we are under tens
         if (num <= tens) {
+            //get the mod of num
             amount = num % tens;
         } else {
+            //else amount = num
             amount = num;
         }
 
-        Log.d("dak;sfj", "amount: " + amount);
-
+        //Log.d("dak;sfj", "amount: " + amount);
+        //if num == 1
         if (num == 1) {
-
+            //First text! YAY!
             anotherAchieve("Congrats!", "You just sent your first text! Celebrate!");
-
         } else if (amount % (tens / 10) == 0 && !(amount < 10)) {
-
-            /**
-             *
-             * @param message
-             * @param fromTo
-             */
+            //every ten or hundred or thousand, etc
             anotherAchieve("Milestone Reached!", "You've sent your " + num + "th text!");
-
         }
 
     }
 
-
+    /*
+    * anotherAchieve
+    * summon the ACHIEVEMENT DIALOG!
+    * title - (String) - the title
+    * message - (String) - the message
+    */
     public void anotherAchieve(String title, String message) {
-
+        //CONFETTI!
         CommonConfetti.rainingConfetti(rl, new int[] { Color.BLACK, Color.BLUE, Color.MAGENTA })
                 .oneShot()
                 .setTouchEnabled(true);
 
+        //The beautiful dialog to show
         mSDialog = new MaterialStyledDialog.Builder(MainActivity.this)
                 .setTitle(title)
                 .setDescription(message)
@@ -444,74 +401,85 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-
+    /*
+    * updateList
+    * updates the recyclerview
+    * message - (String) - the message to show
+    * defaultMessage - (String) - the message without transaltion
+    * fromTo - (int) - 1 or 0. This is whether its from someone or to them.
+    * from == 1
+    * to == 2
+    */
     public void updateList(String message, String defaultMessage, int fromTo) {
         al.add(0, new TextInfo(message, defaultMessage, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
-        /**
-         *
-         */
     }
 
-
+    /*
+    * updateList
+    * updates the recyclerview
+    * message - (String) - the message to show
+    * defaultMessage - (String) - the message without transaltion
+    * fromTo - (int) - 1 or 0. This is whether its from someone or to them.
+    * d - (Date) - the date the text was sent
+    * from == 1
+    * to == 2
+    */
     public void updateList(String message, String defaultMessage, int fromTo, Date d) {
         al.add(0, new TextInfo(message, defaultMessage, fromTo, d));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
-        /**
-         *
-         */
     }
 
-
+    /*
+    * updateList
+    * updates the recyclerview
+    * message - (String) - the message to show
+    * defaultMessage - (String) - the message without transaltion
+    * fromTo - (int) - 1 or 0. This is whether its from someone or to them.
+    * d - (Date) - the date the text was sent
+    * sent - (Boolean) - for if the user sends it
+    * from == 1
+    * to == 2
+    */
     public void updateList(String message, String defaultMessage, int fromTo, boolean sent) {
         al.add(new TextInfo(message, defaultMessage, fromTo));
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.scrollToPosition(al.size() - 1);
     }
-
-    /**
-     *
-     */
+    //To keep track of the texts
     public class TextInfo {
+        //the actual text
         String text;
-        int fromTo; //1 is from
+        int fromTo;
+        //1 is from
         //2 is to
+        //the default
         String defaultText;
+        //the date of the text
         Date dateOfText;
-
-        /**
-         * @param text
-         */
+        //constructor
         public TextInfo(String text) {
             this.text = text;
             fromTo = 1;
         }
-        /**
-         *
-         * @param phoneNumber
-         */
-
-        /**
-         * @param text
-         * @param fromTo
-         */
+        //constructor
         public TextInfo(String text, String defaultText, int fromTo) {
             this.text = text;
             this.fromTo = fromTo;
             this.defaultText = defaultText;
         }
-
+        //constructor
         public TextInfo(String text, int fromTo, Date dateOfText) {
             this.text = text;
             this.fromTo = fromTo;
             this.dateOfText = dateOfText;
         }
-
+        //constructor
         public TextInfo(String text, String defaultText, int fromTo, Date dateOfText) {
             this.text = text;
             this.fromTo = fromTo;
@@ -519,58 +487,41 @@ public class MainActivity extends AppCompatActivity {
             this.defaultText = defaultText;
         }
 
-        /**
-         *
-         */
         @Override
         public String toString() {
             return text;
         }
 
     }
-    /**
-     *
-     * @param number
-     */
 
-    /**
-     *
-     */
+
     @Override
     protected void onResume() {
         super.onResume();
 
     }
 
-    /**
-     *
-     */
+
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
     }
 
-    /**
-     *
-     */
+
     @Override
     public void onBackPressed() {
         finish();
         super.onBackPressed();
     }
 
-    /**
-     *
-     */
+
     @Override
     protected void onPause() {
         super.onPause();
     }
 
-    /**
-     * @param menu
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -578,9 +529,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * @param item
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -604,11 +552,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             default:
-                /**
-                 *
-                 * @param phoneNumber
-                 * @param message
-                 */
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
@@ -617,9 +560,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * @param phoneNumber
-     */
+    /*
+    * getContactName
+    * gets the contacts name
+    * phoneNumber - (String) - the contacts phone number
+    */
     public String getContactName(String phoneNumber) {
         ContentResolver cr = getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -639,7 +584,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return contactName;
     }
-
+    /*
+    * getContactName
+    * gets the contacts name
+    * phoneNumber - (String) - the contacts phone number
+    */
     public long getContactID(String phoneNumber) {
         ContentResolver cr = getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -659,9 +608,7 @@ public class MainActivity extends AppCompatActivity {
         return contactName;
     }
 
-    /**
-     * @param number
-     */
+    /*
     public void ScanSMS(String number) {
         System.out.println("==============================ScanSMS()==============================");
         //Initialize Box
@@ -774,7 +721,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No message to show!", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     public JSONObject getsms() {
         JSONObject result = null;
@@ -854,11 +801,7 @@ public class MainActivity extends AppCompatActivity {
 
         return result;
     }
-
-    /**
-     * @param phoneNumber
-     * @param message
-     */
+    //SENDS THE SMS
     private void sendSMS(String phoneNumber, String message) {
 
         String SENT = "SENT_SMS_ACTION";
@@ -872,13 +815,14 @@ public class MainActivity extends AppCompatActivity {
 
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliver);
-
+        //Updates the recyclerview with the new message
         updateList("You: " + translate.translate(message.trim()), translate.translate(message), 2, true);
 
         //Change menu icon back to arrow
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //ANIMATIONS! YAY!
                 materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
             }
         }, 2500);

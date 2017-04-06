@@ -36,11 +36,11 @@ public class AboutScreen extends MaterialAboutActivity {
     protected MaterialAboutList getMaterialAboutList(Context context) {
 
         Scoop.getInstance().apply(this);
-
+        //Card builder
         MaterialAboutCard.Builder devTeam = new MaterialAboutCard.Builder();
-
+        //Title for the development team
         devTeam.title("Development Team");
-
+        //Jacob!
         devTeam.addItem(new MaterialAboutActionItem.Builder()
                 .text("Jacob Rein")
                 .subText("Developer")
@@ -55,7 +55,7 @@ public class AboutScreen extends MaterialAboutActivity {
                 .icon(R.mipmap.ic_launcher)
                 //.icon(R.mipmap.profile_picture)
                 .build());
-
+        //Jack!
         devTeam.addItem(new MaterialAboutActionItem.Builder()
                 .text("Jack Lu")
                 .subText("Graphic Designer")
@@ -70,11 +70,11 @@ public class AboutScreen extends MaterialAboutActivity {
                 .icon(R.mipmap.ic_launcher)
                 .build());
 
-
+        //Contribution people
         MaterialAboutCard.Builder contTeam = new MaterialAboutCard.Builder();
-
+        //title
         contTeam.title("Contributions");
-
+        //George's Easter Egg
         SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(AboutScreen.this);
         num = load.getInt("GSBug", 0);
 
@@ -127,23 +127,7 @@ public class AboutScreen extends MaterialAboutActivity {
                 })
                 .build());
 
-        /*contTeam.addItem(new MaterialAboutActionItem.Builder()
-                .text("Ryou")
-                .subText("Helped with the German words")
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
-                    @Override
-                    public void onClick() {
-
-                        // You can change the message anytime. before show
-                        mMaterialDialog.setTitle("Ryou");
-                        // You can change the message anytime. after show
-                        mMaterialDialog.setMessage("Thank you for the german words!");
-                        mMaterialDialog.show();
-                    }
-                })
-                .icon(R.mipmap.ic_launcher)
-                .build());*/
-
+        //Adding everyone else
         addPerson(contTeam, "Ryou", "Helped with the German words", "Thank you for the german words!");
 
         addPerson(contTeam, "Carlie", "Helped with the English words", "Thank you for the english words");
@@ -154,10 +138,11 @@ public class AboutScreen extends MaterialAboutActivity {
 
         addPerson(contTeam, "Gerry", "Gave some ideas", "Thank you for your ideas");
 
+        //Special thanks
         MaterialAboutCard.Builder specialThanks = new MaterialAboutCard.Builder();
-
+        //Title
         specialThanks.title("Special Thanks");
-
+        //Coppola!
         addPerson(specialThanks, "Dr. Jean Coppola", "Mentor and Great Professor",
                 "Thank you so much for being there for and with us." +
                         " Helping us learn and introduce us to so much, it means a lot to us.");

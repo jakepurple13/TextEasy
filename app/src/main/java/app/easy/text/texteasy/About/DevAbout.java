@@ -52,7 +52,7 @@ public class DevAbout extends AppCompatActivity {
             brief = "My name is Jacob Rein and I am the developer of this app.\nThis project is one that I will always cherish." +
                     " The amount of hours I've put into this app is more than I'd want to say. I" +
                     " hope that you, the one reading/using this app, can feel at least a little, " +
-                    "amazing-ness that had gone into the creation of this app.";
+                    "of the amazing-ness that had gone into the creation of this app.";
         } else {
             name = "Jack Lu";
             subtitle = "Graphic Designer";
@@ -74,15 +74,7 @@ public class DevAbout extends AppCompatActivity {
                         "https://play.google.com/store/apps/details?id=app.easy.text.texteasy")
                 .build();
 
-
-        //setContentView(view);
-
         fl.addView(view);
-
-        /*addContentView(view, new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));*/
-
 
     }
 }

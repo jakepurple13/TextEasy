@@ -43,12 +43,13 @@ import in.myinnos.alphabetsindexfastscrollrecycler.utilities_fs.StringMatcher;
  * Created by Jacob on 9/15/16.
  */
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> implements SectionIndexer {
+    //The list of contacts
     private ArrayList<Contacts.ContactInfo> mDataset;
-
+    //Contact activity
     Contacts in;
-
+    //Last position
     int lastPos = -1;
-
+    //sections for the index bar
     private String mSections = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     @Override
@@ -89,50 +90,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    /**
-     * 
-     */
-    /**
-     * 
-     */
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        /**
-         * 
-         * @param v 
-         */
         public TextView mTextView;
 
-
-        /**
-         * 
-         * @param v 
-         */
         public ViewHolder(View v) {
             super(v);
-    /**
-     * 
-     * @param myDataset 
-     * @param in 
-     */
-            //mTextView = (TextView) v.findViewById(R.id.textView);
             mTextView = (TextView) v.findViewById(R.id.contactViewed);
-
-
         }
     }
 
-    /**
-     * 
-     * @param parent 
-     * @param viewType 
-     */
     // Provide a suitable constructor (depends on the kind of dataset)
-    /**
-     * 
-     * @param myDataset 
-     * @param in 
-     */
+
     public ContactAdapter(ArrayList<Contacts.ContactInfo> myDataset, Contacts in, String list) {
         mDataset = myDataset;
         this.in = in;
@@ -145,83 +115,62 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                //.inflate(R.layout.chatmessageyou, parent, false);
                 .inflate(R.layout.contactview, parent, false);
         // set the view's size, margins, paddings and layout parameters
-            /**
-             * 
-             * @param v 
-             */
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    /**
-     * 
-     * @param holder 
-     * @param position 
-     */
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-    /**
-     * 
-     */
-
+        //The stroke width of the border
         SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(in);
         String num = load.getString("stroke_width_choice", "1");
 
         GradientDrawable bgShape = (GradientDrawable) holder.mTextView.getBackground();
         //bgShape.setColor(getColored(R.color.pure_gray)); //gray
-        //bgShape.setSize(30, 15);
         if(num.equals("Default value"))
             num = "1";
         bgShape.setStroke(Integer.parseInt(num), Color.BLACK);
-
+        //setting the text
         holder.mTextView.setText(Html.fromHtml(mDataset.get(position).toString()));
-
+        //Change text to white if the theme is a dark theme
         if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
             holder.mTextView.setTextColor(Color.WHITE);
         }
 
-        //holder.mTextView.setTextColor(Color.BLACK);
-        //holder.mTextView.setGravity(Gravity.CENTER);
-        //holder.mTextView.setTextColor(R.color.textColors);
-
-    /**
-     * 
-     * @param pos 
-     */
+        //set up an OnClickListener
         View.OnClickListener von = new View.OnClickListener() {
-            /**
-             * 
-             * @param v 
-             */
+
             @Override
             public void onClick(View v) {
-
+                //If the contact is a facebook contact
                 if(mDataset.get(position).facebook) {
 
                     String s = "https://www.facebook.com/app_scoped_user_id/" + mDataset.get(position).number;//264254410443692";
 
                     Uri uri = Uri.parse("fb-messenger://user/");
 
-                    //uri = ContentUris.withAppendedId(uri,Long.parseLong(mDataset.get(position).number));
-
                     uri = ContentUris.withAppendedId(uri,Long.parseLong("100006154636052"));
-                    //Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    //in.startActivity(intent);
                     final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(s));
                     in.startActivity(intent);
 
+                    //Go to their facebook page cause facebook is a dick >.>
+
                 } else {
+                    //OTHERWISE, go to the Main Activity with a possible message if its being shared
                     Intent intent = new Intent(in, MainActivity.class);
+                    //the contact number
                     intent.putExtra("Number", mDataset.get(position).number);
+                    //message if we are sharing
                     intent.putExtra("MessageToPass", in.messageToPass);
+                    //animation!
                     Bundle bndlanimation =
                             ActivityOptions.makeCustomAnimation(in.getApplicationContext(), R.anim.back_to_contacts, R.anim.from_contacts).toBundle();
                     in.startActivity(intent, bndlanimation);
@@ -230,7 +179,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         };
 
         holder.mTextView.setOnClickListener(von);
-
+        //setting an OnLongClickListener to read a contact aloud
         holder.mTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -240,11 +189,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                 return false;
             }
         });
-
+        //Animations!
         setAnimation(holder.mTextView, position);
 
     }
 
+    //Text to speech!
     TextToSpeech tts;
     public void readAloud(final String text) {
         tts = new TextToSpeech(in, new TextToSpeech.OnInitListener() {
@@ -265,6 +215,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     }
 
+    //speaking words
     private void speak(String text){
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
@@ -279,7 +230,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             viewToAnimate.startAnimation(animation);
             lastPos = position;
         }
-
     }
 
     public int getThemeId() {
@@ -301,19 +251,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    /**
-     * 
-     */
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
-
-    /**
-     * 
-     * @param pos 
-     */
-
 
 }
 

@@ -24,17 +24,22 @@ import app.easy.text.texteasy.R;
 
 public class StatisticsActivity extends AppCompatActivity implements Runnable {
 
-    String TAG = "FloatingActionTester";
-
+    //The relative layout
     RelativeLayout cl;
-
+    //The tabs for a counter
+    //hundred thousand
     TabDigit htd;
+    //ten thousand
     TabDigit ttd;
+    //one thousand
     TabDigit otd;
+    //hundred
     TabDigit hd;
+    //tens
     TabDigit td;
+    //ones
     TabDigit od;
-
+    //the characters to put on the tabs
     char[] digits = "0123456789".toCharArray();
 
     private boolean mPause = true;
@@ -137,8 +142,6 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
         od.setChars(digits);
 
         new Handler().postDelayed(this, 1000);
-
-
 
     }
 

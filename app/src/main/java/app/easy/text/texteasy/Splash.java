@@ -40,16 +40,12 @@ import xyz.hanks.library.SmallBangListener;
  */
 public class Splash extends AppCompatActivity implements Gota.OnRequestPermissionsBack {
 
-    ExplosionField mExplosionField;
-
-    ProgressBar mProgressBar;
     SmallBang mSmallBang;
     /**
      * 
      * @param savedInstanceState 
      */
     ImageView iv;
-    boolean check = false;
 
     String[] perms = {"android.permission.RECEIVE_SMS",
             "android.permission.CALL_PHONE",
@@ -86,48 +82,24 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
         final String myPackageName = getPackageName();
         if (!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
 
-            askForDeafult(myPackageName);
+            askForDefault(myPackageName);
             // App is not default.
             // Show the "not currently set as the default SMS app" interface
-            //AskPermission();
 
         } else {
             // App is the default.
-            /**
-             * 
-             */
             // Hide the "not currently set as the default SMS app" interface
-            check = true;
-            //AskPermission();
-
-            next();
-
-
+            askForDefault(myPackageName);
         }
-        //AskPermission();
-
-            /**
-             * 
-             */
-
 
         iv.setVisibility(View.GONE);
-
+        //Have some fun and BANG!
         mSmallBang.bang(iv, 50, new SmallBangListener() {
-            /**
-             *
-             */
             @Override
             public void onAnimationStart() {
                 iv.setVisibility(View.VISIBLE);
             }
 
-            /**
-             *
-             */
-                    /**
-                     *
-                     */
             @Override
             public void onAnimationEnd() {
 
@@ -136,47 +108,23 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
 
 
     }
-
+    //After the asking to be the main texting app
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
             case 201:
+                //Ask for permission
                 AskPermission();
             default:
-                AskPermission();
-                //requestPermissions(perms, 200);
-        }
 
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
-
-        switch (permsRequestCode) {
-
-            case 200:
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                   next();
-
-                } else {
-                    Toast.makeText(this, "For full app functions these permissions are needed", Toast.LENGTH_LONG).show();
-                }
                 break;
         }
 
     }
-
-    /**
-     * 
-     */
+    //Ask for permissions!
     public void AskPermission() {
-
+        //Gota! THE BEAUTIFUL!
         new Gota.Builder(Splash.this)
                 .withPermissions(perms)
                 .requestId(1)
@@ -221,17 +169,15 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
 
     }
 
-
-    public void askForDeafult(String myPackageName) {
+    //Asks to be the default texting app
+    public void askForDefault(String myPackageName) {
         Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-        /**
-         *
-         */
         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
                 myPackageName);
         startActivityForResult(intent, 201);
     }
 
+    //To go to the Contacts activity
     public void next() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -246,17 +192,20 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
         }, 1000);
     }
 
+    //Dealing with Gota response
     @Override
     public void onRequestBack(int requestId, @NonNull GotaResponse gotaResponse) {
-        if(gotaResponse.hasDeniedPermission()) {
-            Toast.makeText(this, "For full app functions these permissions are needed", Toast.LENGTH_LONG).show();
-            new Gota.Builder(Splash.this)
-                    .withPermissions(gotaResponse.deniedPermissions())
-                    .requestId(1)
-                    .setListener(Splash.this)
-                    .check();
-        } else if(gotaResponse.isAllGranted()) {
-            next();
+        if(requestId==1) {
+            if (gotaResponse.hasDeniedPermission()) {
+                Toast.makeText(this, "For full app functions these permissions are needed", Toast.LENGTH_LONG).show();
+                new Gota.Builder(Splash.this)
+                        .withPermissions(gotaResponse.deniedPermissions())
+                        .requestId(1)
+                        .setListener(Splash.this)
+                        .check();
+            } else if (gotaResponse.isAllGranted()) {
+                next();
+            }
         }
     }
 }
