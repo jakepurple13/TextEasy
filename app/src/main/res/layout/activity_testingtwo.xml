@@ -29,8 +29,11 @@
         app:button_color="@color/colorAccent"
         app:text_color="#61FFFFFF"
         app:icon_one="@mipmap/android"
+        app:text_one="Android"
         app:icon_two="@mipmap/facebook"
+        app:text_two="Facebook"
         app:icon_three="@mipmap/github"
+        app:text_three="Github"
         app:icon_four="@mipmap/google"
         app:icon_five="@mipmap/linkedin"/>
 

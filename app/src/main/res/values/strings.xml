@@ -143,6 +143,8 @@
     <string name="facebook_app_id">294900847607567</string>
     <string name="fb_login_protocol_scheme">fb294900847607567</string>
 
+    <string name="ad_code">"ca-app-pub-8950844463555971~6055866848"</string>
+
     <string-array name="arc_colors">
         <item>#394948</item>
         <item>#5a7874</item>

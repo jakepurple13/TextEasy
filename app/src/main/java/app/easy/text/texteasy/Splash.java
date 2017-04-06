@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Telephony;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +23,11 @@ import android.widget.Toast;
 import com.ftinc.scoop.Scoop;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import net.alhazmy13.gota.Gota;
+import net.alhazmy13.gota.GotaResponse;
+
 import app.easy.text.texteasy.ContactList.Contacts;
+import app.easy.text.texteasy.Tester.testingtwo;
 import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
 import xyz.hanks.library.SmallBangListener;
@@ -33,7 +38,7 @@ import xyz.hanks.library.SmallBangListener;
 /**
  * 
  */
-public class Splash extends AppCompatActivity {
+public class Splash extends AppCompatActivity implements Gota.OnRequestPermissionsBack {
 
     ExplosionField mExplosionField;
 
@@ -157,8 +162,6 @@ public class Splash extends AppCompatActivity {
                 requestPermissions(perms, 200);
         }
 
-
-
     }
 
 
@@ -177,7 +180,7 @@ public class Splash extends AppCompatActivity {
                    next();
 
                 } else {
-                    Toast.makeText(this, "For full app functions these premission are needed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "For full app functions these permissions are needed", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -188,7 +191,15 @@ public class Splash extends AppCompatActivity {
      * 
      */
     public void AskPermission() {
-        int permsRequestCode = 200;
+
+        new Gota.Builder(Splash.this)
+                .withPermissions(perms)
+                .requestId(1)
+                .setListener(Splash.this)
+                .check();
+
+        //Keeping this because it's a good reference for how to do permissions without Gota
+        /*int permsRequestCode = 200;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
@@ -211,18 +222,17 @@ public class Splash extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this, perms, permsRequestCode);
 
                 } else {
-                    /**If the app does have their Permission  dont ask again**/
+                    *//**If the app does have their Permission  dont ask again**//*
                     //requestPermissions(perms, permsRequestCode);
                     ActivityCompat.requestPermissions(this, perms, permsRequestCode);
                     next();
                 }
 
-
             }
 
             //next();
 
-        }
+        }*/
 
     }
 
@@ -258,6 +268,19 @@ public class Splash extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestBack(int requestId, @NonNull GotaResponse gotaResponse) {
+        if(gotaResponse.hasDeniedPermission()) {
+            Toast.makeText(this, "For full app functions these permissions are needed", Toast.LENGTH_LONG).show();
+            new Gota.Builder(Splash.this)
+                    .withPermissions(gotaResponse.deniedPermissions())
+                    .requestId(1)
+                    .setListener(Splash.this)
+                    .check();
+        } else if(gotaResponse.isAllGranted()) {
+            next();
+        }
+    }
 }
 
 

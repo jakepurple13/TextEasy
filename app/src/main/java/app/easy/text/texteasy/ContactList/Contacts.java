@@ -4,14 +4,11 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -35,10 +32,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -46,34 +40,19 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.getkeepsafe.taptargetview.TapTargetView;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.FirebaseAuth;
-import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mooveit.library.Fakeit;
-import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
-import com.nightonke.boommenu.OnBoomListener;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.viethoa.RecyclerViewFastScroller;
 
@@ -88,13 +67,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Settings1Activity;
-import app.easy.text.texteasy.About.AboutScreen;
-import app.easy.text.texteasy.Tester.AboutAndCont;
 import app.easy.text.texteasy.Tester.BlankTestingActivity;
-import app.easy.text.texteasy.Tester.ContactInfoTest;
 import app.easy.text.texteasy.Translator;
 import dmax.dialog.SpotsDialog;
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
@@ -153,7 +128,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
     public String messageToPass = "";
 
-    boolean testingVariable = true;
+    boolean testingVariable = false;
 
     /**
      * @param savedInstanceState
@@ -171,7 +146,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-8950844463555971~6055866848");
+        MobileAds.initialize(getApplicationContext(), String.valueOf(R.string.ad_code));
 
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -876,6 +851,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             listOfNames+=mAlphabetItems.get(i);
         }*/
 
+       if(al.size()==0) {
+           al.add(new ContactInfo("Please goto settings to enable permissions",
+                   "Please goto settings to enable permissions",
+                   "Please goto settings to enable permissions"));
+       }
 
 
         SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);

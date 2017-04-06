@@ -1,5 +1,6 @@
 package app.easy.text.texteasy.Tester;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,10 +14,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ftinc.scoop.Scoop;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.mooveit.library.Fakeit;
+
+import net.alhazmy13.gota.Gota;
+import net.alhazmy13.gota.GotaResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +29,23 @@ import java.util.List;
 import app.easy.text.texteasy.R;
 import eu.long1.spacetablayout.SpaceTabLayout;
 
-public class testingtwo extends AppCompatActivity {
+public class testingtwo extends AppCompatActivity implements Gota.OnRequestPermissionsBack {
 
     SpaceTabLayout tabLayout;
+
+    String[] perms = {"android.permission.RECEIVE_SMS",
+            "android.permission.CALL_PHONE",
+            "android.permission.WRITE_CONTACTS",
+            "android.permission.READ_CONTACTS",
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE",
+            "android.permission.SEND_SMS",
+            "android.permission.READ_SMS"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Scoop.getInstance().apply(this);
         setContentView(R.layout.activity_testingtwo);
 
 
@@ -106,6 +121,21 @@ public class testingtwo extends AppCompatActivity {
         tabLayout.initialize(viewPager, getSupportFragmentManager(),
                 fragmentList, savedInstanceState);
 
+        tabLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tabLayout.getCurrentPosition()==4) {
+
+                    new Gota.Builder(testingtwo.this)
+                            .withPermissions(perms)
+                            .requestId(1)
+                            .setListener(testingtwo.this)
+                            .check();
+
+                    //((TextView) tabLayout.getTabFiveView().findViewById(R.id.textView7)).setText("HELLOEadsf");
+                }
+            }
+        });
 
 
     }
@@ -137,5 +167,16 @@ public class testingtwo extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onRequestBack(int requestId, @NonNull GotaResponse gotaResponse) {
+        if(gotaResponse.hasDeniedPermission()) {
+            new Gota.Builder(testingtwo.this)
+                    .withPermissions(gotaResponse.deniedPermissions())
+                    .requestId(1)
+                    .setListener(testingtwo.this)
+                    .check();
+        }
     }
 }
