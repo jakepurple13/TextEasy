@@ -23,6 +23,7 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,10 +33,12 @@ import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 
 import app.easy.text.texteasy.About.AboutScreen;
+import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Statistics.StatisticsActivity;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -186,7 +189,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                 || NewAbbreviationsPreferenceFragment.class.getName().equals(fragmentName)
                 || StatisticsPreferenceFragment.class.getName().equals(fragmentName)
                 || ShowNumberFragment.class.getName().equals(fragmentName)
-                || LoginPreferenceFragment.class.getName().equals(fragmentName);
+                || LoginPreferenceFragment.class.getName().equals(fragmentName)
+                || WordListPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -528,7 +532,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             String number = tm.getLine1Number();
 
             EditTextPreference phoneNumber = (EditTextPreference) findPreference("phone_number");
-            phoneNumber.setTitle("My Number: " + number);
+            phoneNumber.setTitle("My Number: " + PhoneNumberUtils.formatNumber(number, Locale.getDefault().getCountry()));
             phoneNumber.setSelectable(false);
 
             //Device Model
@@ -647,6 +651,35 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             // guidelines.
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), Settings1Activity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class WordListPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Scoop.getInstance().apply(getActivity());
+            setHasOptionsMenu(true);
+            //goto the login activities
+            Intent i = new Intent(this.getContext(), ListOfWords.class);
+            startActivity(i);
+            getActivity().finish();
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
         }
 
 

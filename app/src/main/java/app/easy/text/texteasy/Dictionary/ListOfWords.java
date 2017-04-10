@@ -62,9 +62,6 @@ public class ListOfWords extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //setThemed();
-
         super.onCreate(savedInstanceState);
 
         Scoop.getInstance().apply(this);
@@ -188,6 +185,7 @@ public class ListOfWords extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
+        fab.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

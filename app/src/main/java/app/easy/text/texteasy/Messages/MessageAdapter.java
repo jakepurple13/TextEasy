@@ -26,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import org.json.JSONException;
 
@@ -204,6 +206,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(isHidden) {
                     holder.dateView.setVisibility(View.VISIBLE);
                     isHidden = false;
@@ -211,6 +214,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     holder.dateView.setVisibility(View.GONE);
                     isHidden = true;
                 }
+
             }
         });
 

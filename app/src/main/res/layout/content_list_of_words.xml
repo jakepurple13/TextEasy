@@ -21,7 +21,8 @@
         android:layout_below="@+id/wordsearch"
         android:layout_alignParentBottom="true"
         android:layout_above="@id/adView1"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        android:layout_toStartOf="@+id/quickDictionary" />
 
     <com.viethoa.RecyclerViewFastScroller
         android:id="@+id/quickDictionary"

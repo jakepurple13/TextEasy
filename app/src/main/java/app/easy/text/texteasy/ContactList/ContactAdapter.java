@@ -1,10 +1,12 @@
 package app.easy.text.texteasy.ContactList;
 
 import android.app.ActivityOptions;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -31,12 +33,16 @@ import com.viethoa.RecyclerViewFastScroller;
 import org.json.JSONException;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.Messages.MainActivity;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Translator;
 import in.myinnos.alphabetsindexfastscrollrecycler.utilities_fs.StringMatcher;
 
 /**
@@ -51,6 +57,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     int lastPos = -1;
     //sections for the index bar
     private String mSections = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Translator t;
 
     @Override
     public int getPositionForSection(int section) {
@@ -103,10 +110,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     // Provide a suitable constructor (depends on the kind of dataset)
 
-    public ContactAdapter(ArrayList<Contacts.ContactInfo> myDataset, Contacts in, String list) {
+    public ContactAdapter(ArrayList<Contacts.ContactInfo> myDataset, Contacts in, String list, Translator t) {
         mDataset = myDataset;
         this.in = in;
         mSections = list;
+        this.t = t;
     }
 
     // Create new views (invoked by the layout manager)
@@ -139,7 +147,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             num = "1";
         bgShape.setStroke(Integer.parseInt(num), Color.BLACK);
         //setting the text
-        holder.mTextView.setText(Html.fromHtml(mDataset.get(position).toString()));
+        //holder.mTextView.setText(Html.fromHtml(mDataset.get(position).toString()));
+        holder.mTextView.setText(Html.fromHtml(mDataset.get(position).toString() + getsms(mDataset.get(position).number)));
         //Change text to white if the theme is a dark theme
         if(getThemeId() == R.style.Theme_NightTheme_DayNight_NightMODE) {
             holder.mTextView.setTextColor(Color.WHITE);
@@ -242,6 +251,65 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             Log.w("themeid", e.toString());
         }
         return 0;
+    }
+
+    /*
+    *getsms
+    *get texts of a contact
+    * phoneNumber - (String) - a contacts phone number
+    */
+    public String getsms(String phoneNumber) {
+        //the text that will be returned
+        String text = " ";
+
+        Uri uri = Uri.parse("content://sms/");
+        ContentResolver contentResolver = in.getContentResolver();
+        //SQL based stuff to single out a contact
+
+        //gets the last text contact sent
+        //String sms = "address='"+ "+1" + phoneNumber + "'";
+        //gets last contact you sent
+        //String sms = "address='" + phoneNumber + "'";
+        //Gets the last text sent or received
+        String[] smsTest = new String[]{ "+1" + phoneNumber, phoneNumber};
+        //Cursor cursor = contentResolver.query(uri, new String[] { "_id", "body", "date", "address" }, sms, null, null);
+        Cursor cursor = contentResolver.query(uri, new String[] { "_id", "body", "date", "address" }, "address IN(?,?)", smsTest, null);
+        //body of text
+        String strbody = "";
+        //To get the date
+        Calendar cal = Calendar.getInstance();
+        //get the most recent data
+        assert cursor != null;
+        if(cursor.moveToFirst()) {
+            strbody = cursor.getString(cursor.getColumnIndex("body"));
+            cal.setTimeInMillis(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow("date")).toString()));
+            //Log.i(phoneNumber, "getsms: " + strbody);
+        }
+        //Change calendar to a date
+        Date d = cal.getTime();
+        //deal with patterns to conversion
+        String pattern = "hh:mm:ss a MM/dd/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+        //Closing the cursor
+        cursor.close();
+        //moving on to String manipulation
+        text = strbody;
+        //Possible change in color
+        String textColor = "gray";
+
+        //String result = "<br><small><small><font color=\"" + textColor + "\">" + translate.translate(text) +
+        //      "<br>" + format.format(d) + "</font></small></small>";
+
+
+        //This is what will be returned
+        String result = "<br><small><small><small>" + t.translate(text) + "<br>" + format.format(d) + "</small></small></small>";
+
+        //if no text was sent, make result do a break line so things still look nice
+        if(text.equals("")) {
+            result = "<br>";
+        }
+        //return the text
+        return result;
     }
 
     public int getColored(int resource) {

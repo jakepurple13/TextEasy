@@ -72,6 +72,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Settings.Settings1Activity;
 import app.easy.text.texteasy.Tester.BlankTestingActivity;
@@ -195,7 +196,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                         intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                         startActivity(intent);
                         Collections.sort(al, new InfoCompare());
-                        mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+                        mAdapter = new ContactAdapter(al, Contacts.this, listOfNames, translate);
                         alphabetScroller.setAdapter(mAdapter);
                     }
                 })
@@ -330,7 +331,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
                 }
                 //set the adapter for real time searching
-                mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames);
+                mAdapter = new ContactAdapter(searched, Contacts.this, listOfNames, translate);
                 alphabetScroller.setAdapter(mAdapter);
 
                 //this is for the suggestion list
@@ -494,7 +495,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
             String text = "";
             //gets last text
-            text = getsms(contactNumber);
+            //text = getsms(contactNumber);
 
             //This is for privacy
             if(testingVariable) {
@@ -528,7 +529,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                    "Please goto settings to enable permissions",
                    "Please goto settings to enable permissions"));
         }
-
 
         SharedPreferences enter = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = enter.edit();
@@ -571,12 +571,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     public boolean onMenuItemClick(MenuItem item) {
 
         switch (item.getItemId()) {
-            /*case R.id.wordChange:
+            case R.id.wordChange:
 
                 Intent callIntent = new Intent(this, ListOfWords.class);
                 startActivity(callIntent);
 
-                return true;*/
+                return true;
 
             case R.id.themes:
 
@@ -665,7 +665,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 listOfNames+=mAlphabetItems.get(i);
             }
 
-            mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+            mAdapter = new ContactAdapter(al, Contacts.this, listOfNames, translate);
 
             alphabetScroller.setAdapter(mAdapter);
             //EASTER EGG!
@@ -683,7 +683,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 mMaterialDialog.show();
             }
         }
-
 
     }
 
@@ -932,8 +931,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                                         e.printStackTrace();
                                     }
 
-
-                                    mAdapter = new ContactAdapter(al, Contacts.this, listOfNames);
+                                    mAdapter = new ContactAdapter(al, Contacts.this, listOfNames, translate);
                                     alphabetScroller.setAdapter(mAdapter);
 
                                 }

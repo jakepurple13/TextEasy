@@ -23,6 +23,11 @@
         android:title="Personal Information" />
 
     <header
+        android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$WordListPreferenceFragment"
+        android:icon="@mipmap/feedback"
+        android:title="List Of Abbreviations" />
+
+    <header
         android:fragment="app.easy.text.texteasy.Settings.Settings1Activity$ThemePreferenceFragment"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/themeChanged" />

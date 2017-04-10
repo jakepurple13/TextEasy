@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.speech.RecognizerIntent;
@@ -115,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
     String CONTACT_NAME;
     //The relative layout
     RelativeLayout rl;
+    //A check to see if its the user's first time
+    boolean firstTime;
 
     public static MainActivity instance() {
         return inst;
@@ -317,6 +320,45 @@ public class MainActivity extends AppCompatActivity {
         String shared = getIntent().getStringExtra("MessageToPass");
         //set the message text to what we want to share
         message.setText(shared);
+
+        SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this);
+        firstTime = load.getBoolean("FirstTimeOptions", true);
+
+        if(firstTime) {
+
+            //The beautiful dialog to show
+            mSDialog = new MaterialStyledDialog.Builder(MainActivity.this)
+                    .setTitle("More Options")
+                    .setDescription("Click on a text to see the date of the text. " +
+                            "Click and hold to Copy the text, Read the text Out Loud, or Share with the Facebook Messenger")
+                    .setStyle(Style.HEADER_WITH_ICON)
+                    //.setStyle(Style.HEADER_WITH_TITLE)
+                    .withDialogAnimation(true)
+                    .setScrollable(true)
+                    .setIcon(R.drawable.texteasyicon)
+                    .setPositiveText("OK")
+                    .setNegativeText("CANCEL")
+                    .onPositive(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                            mSDialog.dismiss();
+                        }
+                    })
+                    .onNegative(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull com.afollestad.materialdialogs.MaterialDialog dialog, @NonNull DialogAction which) {
+                            mSDialog.dismiss();
+                        }
+                    })
+                    .show();
+
+            SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = enter.edit();
+
+            editor.putBoolean("FirstTimeOptions", false);
+            editor.apply();
+        }
+
 
     }
 
