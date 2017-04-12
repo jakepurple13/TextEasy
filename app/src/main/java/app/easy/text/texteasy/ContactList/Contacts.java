@@ -277,8 +277,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                             .drawShadow(true)
                             .tintTarget(true)
                             .transparentTarget(false)
-                            .outerCircleColor(R.color.primary)
-                            .targetCircleColor(R.color.primary_dark),
+                            .outerCircleColor(R.color.accent_color)
+                            .targetCircleColor(R.color.accent),
                     new TapTargetView.Listener() {
                         @Override
                         public void onTargetClick(TapTargetView view) {

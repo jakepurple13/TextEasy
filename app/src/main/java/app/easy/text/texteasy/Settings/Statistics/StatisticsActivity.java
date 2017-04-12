@@ -88,7 +88,13 @@ public class StatisticsActivity extends AppCompatActivity implements Runnable {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(StatisticsActivity.this, StatisticsPage2.class);
+                /*Intent i = new Intent(StatisticsActivity.this, StatisticsPage2.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+                finish();*/
+
+
+                Intent i = new Intent(StatisticsActivity.this, Statistic.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
                 finish();

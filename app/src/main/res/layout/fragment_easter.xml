@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.github.lzyzsd.circleprogress.ArcProgress
+        android:id="@+id/arc_progress"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:arc_progress="55"
+        app:arc_bottom_text="\???"
+        android:layout_below="@+id/statBars"
+        android:layout_alignParentStart="true" />
+
+</LinearLayout>

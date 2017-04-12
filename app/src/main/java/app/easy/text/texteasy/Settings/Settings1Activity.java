@@ -35,6 +35,7 @@ import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import app.easy.text.texteasy.About.AboutScreen;
 import app.easy.text.texteasy.Dictionary.ListOfWords;
 import app.easy.text.texteasy.R;
+import app.easy.text.texteasy.Settings.Statistics.Statistic;
 import app.easy.text.texteasy.Settings.Statistics.StatisticsActivity;
 
 import java.util.List;
@@ -482,7 +483,8 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             Scoop.getInstance().apply(getActivity());
             setHasOptionsMenu(true);
             //goto the statistics activity
-            Intent i = new Intent(this.getContext(), StatisticsActivity.class);
+            //Intent i = new Intent(this.getContext(), StatisticsActivity.class);
+            Intent i = new Intent(this.getContext(), Statistic.class);
             startActivity(i);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences

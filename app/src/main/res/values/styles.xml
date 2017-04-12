@@ -117,7 +117,7 @@
 
     </style>
 
-    <style name="AppTheme.MaterialAboutActivity" parent="Theme.Mal.Dark.DarkActionBar" >
+    <style name="AppTheme.MaterialAboutActivity" parent="Theme.Mal.Dark.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/charcoal</item>
         <item name="colorPrimaryDark">@color/charcoal</item>
@@ -135,8 +135,6 @@
         <item name="colorPrimaryDark">@color/sahara</item>
 
     </style>
-
-
 
 
 </resources>

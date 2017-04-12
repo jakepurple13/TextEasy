@@ -181,7 +181,11 @@
         <activity android:name=".Settings.Statistics.StatisticsPage2" />
         <activity android:name=".Tester.GoogleSignInActivity" />
         <activity android:name=".Settings.LoginAcitivities" />
-        <activity android:name=".Tester.testingtwo"></activity>
+        <activity android:name=".Tester.testingtwo" />
+        <activity
+            android:name=".Settings.Statistics.Statistic"
+            android:label="@string/title_activity_statistic"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

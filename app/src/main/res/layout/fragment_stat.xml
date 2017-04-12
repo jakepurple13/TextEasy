@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/activity_floating_action_tester"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabDigit1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        digit:backgroundColor="#000000"
+        digit:padding="10dp"
+        digit:textColor="#ffffff"
+        digit:textSize="60dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        digit:layout_constraintLeft_toLeftOf="parent"
+        digit:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/statBar" />
+
+    <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabDigit2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        digit:backgroundColor="#000000"
+        digit:padding="10dp"
+        digit:textColor="#ffffff"
+        digit:textSize="60dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
+        digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
+        android:layout_marginLeft="43dp"
+        android:layout_alignBottom="@+id/tabDigit4"
+        android:layout_below="@+id/statBar" />
+
+    <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabDigit3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        digit:backgroundColor="#000000"
+        digit:padding="10dp"
+        digit:textColor="#ffffff"
+        digit:textSize="60dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
+        digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
+        android:layout_marginLeft="86dp"
+        android:layout_alignBottom="@+id/tabDigit4"
+        android:layout_below="@+id/statBar" />
+
+    <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabDigit4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        digit:backgroundColor="#000000"
+        digit:padding="10dp"
+        digit:textColor="#ffffff"
+        digit:textSize="60dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
+        digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
+        android:layout_marginLeft="129dp"
+        android:layout_alignBottom="@+id/tabDigit6"
+        android:layout_below="@+id/statBar" />
+
+
+
+    <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabDigit5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        digit:backgroundColor="#000000"
+        digit:padding="10dp"
+        digit:textColor="#ffffff"
+        digit:textSize="60dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
+        digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
+        android:layout_marginLeft="172dp"
+        android:layout_alignBottom="@+id/tabDigit4"
+        android:layout_below="@+id/statBar" />
+
+    <com.xenione.digit.TabDigit xmlns:digit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabDigit6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        digit:backgroundColor="#000000"
+        digit:padding="10dp"
+        digit:textColor="#ffffff"
+        digit:textSize="60dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        digit:layout_constraintLeft_toLeftOf="@+id/tabDigit1"
+        digit:layout_constraintTop_toTopOf="@+id/tabDigit1"
+        android:layout_marginLeft="215dp"
+        android:layout_alignBottom="@+id/tabDigit1"
+        android:layout_below="@+id/statBar" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="138dp"
+        android:layout_height="81dp"
+        android:text="Texts Sent Using TextEasy"
+        tools:layout_editor_absoluteX="274dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_below="@+id/statBar"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/tabDigit6" />
+
+    <com.github.anastr.speedviewlib.ProgressiveGauge
+        android:id="@+id/progressiveGauge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:sv_speedTextFormat="INTEGER"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tabDigit2" />
+
+</RelativeLayout>
