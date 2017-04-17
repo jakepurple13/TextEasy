@@ -16,6 +16,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -42,6 +43,7 @@ import java.util.List;
 import app.easy.text.texteasy.ContactList.ContactAdapter;
 import app.easy.text.texteasy.R;
 import app.easy.text.texteasy.Translator;
+import me.toptas.fancyshowcase.FancyShowCaseView;
 
 public class ListOfWords extends AppCompatActivity {
 
@@ -125,27 +127,6 @@ public class ListOfWords extends AppCompatActivity {
 
         fastScroller.setUpAlphabet(mAlphabetItems);
 
-        /*ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //Remove swiped item from list and notify the RecyclerView
-                //WordAdapter wa = (WordAdapter) mRecyclerView.getAdapter();
-                int swipedPosition = viewHolder.getAdapterPosition();
-                mAdapter.notifyItemRemoved(swipedPosition);
-                Lingo l = Lingo.findById(Lingo.class, swipedPosition);
-                l.delete();
-
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);*/
-
         searchBar = (EditText) findViewById(R.id.wordsearch);
 
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -162,8 +143,8 @@ public class ListOfWords extends AppCompatActivity {
                 searchKey = s.toString();
                 System.out.println(searchKey);
                 for (int i = 0; i < al.size(); i++) {
-                    if (al.get(i).word.toUpperCase().contains(searchKey.toUpperCase()) ||
-                            al.get(i).word.contains(searchKey)) {
+                    if (al.get(i).toString().toUpperCase().contains(searchKey.toUpperCase()) ||
+                            al.get(i).toString().contains(searchKey)) {
                         searched.add(al.get(i));
                     }
                 }
@@ -205,9 +186,9 @@ public class ListOfWords extends AppCompatActivity {
             }
         });
 
-
-
     }
+
+
 
 
     public void setTutorial(final String title, final String description, View v) {

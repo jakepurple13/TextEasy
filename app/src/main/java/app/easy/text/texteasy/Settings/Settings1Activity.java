@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -583,6 +584,29 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                     editor.apply();
 
                     preference.setTitle("Stroke Width: " + newValue);
+
+                    return false;
+                }
+            });
+
+            CheckBoxPreference tutAgain = (CheckBoxPreference) findPreference("show_tut_again");
+            SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+            tutAgain.setChecked(load.getBoolean("first time contact", false));
+            tutAgain.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                    ((CheckBoxPreference) preference).setChecked((Boolean) newValue);
+
+                    //FirstTimeOptions
+                    //first time contact
+                    SharedPreferences.Editor editor = preference.getEditor();
+                    editor.putBoolean("FirstTimeOptions", (Boolean) newValue);
+                    editor.apply();
+
+                    //SharedPreferences.Editor editor1 = preference.getEditor();
+                    editor.putBoolean("first time contact", (Boolean) newValue);
+                    editor.apply();
 
                     return false;
                 }

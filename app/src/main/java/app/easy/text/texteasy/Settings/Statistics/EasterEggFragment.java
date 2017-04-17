@@ -71,7 +71,7 @@ public class EasterEggFragment extends Fragment {
     }
 
     ArcProgress ap;
-
+    ArcProgress ip;
     MaterialDialog mMaterialDialog;
 
     @Override
@@ -107,12 +107,48 @@ public class EasterEggFragment extends Fragment {
         int num = load.getInt("roles", 0);
 
 
+        ip = (ArcProgress) root.findViewById(R.id.imagination);
+        ip.setTextColor(Color.rgb(0, 62, 124));
+        ip.setFinishedStrokeColor(Color.rgb(0, 62, 124));
+        ip.setUnfinishedStrokeColor(Color.rgb(0, 62, 124));
+
+        View.OnClickListener imagine;
+
+        if(num>=1) {
+            ip.setProgress(100);
+            ip.setBottomText("Imagination");
+            imagine = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mMaterialDialog.setTitle("Imagination!");
+                    mMaterialDialog.setMessage("You used the /me and used your imagination!");
+                    mMaterialDialog.show();
+                }
+            };
+        } else {
+            ip.setProgress(num/100);
+            ip.setBottomText("Mind Fun");
+            imagine = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mMaterialDialog.setTitle("Mind Fun");
+                    mMaterialDialog.setMessage("/me");
+                    mMaterialDialog.show();
+                }
+            };
+        }
+
+        ip.setOnClickListener(imagine);
+
+
+
+
+
         ap = (ArcProgress) root.findViewById(R.id.arc_progress);
         ap.setTextColor(Color.YELLOW);
         ap.setFinishedStrokeColor(Color.YELLOW);
 
         View.OnClickListener goldTheme;
-
 
         if(g>=79) {
             ap.setProgress(100);
@@ -139,8 +175,6 @@ public class EasterEggFragment extends Fragment {
         }
 
         ap.setOnClickListener(goldTheme);
-
-
 
         return root;
     }

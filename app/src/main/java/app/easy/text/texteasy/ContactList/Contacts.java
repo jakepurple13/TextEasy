@@ -28,11 +28,15 @@ import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -83,6 +87,9 @@ import me.drakeet.materialdialog.MaterialDialog;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
 import me.everything.providers.core.Data;
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.FocusShape;
 
 import static android.R.attr.id;
 
@@ -116,7 +123,9 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     boolean firstTimeAddContact = false;
     //first time for tutorial
     boolean firstTimeSearch = false;
-
+    //first time check
+    boolean firstTime;
+    //the last theme id
     int lastTheme = -1;
     //This is for the fast index bar
     String listOfNames = "";
@@ -130,6 +139,12 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     public String messageToPass = "";
     //purely for generating fake data
     boolean testingVariable = false;
+    //layout for the contact activity
+    RelativeLayout rl;
+    //the toolbar
+    Toolbar toolbar;
+    //Ads!
+    AdView mAdView;
 
     /**
      * @param savedInstanceState
@@ -140,16 +155,19 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
         //Scoop! Deals with the theme
         Scoop.getInstance().apply(this);
         setContentView(R.layout.activity_contacts);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Ad initializer! Yay!
         MobileAds.initialize(getApplicationContext(), String.valueOf(R.string.ad_code));
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         //Get the translator running
         translate = new Translator(this);
+        //set up the layout
+        rl = (RelativeLayout) findViewById(R.id.contactlayout);
+
         //This is to get the contacts
         pt = new ProgressTask(Contacts.this);
         pt.execute();
@@ -174,9 +192,11 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 });
 
         //These are to get first time data
-        SharedPreferences load = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this);
+        firstTime = load.getBoolean("first time contact", true);
         firstTimeAddContact = load.getBoolean("add contact", false);
         firstTimeSearch = load.getBoolean("search", false);
+        //firstTime = true;
 
         //---------------BOOM---------------------
 
@@ -261,7 +281,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 .subNormalText("Coming Soon!");
 
         //bmb.addBuilder(groupChat);
-        //First time
+
+        /*//First time
         if (!firstTimeAddContact) {
 
             SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
@@ -291,7 +312,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                         }
                     });
 
-        }
+        }*/
 
         //---------------BOOM---------------------
 
@@ -398,6 +419,49 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             Log.e("Contacts Line 667", "onCreate: " + e);
         }
 
+    }
+
+    public void firstTimeHere() {
+
+        FancyShowCaseView search = new FancyShowCaseView.Builder(Contacts.this)
+                .focusOn(searchBars)
+                .title("Search Bar\nSearch for a contact here")
+                .titleGravity(Gravity.CENTER)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
+
+        FancyShowCaseView bmbText = new FancyShowCaseView.Builder(Contacts.this)
+                .focusOn(bmb)
+                .title("Options\nAdd a Contact, Go to the Settings Menu, or Call Someone by clicking this")
+                .titleGravity(Gravity.END | Gravity.CENTER)
+                .focusShape(FocusShape.CIRCLE)
+                .build();
+
+        FancyShowCaseView texted = new FancyShowCaseView.Builder(Contacts.this)
+                .focusOn(alphabetScroller)
+                .title("Contacts Will Show Up Here\nClick On a Contact to Text Them")
+                .titleGravity(Gravity.BOTTOM | Gravity.START)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
+
+        FancyShowCaseView ads = new FancyShowCaseView.Builder(Contacts.this)
+                .focusOn(mAdView)
+                .title("And if you want to support the developers, you can click on this ad" +
+                        " to give him a few pennies.")
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
+
+        new FancyShowCaseQueue()
+                .add(search)
+                .add(bmbText)
+                //.add(texted)
+                .add(ads)
+                .show();
+
+        SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = enter.edit();
+        editor.putBoolean("first time contact", false);
+        editor.apply();
     }
 
     /*
@@ -682,6 +746,23 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                 });
                 mMaterialDialog.show();
             }
+
+            ViewTreeObserver vto = alphabetScroller.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    alphabetScroller.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    //We are now sure the view is drawn and should be able to do what you wanted:
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(alphabetScroller,InputMethodManager.SHOW_IMPLICIT);
+
+                    if(firstTime) {
+                        firstTimeHere();
+                    }
+
+                }
+            });
+
         }
 
     }
@@ -782,11 +863,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
         if (requestCode == 201) {
-
             //recreate();
-
         }
 
         recreate();
@@ -819,7 +897,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     }
 
 
-
     public void getFaceBookStuff() {
 
         /* make the API call */
@@ -844,9 +921,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             request.setParameters(parameters);
             request.executeAsync();
 
-            final String TAG = "gello world";
-
-
+            final String TAG = "hello world";
 
             GraphRequest data_request = GraphRequest.newMeRequest(
                     AccessToken.getCurrentAccessToken(),
@@ -875,7 +950,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                                             category+ " likes count -" + count);
                                 }
 
-                            } catch(Exception e){
+                            } catch(Exception e) {
 
                             }
                         }
@@ -885,10 +960,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             permission_param.putString("fields", "likes{id,category,name,location,likes}");
             data_request.setParameters(permission_param);
             data_request.executeAsync();
-
-
-
-
 
             GraphRequestBatch batch = new GraphRequestBatch(
                     GraphRequest.newMeRequest(
@@ -946,7 +1017,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             batch.executeAsync();
 
         } catch(NullPointerException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            Log.e("error", e.toString());
         }
 
     }

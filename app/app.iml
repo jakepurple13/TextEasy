@@ -142,6 +142,7 @@
     <orderEntry type="library" exported="" name="bolts-applinks-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="navigationtabstrip-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="smallbang-library-0.1.2" level="project" />
+    <orderEntry type="library" exported="" name="FancyShowCaseView-0.0.6" level="project" />
     <orderEntry type="library" exported="" name="MaterialStyledDialogs-2.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-25.3.0" level="project" />
@@ -159,8 +160,8 @@
     <orderEntry type="library" exported="" name="bolts-tasks-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-auth-10.2.0" level="project" />
-    <orderEntry type="library" exported="" name="AlphabetIndex-Fast-Scroll-RecyclerView-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-clearcut-10.2.0" level="project" />
+    <orderEntry type="library" exported="" name="AlphabetIndex-Fast-Scroll-RecyclerView-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-v13-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="magic-1.1" level="project" />

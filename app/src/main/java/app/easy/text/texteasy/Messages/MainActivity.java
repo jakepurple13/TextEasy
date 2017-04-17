@@ -22,6 +22,7 @@ import android.provider.Telephony;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.RemoteInput;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,11 +31,14 @@ import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -77,6 +81,9 @@ import app.easy.text.texteasy.Translator;
 import me.drakeet.materialdialog.MaterialDialog;
 import me.everything.providers.android.telephony.Sms;
 import me.everything.providers.android.telephony.TelephonyProvider;
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.FocusShape;
 import tyrantgit.explosionfield.ExplosionField;
 import xyz.hanks.library.SmallBang;
 
@@ -118,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
     //A check to see if its the user's first time
     boolean firstTime;
+    //the toolbar
+    Toolbar toolbar;
 
     public static MainActivity instance() {
         return inst;
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         Scoop.getInstance().apply(this);
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarsed);
+        toolbar = (Toolbar) findViewById(R.id.toolbarsed);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -154,13 +163,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         rl = (RelativeLayout) findViewById(R.id.confettiContain);
 
         materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.ARROW);
         toolbar.setNavigationIcon(materialMenu);
-
 
         mMaterialDialog = new MaterialDialog(this)
                 .setTitle("Hi")
@@ -216,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new MessageAdapter(al, MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
+        //Get our texts!
+        getsms();
         //scroll to the bottom
         mRecyclerView.scrollToPosition(al.size() - 1);
         //send button
@@ -275,36 +284,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        send.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-
-                TapTargetView.showFor(MainActivity.this,
-                        TapTarget.forView(send, "Send", "Send your text\nPress and hold to bring up again")
-                                .cancelable(true)
-                                .drawShadow(true)
-                                .tintTarget(true)
-                                //.icon(R.drawable.sendbutton)
-                                .transparentTarget(false)
-                                .outerCircleColor(R.color.primary)
-                                .targetCircleColor(R.color.primary_dark),
-                        new TapTargetView.Listener() {
-                            @Override
-                            public void onTargetClick(TapTargetView view) {
-                                view.dismiss(true);
-                            }
-
-                            @Override
-                            public void onTargetLongClick(TapTargetView view) {
-
-                            }
-                        });
-
-                return false;
-            }
-        });
-
         //speech to text button
         speechToText = (ImageButton) findViewById(R.id.speech_button);
         //set the OnClickListener
@@ -314,23 +293,49 @@ public class MainActivity extends AppCompatActivity {
                 startSpeechToText();
             }
         });
-        //Get our texts!
-        getsms();
         //are we sharing anything?
         String shared = getIntent().getStringExtra("MessageToPass");
         //set the message text to what we want to share
         message.setText(shared);
 
+        send.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                firstTimeHere();
+                return false;
+            }
+        });
+
         SharedPreferences load = PreferenceManager.getDefaultSharedPreferences(this);
         firstTime = load.getBoolean("FirstTimeOptions", true);
 
-        if(firstTime) {
+        ViewTreeObserver vto = rl.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                rl.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                //We are now sure the view is drawn and should be able to do what you wanted:
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(rl,InputMethodManager.SHOW_IMPLICIT);
 
-            //The beautiful dialog to show
+                if(firstTime) {
+                    firstTimeHere();
+                }
+
+            }
+        });
+
+    }
+
+    View mi;
+
+    public void firstTimeHere() {
+        /*//The beautiful dialog to show
             mSDialog = new MaterialStyledDialog.Builder(MainActivity.this)
                     .setTitle("More Options")
                     .setDescription("Click on a text to see the date of the text. " +
-                            "Click and hold to Copy the text, Read the text Out Loud, or Share with the Facebook Messenger")
+                            "Click and hold to Copy the text, Read the text Out Loud,
+                            or Share with the Facebook Messenger")
                     .setStyle(Style.HEADER_WITH_ICON)
                     //.setStyle(Style.HEADER_WITH_TITLE)
                     .withDialogAnimation(true)
@@ -350,16 +355,72 @@ public class MainActivity extends AppCompatActivity {
                             mSDialog.dismiss();
                         }
                     })
-                    .show();
+                    .show();*/
 
-            SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = enter.edit();
+        FancyShowCaseView speech = new FancyShowCaseView.Builder(MainActivity.this)
+                .focusOn(speechToText)
+                .title("Speech to Text")
+                //.showOnce("speechtotextonce")
+                .titleGravity(Gravity.BOTTOM)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
 
-            editor.putBoolean("FirstTimeOptions", false);
-            editor.apply();
+        FancyShowCaseView sent = new FancyShowCaseView.Builder(MainActivity.this)
+                .focusOn(send)
+                .title("Send Your Text\nAlso Press and Hold here to see this again.")
+                //.showOnce("sendtextonce")
+                .titleGravity(Gravity.BOTTOM)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
+
+        FancyShowCaseView messages = new FancyShowCaseView.Builder(MainActivity.this)
+                .focusOn(message)
+                .title("Your Message to Send")
+                //.showOnce("messagetextonce")
+                .titleGravity(Gravity.END | Gravity.CENTER)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
+
+        FancyShowCaseView tool = new FancyShowCaseView.Builder(MainActivity.this)
+                .focusOn(toolbar)
+                .title("Here you can Call or Edit this Contact")
+                //.showOnce("toolbaronce")
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .build();
+
+        FancyShowCaseView.Builder textedBuild;
+
+        if(al.size()!=0) {
+            textedBuild = new FancyShowCaseView.Builder(MainActivity.this)
+                    .focusOn(mRecyclerView.findViewHolderForAdapterPosition(al.size()-1).itemView);
+        } else {
+            textedBuild = new FancyShowCaseView.Builder(MainActivity.this)
+                    .focusOn(mRecyclerView);
+
         }
 
+        FancyShowCaseView texted = textedBuild.title("This is where the text messages will go.\n" +
+                "Click on a text to see the date of the text.\n" +
+                "Click and hold to bring some Options up.")
+                /*"\nYou can:\n Copy the text.\nRead the text Out Loud.\n" +
+                "Or Share with the Facebook Messenger.")*/
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                //.showOnce("textmessageonce")
+                .build();
 
+        new FancyShowCaseQueue()
+                .add(speech)
+                .add(sent)
+                .add(messages)
+                .add(tool)
+                .add(texted)
+                .show();
+
+        SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = enter.edit();
+
+        editor.putBoolean("FirstTimeOptions", false);
+        editor.apply();
     }
 
     /*

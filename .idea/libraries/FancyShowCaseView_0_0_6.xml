@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="FancyShowCaseView-0.0.6">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/b11594d94128480c3adc18f89c7e0fe61ef6cfda/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/b11594d94128480c3adc18f89c7e0fe61ef6cfda/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.faruktoptas/FancyShowCaseView/0.0.6/368c2ad3636e499528bd0e2247a9f027ce659bc3/FancyShowCaseView-0.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

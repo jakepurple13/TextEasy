@@ -39,6 +39,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/b11594d94128480c3adc18f89c7e0fe61ef6cfda/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1948e3e272dbe00997d2a7d4b16665353b7735ef">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_885681a39ed7b2c12aa3cb4035f004b0eaba448c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
@@ -93,6 +102,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/9e72b293622d6debc0a7bcdca3335eceb141ece8/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="20e7f75b3d42b2bea7439b73a043237155a6ccec">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6441377ee082f155bb70810c04bc47e950660b4a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/.android/build-cache/04b32bc04e89b1b9bc3a3c2b380aeeadc72fec22/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -135,15 +153,6 @@
         revision="25.0.2"
         sha1="e3a80b097354d985329afc51d61a304e0eb90731">
         <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_206cdead3c92f108cf2a7ec944a609f63f93cadc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Jacob/.android/build-cache/8be5624a3c294e5a9c3d38a39acae31bdc0f1ef7/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="989cd4faa1aa1069c037e814a408f5f7f1fe5fd2">
-        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_75e51edb43a6c60eca6b5eea65f8622302aa9d1b/classes.dex" />
     </item>
 
 </items>
