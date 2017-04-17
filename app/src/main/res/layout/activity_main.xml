@@ -53,9 +53,10 @@
 
     <ImageButton
         android:id="@+id/speech_button"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:src="@drawable/ic_mic"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ic_mic"
+        android:layout_height="50dp"
         android:layout_below="@+id/my_recycler_view"
         android:layout_toStartOf="@+id/button" />
 

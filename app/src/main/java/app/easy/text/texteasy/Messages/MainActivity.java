@@ -662,7 +662,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /*
     * getContactName
     * gets the contacts name

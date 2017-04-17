@@ -30,30 +30,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16eb00c4-bbe7-46d3-8331-758605d73785" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/AlphabetIndex_Fast_Scroll_RecyclerView_1_0_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/FancyShowCaseView_0_0_6.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/AlphabetIndex_Fast_Scroll_RecyclerView_1_0_2.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/EasterEggFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/EasterEggFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_contacts.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_contacts.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_easter.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_easter.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/raw/wordlist" afterPath="$PROJECT_DIR$/app/src/main/res/raw/wordlist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/xml/show_number.xml" afterPath="$PROJECT_DIR$/app/src/main/res/xml/show_number.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
     </list>
     <ignored path="TextEasy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -126,73 +113,88 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="421" column="43" selection-start-line="421" selection-start-column="27" selection-end-line="421" selection-end-column="43" />
+            <state relative-caret-position="10905">
+              <caret line="827" column="22" selection-start-line="827" selection-start-column="22" selection-end-line="827" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5081#5366#0" expanded="true" />
-                <element signature="e#5365#5366#0" expanded="true" />
-                <element signature="e#10856#11046#0" expanded="true" />
-                <element signature="e#11045#11046#0" expanded="true" />
-                <element signature="e#11295#11903#0" expanded="true" />
-                <element signature="e#11902#11903#0" expanded="true" />
-                <marker date="1492120086000" expanded="false" signature="25561:30190" ph="..." />
+                <marker date="1492437944000" expanded="true" signature="25560:30189" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Settings1Activity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Settings1Activity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="593" column="75" selection-start-line="593" selection-start-column="75" selection-end-line="593" selection-end-column="75" />
-              <folding>
-                <element signature="e#24272#25062#0" expanded="true" />
-                <element signature="e#25061#25062#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="8280">
+              <caret line="593" column="78" selection-start-line="593" selection-start-column="78" selection-end-line="593" selection-end-column="78" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="show_number.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/show_number.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
+            <state relative-caret-position="570">
               <caret line="38" column="35" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="35" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="main_activity.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_activity.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
         </entry>
       </file>
-      <file leaf-file-name="Contacts.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Contacts.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="194" column="85" selection-start-line="194" selection-start-column="8" selection-end-line="194" selection-end-column="85" />
+            <state relative-caret-position="195">
+              <caret line="141" column="37" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#5494#5510#0" expanded="true" />
+                <element signature="e#7479#8162#0" expanded="true" />
+                <element signature="e#8161#8162#0" expanded="true" />
+                <element signature="e#8506#8833#0" expanded="true" />
+                <element signature="e#8832#8833#0" expanded="true" />
+                <element signature="e#9158#9480#0" expanded="true" />
+                <element signature="e#9479#9480#0" expanded="true" />
+                <element signature="e#9826#10103#0" expanded="true" />
+                <element signature="e#10102#10103#0" expanded="true" />
+                <element signature="e#10375#10713#0" expanded="true" />
+                <element signature="e#10712#10713#0" expanded="true" />
+                <element signature="e#27787#28136#0" expanded="true" />
+                <element signature="e#28135#28136#0" expanded="true" />
                 <element signature="e#28311#28991#0" expanded="true" />
                 <element signature="e#28990#28991#0" expanded="true" />
-                <marker date="1492119763000" expanded="true" signature="12182:12260" ph="//..." />
-                <marker date="1492119763000" expanded="false" signature="23999:24026" ph=" { " />
-                <marker date="1492119763000" expanded="false" signature="24045:24067" ph=" }" />
+                <element signature="e#33137#33578#0" expanded="true" />
+                <element signature="e#33577#33578#0" expanded="true" />
+                <element signature="e#33962#35491#0" expanded="true" />
+                <element signature="e#35490#35491#0" expanded="true" />
+                <element signature="e#36002#36473#0" expanded="true" />
+                <element signature="e#36472#36473#0" expanded="true" />
+                <element signature="e#36623#38439#0" expanded="true" />
+                <element signature="e#37398#37406#0" expanded="true" />
+                <element signature="e#38438#38439#0" expanded="true" />
+                <element signature="e#38486#38726#0" expanded="true" />
+                <element signature="e#38725#38726#0" expanded="true" />
+                <marker date="1492438118000" expanded="true" signature="12182:12260" ph="//..." />
+                <marker date="1492438118000" expanded="false" signature="23999:24026" ph=" { " />
+                <marker date="1492438118000" expanded="false" signature="24045:24067" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -201,7 +203,7 @@
       <file leaf-file-name="ContactAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1432">
+            <state relative-caret-position="105">
               <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding />
             </state>
@@ -210,34 +212,34 @@
       </file>
       <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
           <provider editor-type-id="android-designer2">
             <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="content_contacts.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_contacts.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="675">
               <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
         </entry>
       </file>
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="497">
+            <state relative-caret-position="945">
               <caret line="63" column="76" selection-start-line="63" selection-start-column="76" selection-end-line="63" selection-end-column="76" />
               <folding />
             </state>
@@ -247,7 +249,7 @@
       <file leaf-file-name="ListOfWords.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
+            <state relative-caret-position="1800">
               <caret line="163" column="11" selection-start-line="163" selection-start-column="11" selection-end-line="163" selection-end-column="11" />
               <folding />
             </state>
@@ -3349,7 +3351,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login_acitivities.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Tester/LoginAcitivities.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/bubbletrash.xml" />
@@ -3396,10 +3397,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_contacts.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/show_number.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
       </list>
     </option>
   </component>
@@ -3482,6 +3484,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -3656,10 +3662,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -4326,8 +4328,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32628798" sideWeight="0.5143061" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32628798" sideWeight="0.48569384" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Unicode Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -4339,8 +4341,8 @@
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3989432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3989432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -4391,23 +4393,20 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_contacts.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="19" column="58" selection-start-line="12" selection-start-column="4" selection-end-line="19" selection-end-column="58" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Tester/testingtwo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="161" column="19" selection-start-line="143" selection-start-column="8" selection-end-line="161" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4415,12 +4414,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-52">
           <caret line="182" column="44" selection-start-line="182" selection-start-column="44" selection-end-line="182" selection-end-column="44" />
-          <folding>
-            <element signature="e#8004#8406#0" expanded="false" />
-            <element signature="e#8405#8406#0" expanded="false" />
-            <element signature="e#8452#8854#0" expanded="false" />
-            <element signature="e#8853#8854#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4428,26 +4421,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="428">
           <caret line="54" column="28" selection-start-line="54" selection-start-column="28" selection-end-line="54" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1575">
           <caret line="166" column="36" selection-start-line="166" selection-start-column="36" selection-end-line="166" selection-end-column="36" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Receiver/HeadlessSmsSendService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4455,7 +4446,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1027">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4463,7 +4453,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-300">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4471,7 +4460,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-457">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4479,7 +4467,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4487,7 +4474,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
           <caret line="171" column="0" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4495,7 +4481,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4542,6 +4527,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/contact_activity_menu.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
@@ -4550,30 +4538,27 @@
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update_word.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update_word.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_of_words.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_of_words.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_headers.xml">
@@ -4588,10 +4573,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="265" column="31" selection-start-line="265" selection-start-column="31" selection-end-line="265" selection-end-column="31" />
-          <folding>
-            <element signature="e#6860#7254#0" expanded="false" />
-            <element signature="e#7253#7254#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4599,12 +4580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="362">
           <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-          <folding>
-            <element signature="e#2997#3319#0" expanded="false" />
-            <element signature="e#3318#3319#0" expanded="false" />
-            <element signature="e#3677#4271#0" expanded="false" />
-            <element signature="e#4270#4271#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4612,7 +4587,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4620,82 +4594,71 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="69" column="64" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="64" />
-          <folding>
-            <element signature="e#2013#2298#0" expanded="false" />
-            <element signature="e#2297#2298#0" expanded="false" />
-            <element signature="e#2617#3207#0" expanded="false" />
-            <element signature="e#3206#3207#0" expanded="false" />
-            <element signature="e#5164#5165#0" expanded="false" />
-            <element signature="e#5194#5195#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_statistics.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="53" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="53" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/StatFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3223#3224#0" expanded="true" />
-            <element signature="e#3273#3274#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_stat.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="70" column="8" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="43" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statistic.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statistic.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_statistics_page2.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_statistics_page2.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/StatisticsPage2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="28" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_statistic.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="8" selection-start-line="4" selection-start-column="4" selection-end-line="8" selection-end-column="38" />
@@ -4704,23 +4667,18 @@
           </folding>
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="53">
           <caret line="56" column="55" selection-start-line="56" selection-start-column="55" selection-end-line="56" selection-end-column="55" />
-          <folding>
-            <element signature="e#2026#2311#0" expanded="false" />
-            <element signature="e#2310#2311#0" expanded="false" />
-            <element signature="e#5744#5821#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_statistic.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
           <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
@@ -4729,31 +4687,22 @@
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_easter.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_easter.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/EasterEggFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="113">
           <caret line="114" column="37" selection-start-line="114" selection-start-column="37" selection-end-line="114" selection-end-column="37" />
-          <folding>
-            <element signature="e#3781#4114#0" expanded="true" />
-            <element signature="e#4113#4114#0" expanded="true" />
-            <element signature="e#4234#4523#0" expanded="true" />
-            <element signature="e#4522#4523#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4761,7 +4710,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
           <caret line="74" column="12" selection-start-line="74" selection-start-column="12" selection-end-line="74" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4769,7 +4717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="112" column="24" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4782,19 +4729,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/chatmessagethem.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
+        <state relative-caret-position="1800">
           <caret line="163" column="11" selection-start-line="163" selection-start-column="11" selection-end-line="163" selection-end-column="11" />
           <folding />
         </state>
@@ -4804,38 +4751,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="415" column="19" selection-start-line="415" selection-start-column="19" selection-end-line="415" selection-end-column="19" />
-          <folding>
-            <element signature="e#16317#16318#0" expanded="false" />
-            <element signature="e#16381#16382#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_contacts.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
           <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1432">
+        <state relative-caret-position="105">
           <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
           <folding />
         </state>
@@ -4843,73 +4775,99 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
+        <state relative-caret-position="945">
           <caret line="63" column="76" selection-start-line="63" selection-start-column="76" selection-end-line="63" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/show_number.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8280">
+          <caret line="593" column="78" selection-start-line="593" selection-start-column="78" selection-end-line="593" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10905">
+          <caret line="827" column="22" selection-start-line="827" selection-start-column="22" selection-end-line="827" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1492437944000" expanded="true" signature="25560:30189" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_activity.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/show_number.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="38" column="35" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="35" />
+        <state relative-caret-position="390">
+          <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
           <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="421" column="43" selection-start-line="421" selection-start-column="27" selection-end-line="421" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5081#5366#0" expanded="true" />
-            <element signature="e#5365#5366#0" expanded="true" />
-            <element signature="e#10856#11046#0" expanded="true" />
-            <element signature="e#11045#11046#0" expanded="true" />
-            <element signature="e#11295#11903#0" expanded="true" />
-            <element signature="e#11902#11903#0" expanded="true" />
-            <marker date="1492120086000" expanded="false" signature="25561:30190" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="194" column="85" selection-start-line="194" selection-start-column="8" selection-end-line="194" selection-end-column="85" />
+        <state relative-caret-position="195">
+          <caret line="141" column="37" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5494#5510#0" expanded="true" />
+            <element signature="e#7479#8162#0" expanded="true" />
+            <element signature="e#8161#8162#0" expanded="true" />
+            <element signature="e#8506#8833#0" expanded="true" />
+            <element signature="e#8832#8833#0" expanded="true" />
+            <element signature="e#9158#9480#0" expanded="true" />
+            <element signature="e#9479#9480#0" expanded="true" />
+            <element signature="e#9826#10103#0" expanded="true" />
+            <element signature="e#10102#10103#0" expanded="true" />
+            <element signature="e#10375#10713#0" expanded="true" />
+            <element signature="e#10712#10713#0" expanded="true" />
+            <element signature="e#27787#28136#0" expanded="true" />
+            <element signature="e#28135#28136#0" expanded="true" />
             <element signature="e#28311#28991#0" expanded="true" />
             <element signature="e#28990#28991#0" expanded="true" />
-            <marker date="1492119763000" expanded="true" signature="12182:12260" ph="//..." />
-            <marker date="1492119763000" expanded="false" signature="23999:24026" ph=" { " />
-            <marker date="1492119763000" expanded="false" signature="24045:24067" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="593" column="75" selection-start-line="593" selection-start-column="75" selection-end-line="593" selection-end-column="75" />
-          <folding>
-            <element signature="e#24272#25062#0" expanded="true" />
-            <element signature="e#25061#25062#0" expanded="true" />
+            <element signature="e#33137#33578#0" expanded="true" />
+            <element signature="e#33577#33578#0" expanded="true" />
+            <element signature="e#33962#35491#0" expanded="true" />
+            <element signature="e#35490#35491#0" expanded="true" />
+            <element signature="e#36002#36473#0" expanded="true" />
+            <element signature="e#36472#36473#0" expanded="true" />
+            <element signature="e#36623#38439#0" expanded="true" />
+            <element signature="e#37398#37406#0" expanded="true" />
+            <element signature="e#38438#38439#0" expanded="true" />
+            <element signature="e#38486#38726#0" expanded="true" />
+            <element signature="e#38725#38726#0" expanded="true" />
+            <marker date="1492438118000" expanded="true" signature="12182:12260" ph="//..." />
+            <marker date="1492438118000" expanded="false" signature="23999:24026" ph=" { " />
+            <marker date="1492438118000" expanded="false" signature="24045:24067" ph=" }" />
           </folding>
         </state>
       </provider>
