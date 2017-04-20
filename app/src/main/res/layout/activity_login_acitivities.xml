@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,20 +15,12 @@
         android:layout_centerHorizontal="true" />
 
 
-    <br.com.bloder.magic.view.MagicButton
+    <Button
         android:id="@+id/google_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:magic_button_size="50dp"
-        app:button_icon="@mipmap/google"
-        app:button_icon_width="25dp"
-        app:button_icon_height="25dp"
-        app:hide_text="Google"
-        app:hide_text_size="8dp"
-        app:hide_text_color="@android:color/black"
-        app:icon_button_color="#FFFFFF"
-        app:expandable_area_color="#515151"
+        android:text="Login with Google"
         android:layout_above="@+id/facebook_login_button"
-        android:layout_alignStart="@+id/facebook_login_button" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

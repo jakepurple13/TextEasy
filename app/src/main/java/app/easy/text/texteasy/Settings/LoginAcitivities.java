@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -39,7 +40,7 @@ import br.com.bloder.magic.view.MagicButton;
 
 public class LoginAcitivities extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    MagicButton googleLog;
+    Button googleLog;
 
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
@@ -71,9 +72,9 @@ public class LoginAcitivities extends AppCompatActivity implements GoogleApiClie
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(LoginAcitivities.this);
-        googleLog = (MagicButton) findViewById(R.id.google_login_button);
+        googleLog = (Button) findViewById(R.id.google_login_button);
 
-        googleLog.setMagicButtonClickListener(new View.OnClickListener() {
+        googleLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();

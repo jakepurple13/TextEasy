@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "app.easy.text.texteasy"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 25
         versionCode 7
         versionName "6.1"
