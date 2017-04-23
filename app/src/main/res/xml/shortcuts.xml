@@ -1,0 +1,19 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="contacts"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/hello_blank_fragment"
+        android:shortcutLongLabel="@string/hello_blank_fragment"
+        android:shortcutDisabledMessage="@string/hello_blank_fragment">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage=".ContactList"
+            android:targetClass=".ContactList.Contacts" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <!-- Specify more shortcuts here. -->
+</shortcuts>

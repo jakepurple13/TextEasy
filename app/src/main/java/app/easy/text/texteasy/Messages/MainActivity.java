@@ -9,9 +9,12 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -253,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //As long as the text is not ""
-                if (!(message.getText().toString().length() < 1)) {
+                if (!(message.getText().toString().trim().length() < 1)) {
                     //Some banging fun!
                     SharedPreferences load = getSharedPreferences("numOfTexts", Context.MODE_PRIVATE);
                     int num = load.getInt("DotNum", 0);
@@ -930,6 +933,55 @@ public class MainActivity extends AppCompatActivity {
         //change menu icon to a check showing that the text was sent
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.CHECK);
 
+        SharedPreferences enter = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = enter.edit();
+        editor.putString("phoneNumberLast", phoneNumber);
+        editor.apply();
+
+        setShortcuts();
+
+    }
+
+    public void setShortcuts() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+
+            if (shortcutManager.getDynamicShortcuts().size() == 0) {
+                // Application restored. Need to re-publish dynamic shortcuts.
+                if (shortcutManager.getPinnedShortcuts().size() > 0) {
+                    // Pinned shortcuts have been restored. Use
+                    // updateShortcuts() to make sure they contain
+                    // up-to-date information.
+                    shortcutManager.removeAllDynamicShortcuts();
+                }
+            }
+
+            List<ShortcutInfo> scl = new ArrayList<>();
+
+            ShortcutInfo shortcut = new ShortcutInfo.Builder(this, "id1")
+                    .setShortLabel("Go to Contacts")
+                    .setLongLabel("Go to Contacts")
+                    .setIcon(Icon.createWithResource(this, R.drawable.texteasyicon))
+                    .setIntent(new Intent(Intent.ACTION_MAIN, Uri.EMPTY, this, Contacts.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                    .build();
+
+            Intent i = new Intent(Intent.ACTION_MAIN, Uri.EMPTY, this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.putExtra("Number", phoneNumber);
+
+            ShortcutInfo shortcut1 = new ShortcutInfo.Builder(this, "id2")
+                    .setShortLabel("Text " + getContactName(phoneNumber))
+                    .setLongLabel("Text " + getContactName(phoneNumber))
+                    .setIcon(Icon.createWithResource(this, R.drawable.texteasyicon))
+                    .setIntent(i)
+                    .build();
+
+            scl.add(shortcut1);
+            scl.add(shortcut);
+
+            shortcutManager.setDynamicShortcuts(scl);
+
+        }
     }
 
     public void setThemed() {
