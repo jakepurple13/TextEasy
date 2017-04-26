@@ -138,7 +138,7 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
     //This is for sharing
     public String messageToPass = "";
     //purely for generating fake data
-    boolean testingVariable = false;
+    boolean testingVariable = true;
     //layout for the contact activity
     RelativeLayout rl;
     //the toolbar

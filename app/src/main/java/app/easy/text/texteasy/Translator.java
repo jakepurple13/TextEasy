@@ -2,6 +2,7 @@ package app.easy.text.texteasy;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 
@@ -25,6 +26,8 @@ public class Translator {
     //The dictionary
     LinkedHashMap<String, String> hm;
     boolean firsttime;
+    boolean amITranslating = true;
+
 
     public Translator(Context context) {
 
@@ -32,6 +35,8 @@ public class Translator {
 
         SharedPreferences load = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
         firsttime = load.getBoolean("FirstLoad", true);
+        SharedPreferences load1 = PreferenceManager.getDefaultSharedPreferences(context);
+        amITranslating = load1.getBoolean("translate_option", true);
 
         Log.e("Translator: ", firsttime + "");
         //firsttime
@@ -113,7 +118,13 @@ public class Translator {
             text+=sentence[i] + " ";
         }
 
-        return text;
+        if(amITranslating) {
+            return text;
+        } else {
+            return words;
+        }
+
+
     }
 
     public LinkedHashMap<String, String> getWords() {

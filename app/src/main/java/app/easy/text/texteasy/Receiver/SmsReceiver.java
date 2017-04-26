@@ -66,17 +66,21 @@ public class SmsReceiver extends BroadcastReceiver {
 
 
         inst = MainActivity.instance();
-
+        String name = getContactName(context, from);
         try {
 
             if (!inst.isDestroyed()) {
-                inst.updateList(getContactName(context, from) + ": " + message, message, 1, true);
+                inst.updateList(name + ": " + message, message, 1, true);
             }
+
+            /*if (!inst.isDestroyed()) {
+                inst.updateList(getContactName(context, from) + ": " + message, message, 1, true);
+            }*/
 
         } catch (NullPointerException e) {
             Log.e("Null point on line 77", e.toString());
 
-            try {
+            /*try {
 
                 if (!inst.isDestroyed()) {
                     inst.updateList(from + ": " + message, message, 1, true);
@@ -84,7 +88,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
             } catch(NullPointerException e1) {
                 Log.e("Null point on line 86", e1.toString());
-            }
+            }*/
 
         }
 

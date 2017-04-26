@@ -28,6 +28,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.facebook.Profile;
+import com.mooveit.library.Fakeit;
 import com.viethoa.RecyclerViewFastScroller;
 
 import org.json.JSONException;

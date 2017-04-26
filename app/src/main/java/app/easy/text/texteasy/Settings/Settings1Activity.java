@@ -612,10 +612,24 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
                 }
             });
 
+            CheckBoxPreference translateOption = (CheckBoxPreference) findPreference("translate_option");
+            SharedPreferences load1 = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+            translateOption.setChecked(load1.getBoolean("translate_option", false));
+            translateOption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                    ((CheckBoxPreference) preference).setChecked((Boolean) newValue);
+                    SharedPreferences.Editor editor = preference.getEditor();
+                    editor.putBoolean("translate_option", !((Boolean) newValue));
+                    editor.apply();
+
+                    return false;
+                }
+            });
+
         }
-
-
-
+        
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();

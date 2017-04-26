@@ -38,6 +38,9 @@
         android:defaultValue="false"
         android:key="show_tut_again"
         android:title="Show Tutorial Again" />
-
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="translate_option"
+        android:title="Don't translate" />
 
 </PreferenceScreen>
