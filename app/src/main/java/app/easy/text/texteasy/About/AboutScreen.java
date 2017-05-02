@@ -1,8 +1,10 @@
 package app.easy.text.texteasy.About;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.Html;
@@ -49,7 +51,9 @@ public class AboutScreen extends MaterialAboutActivity {
                     public void onClick() {
                         Intent i = new Intent(AboutScreen.this, DevAbout.class);
                         i.putExtra("AboutName", true);
-                        startActivity(i);
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(AboutScreen.this.getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+                        startActivity(i, bndlanimation);
                     }
                 })
                 .icon(R.mipmap.ic_launcher)
@@ -194,6 +198,17 @@ public class AboutScreen extends MaterialAboutActivity {
 
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.back_to_contacts, R.anim.going_up);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 
     @Override
     protected CharSequence getActivityTitle() {

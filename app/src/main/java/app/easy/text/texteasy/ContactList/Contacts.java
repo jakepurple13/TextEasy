@@ -232,7 +232,9 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
                     @Override
                     public void onBoomButtonClick(int index) {
                         Intent settingsIntent = new Intent(Contacts.this, Settings1Activity.class);
-                        startActivityForResult(settingsIntent, 201);
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.back_to_contacts, R.anim.from_contacts).toBundle();
+                        startActivityForResult(settingsIntent, 201, bndlanimation);
                     }
                 })
                 .normalText("Settings")
@@ -634,7 +636,8 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-
+        Bundle bndlanimation1 =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.back_to_contacts, R.anim.from_contacts).toBundle();
         switch (item.getItemId()) {
             case R.id.wordChange:
 
@@ -648,14 +651,14 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             case R.id.themes:
 
                 Intent settings = ScoopSettingsActivity.createIntent(this, "Settings");
-                startActivityForResult(settings, 201);
+                startActivityForResult(settings, 201, bndlanimation1);
 
                 return true;
 
             case R.id.settings:
 
                 Intent settingsIntent = new Intent(this, Settings1Activity.class);
-                startActivityForResult(settingsIntent, 201);
+                startActivityForResult(settingsIntent, 201, bndlanimation1);
 
                 return true;
 

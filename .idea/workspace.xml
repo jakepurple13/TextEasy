@@ -25,25 +25,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16eb00c4-bbe7-46d3-8331-758605d73785" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/anim/going_down.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/anim/going_up.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/DevAbout.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/DevAbout.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/WordAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/WordAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Translator.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Translator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java" afterPath="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
     </list>
     <ignored path="TextEasy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -116,8 +112,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-212">
-              <caret line="633" column="19" selection-start-line="633" selection-start-column="19" selection-end-line="633" selection-end-column="19" />
+            <state relative-caret-position="148">
+              <caret line="609" column="16" selection-start-line="609" selection-start-column="16" selection-end-line="609" selection-end-column="16" />
               <folding>
                 <element signature="e#4784#4785#0" expanded="true" />
                 <element signature="e#4814#4815#0" expanded="true" />
@@ -127,49 +123,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Contacts.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Contacts.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="642" column="108" selection-start-line="642" selection-start-column="108" selection-end-line="642" selection-end-column="108" />
+            <state relative-caret-position="313">
+              <caret line="651" column="0" selection-start-line="651" selection-start-column="0" selection-end-line="651" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1493755961000" expanded="true" signature="12217:12295" ph="//..." />
-                <marker date="1493755961000" expanded="false" signature="24034:24061" ph=" { " />
-                <marker date="1493755961000" expanded="false" signature="24080:24102" ph=" }" />
+                <marker date="1493757829000" expanded="true" signature="12431:12509" ph="//..." />
+                <marker date="1493757829000" expanded="false" signature="24248:24275" ph=" { " />
+                <marker date="1493757829000" expanded="false" signature="24294:24316" ph=" }" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="going_down.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/going_down.xml">
+      <file leaf-file-name="Settings1Activity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Translator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Translator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="70" column="45" selection-start-line="70" selection-start-column="45" selection-end-line="70" selection-end-column="45" />
+            <state relative-caret-position="225">
+              <caret line="475" column="40" selection-start-line="475" selection-start-column="40" selection-end-line="475" selection-end-column="40" />
               <folding>
-                <element signature="e#1165#1216#0" expanded="true" />
-                <element signature="e#2120#2174#0" expanded="true" />
+                <element signature="e#17173#17221#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MessageAdapter.java">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="350" column="35" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
+            <state relative-caret-position="15">
+              <caret line="11" column="95" selection-start-line="11" selection-start-column="95" selection-end-line="11" selection-end-column="95" />
               <folding />
             </state>
           </provider>
@@ -178,8 +163,8 @@
       <file leaf-file-name="ListOfWords.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="471" column="13" selection-start-line="471" selection-start-column="13" selection-end-line="471" selection-end-column="13" />
+            <state relative-caret-position="31">
+              <caret line="465" column="4" selection-start-line="465" selection-start-column="4" selection-end-line="475" selection-end-column="5" />
               <folding>
                 <element signature="e#11377#12916#0" expanded="true" />
                 <element signature="e#12915#12916#0" expanded="true" />
@@ -190,21 +175,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="going_up.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/going_up.xml">
+      <file leaf-file-name="LoginAcitivities.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="32" selection-start-line="2" selection-start-column="3" selection-end-line="5" selection-end-column="32" />
+            <state relative-caret-position="414">
+              <caret line="270" column="5" selection-start-line="270" selection-start-column="5" selection-end-line="270" selection-end-column="5" />
+              <folding>
+                <element signature="e#2625#2767#0" expanded="true" />
+                <element signature="e#2766#2767#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AboutScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="54" column="84" selection-start-line="54" selection-start-column="84" selection-end-line="54" selection-end-column="84" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="from_contacts.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/from_contacts.xml">
+      <file leaf-file-name="DevAbout.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/DevAbout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="5" selection-end-column="32" />
+            <state relative-caret-position="1185">
+              <caret line="90" column="5" selection-start-line="90" selection-start-column="5" selection-end-line="90" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -213,26 +211,19 @@
       <file leaf-file-name="ContactAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="185" column="60" selection-start-line="185" selection-start-column="60" selection-end-line="185" selection-end-column="60" />
+            <state relative-caret-position="120">
+              <caret line="170" column="71" selection-start-line="170" selection-start-column="71" selection-end-line="170" selection-end-column="71" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WordAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/WordAdapter.java">
+      <file leaf-file-name="MessageAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MessageAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="195" column="50" selection-start-line="195" selection-start-column="50" selection-end-line="195" selection-end-column="50" />
-              <folding>
-                <element signature="e#3081#4904#0" expanded="true" />
-                <element signature="e#3586#4816#0" expanded="true" />
-                <element signature="e#4815#4816#0" expanded="true" />
-                <element signature="e#4903#4904#0" expanded="true" />
-                <element signature="e#5090#5684#0" expanded="true" />
-                <element signature="e#5683#5684#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="406">
+              <caret line="350" column="35" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -3343,8 +3334,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_testingtwo.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Tester/testingtwo.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_contacts.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/DevAbout.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Receiver/HeadlessSmsSendService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Receiver/MyFirebaseMessagingService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/file_for_things_todo.java" />
@@ -3356,33 +3345,35 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_stat.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/StatFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_statistic.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_statistic.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_easter.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/EasterEggFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/raw/wordlist" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_contacts.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login_acitivities.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/shortcuts.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/MainApp.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Receiver/SmsReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/show_number.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Splash.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/list_of_words_menu.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Translator.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/WordAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/going_up.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/going_down.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/DevAbout.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -3498,6 +3489,28 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TextEasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -3515,6 +3528,20 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="raw" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TextEasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -3585,6 +3612,54 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Settings" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TextEasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="texteasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Settings" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Statistics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TextEasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="texteasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Messages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -3608,6 +3683,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ContactList" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TextEasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="texteasy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="About" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3760,7 +3857,7 @@
     <property name="device.picker.selection" value="025dc34c3c98d699" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="android.project.structure.last.selected" value="app" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="com.google.gct.idea.git.username" value="jakerein@gmail.com" />
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
@@ -4410,13 +4507,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update_word.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_of_words.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -4435,13 +4525,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/StatisticsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="69" column="64" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="64" />
         </state>
       </provider>
     </entry>
@@ -4494,13 +4577,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="56" column="55" selection-start-line="56" selection-start-column="55" selection-end-line="56" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_statistic.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
@@ -4512,13 +4588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/EasterEggFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="114" column="37" selection-start-line="114" selection-start-column="37" selection-end-line="114" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -4571,13 +4640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/app/easy/text/texteasy/ApplicationTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -4600,18 +4662,6 @@
         <state relative-caret-position="285">
           <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="76" column="23" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2716#2717#0" expanded="false" />
-            <element signature="e#2756#2757#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4654,14 +4704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2513">
-          <caret line="626" column="33" selection-start-line="626" selection-start-column="33" selection-end-line="626" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -4736,22 +4778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="150" column="51" selection-start-line="150" selection-start-column="51" selection-end-line="150" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MessageAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="350" column="35" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/WordAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="466">
@@ -4775,27 +4801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="471" column="13" selection-start-line="471" selection-start-column="13" selection-end-line="471" selection-end-column="13" />
-          <folding>
-            <element signature="e#11377#12916#0" expanded="true" />
-            <element signature="e#12915#12916#0" expanded="true" />
-            <element signature="e#14068#14114#0" expanded="true" />
-            <element signature="e#14275#14318#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="185" column="60" selection-start-line="185" selection-start-column="60" selection-end-line="185" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Translator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -4803,18 +4808,6 @@
           <folding>
             <element signature="e#1165#1216#0" expanded="true" />
             <element signature="e#2120#2174#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-212">
-          <caret line="633" column="19" selection-start-line="633" selection-start-column="19" selection-end-line="633" selection-end-column="19" />
-          <folding>
-            <element signature="e#4784#4785#0" expanded="true" />
-            <element signature="e#4814#4815#0" expanded="true" />
-            <marker date="1493755687000" expanded="true" signature="25684:30313" ph="..." />
           </folding>
         </state>
       </provider>
@@ -4835,15 +4828,125 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/Statistic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="230" column="5" selection-start-line="230" selection-start-column="5" selection-end-line="230" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/EasterEggFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="114" column="37" selection-start-line="114" selection-start-column="37" selection-end-line="114" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Statistics/StatisticsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="69" column="64" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/DevAbout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1185">
+          <caret line="90" column="5" selection-start-line="90" selection-start-column="5" selection-end-line="90" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/About/AboutScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="54" column="84" selection-start-line="54" selection-start-column="84" selection-end-line="54" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/LoginAcitivities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="270" column="5" selection-start-line="270" selection-start-column="5" selection-end-line="270" selection-end-column="5" />
+          <folding>
+            <element signature="e#2625#2767#0" expanded="true" />
+            <element signature="e#2766#2767#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Dictionary/ListOfWords.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31">
+          <caret line="465" column="4" selection-start-line="465" selection-start-column="4" selection-end-line="475" selection-end-column="5" />
+          <folding>
+            <element signature="e#11377#12916#0" expanded="true" />
+            <element signature="e#12915#12916#0" expanded="true" />
+            <element signature="e#14068#14114#0" expanded="true" />
+            <element signature="e#14275#14318#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/ContactAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="170" column="71" selection-start-line="170" selection-start-column="71" selection-end-line="170" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MessageAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="350" column="35" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Messages/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="609" column="16" selection-start-line="609" selection-start-column="16" selection-end-line="609" selection-end-column="16" />
+          <folding>
+            <element signature="e#4784#4785#0" expanded="true" />
+            <element signature="e#4814#4815#0" expanded="true" />
+            <marker date="1493755687000" expanded="true" signature="25684:30313" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/ContactList/Contacts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="642" column="108" selection-start-line="642" selection-start-column="108" selection-end-line="642" selection-end-column="108" />
+        <state relative-caret-position="313">
+          <caret line="651" column="0" selection-start-line="651" selection-start-column="0" selection-end-line="651" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1493755961000" expanded="true" signature="12217:12295" ph="//..." />
-            <marker date="1493755961000" expanded="false" signature="24034:24061" ph=" { " />
-            <marker date="1493755961000" expanded="false" signature="24080:24102" ph=" }" />
+            <marker date="1493757829000" expanded="true" signature="12431:12509" ph="//..." />
+            <marker date="1493757829000" expanded="false" signature="24248:24275" ph=" { " />
+            <marker date="1493757829000" expanded="false" signature="24294:24316" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="11" column="95" selection-start-line="11" selection-start-column="95" selection-end-line="11" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/app/easy/text/texteasy/Settings/Settings1Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="475" column="40" selection-start-line="475" selection-start-column="40" selection-end-line="475" selection-end-column="40" />
+          <folding>
+            <element signature="e#17173#17221#0" expanded="true" />
           </folding>
         </state>
       </provider>

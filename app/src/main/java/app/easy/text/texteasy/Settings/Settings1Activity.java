@@ -2,6 +2,7 @@ package app.easy.text.texteasy.Settings;
 
 
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -54,6 +55,18 @@ import java.util.Locale;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class Settings1Activity extends AppCompatPreferenceActivity {
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -145,8 +158,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
 
     }
 
-
-
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
@@ -219,7 +230,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             //bindPreferenceSummaryToValue(findPreference("example_list"));
             //goto the about screen
             Intent i = new Intent(this.getContext(), AboutScreen.class);
-            startActivity(i);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+            startActivity(i, bndlanimation);
             getActivity().finish();
 
         }
@@ -347,7 +360,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             //goto the super cool scoop theme activity
             Intent settings = ScoopSettingsActivity.createIntent(getActivity(), "Change Theme");
-            startActivityForResult(settings, 201);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.from_contacts).toBundle();
+            startActivityForResult(settings, 201, bndlanimation);
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
@@ -422,7 +437,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             String url = getResources().getString(R.string.feedback_link);
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
-            startActivity(i);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+            startActivity(i, bndlanimation);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -454,7 +471,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             String url = getResources().getString(R.string.abbrev_link);
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
-            startActivity(i);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+            startActivity(i, bndlanimation);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -486,7 +505,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             //goto the statistics activity
             //Intent i = new Intent(this.getContext(), StatisticsActivity.class);
             Intent i = new Intent(this.getContext(), Statistic.class);
-            startActivity(i);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+            startActivity(i, bndlanimation);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -682,7 +703,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             //goto the login activities
             Intent i = new Intent(this.getContext(), LoginAcitivities.class);
-            startActivity(i);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+            startActivity(i, bndlanimation);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -713,7 +736,9 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             //goto the login activities
             Intent i = new Intent(this.getContext(), ListOfWords.class);
-            startActivity(i);
+            Bundle bndlanimation =
+                    ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.back_to_contacts, R.anim.going_down).toBundle();
+            startActivity(i, bndlanimation);
             getActivity().finish();
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

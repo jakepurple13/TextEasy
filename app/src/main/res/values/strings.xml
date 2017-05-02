@@ -9,6 +9,7 @@
 
     <string name="feedback_link" translatable="false">https://goo.gl/forms/9pN7x2zEeWEJ1v562</string>
     <string name="abbrev_link" translatable="false">https://goo.gl/forms/Q5basUo0KYFefejY2</string>
+    <string name="medi_abbrev_link" translatable="false">https://goo.gl/forms/4t4PpvCN5Ws0QGsv1</string>
 
     <string name="feedbackWord" translatable="false">Feedback</string>
     <string name="abbrevWord" translatable="false">Help Add New Abbreviations</string>

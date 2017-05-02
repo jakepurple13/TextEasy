@@ -217,4 +217,16 @@ public class Statistic extends AppCompatActivity {
             return null;
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.back_to_contacts, R.anim.going_up);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }
