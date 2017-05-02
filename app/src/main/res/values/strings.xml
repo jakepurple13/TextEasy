@@ -140,6 +140,13 @@
         <item>Share with FaceBook Messenger</item>
     </string-array>
 
+    <string-array name="word_details">
+        <item>Copy Text</item>
+        <item>Read Aloud</item>
+        <item>Change Word</item>
+        <item>Delete Word</item>
+    </string-array>
+
     <string name="facebook_app_id">294900847607567</string>
     <string name="fb_login_protocol_scheme">fb294900847607567</string>
 

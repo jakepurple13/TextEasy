@@ -629,7 +629,7 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             });
 
         }
-        
+
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
@@ -640,7 +640,6 @@ public class Settings1Activity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
 
     /** Returns the consumer friendly device name */
     public static String getDeviceName() {

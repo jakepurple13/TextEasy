@@ -54,7 +54,9 @@ public class Splash extends AppCompatActivity implements Gota.OnRequestPermissio
             "android.permission.INTERNET",
             "android.permission.ACCESS_NETWORK_STATE",
             "android.permission.SEND_SMS",
-            "android.permission.READ_SMS"};
+            "android.permission.READ_SMS",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.READ_EXTERNAL_STORAGE"};
 
     /**
      * 

@@ -41,6 +41,6 @@
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="translate_option"
-        android:title="Don't translate" />
+        android:title="Don't Translate" />
 
 </PreferenceScreen>
