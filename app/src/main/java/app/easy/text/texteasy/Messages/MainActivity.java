@@ -600,13 +600,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
 
     }
-
 
     @Override
     public void finish() {
@@ -614,19 +612,16 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.back_to_contacts, R.anim.from_contacts);
     }
 
-
     @Override
     public void onBackPressed() {
         finish();
         super.onBackPressed();
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

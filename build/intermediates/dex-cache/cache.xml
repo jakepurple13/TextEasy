@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Jacob/.android/build-cache/a1c6afc2dcf34abebb78f633e1214434155ff3ec/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7dbc090c8ca1f062297884fa1a0a631f724fe655">
+        <dex dex="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f65b37148913b9aecb2921b369df3527681bda7d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Jacob/Downloads/TextEasy/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"

@@ -201,7 +201,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         });
         //Animations!
         setAnimation(holder.mTextView, position);
-
     }
 
     //Text to speech!

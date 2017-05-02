@@ -424,13 +424,13 @@ public class ListOfWords extends AppCompatActivity {
     public void writeToFile() {
         // Get the directory for the user's public pictures directory.
         String path =
-                Environment.getExternalStorageDirectory() + File.separator + "TextEasy";
+                Environment.getExternalStorageDirectory() + File.separator + getResources().getString(R.string.folder_name);
         // Create the folder.
         File folder = new File(path);
         folder.mkdirs();
 
         // Create the file.
-        File file = new File(folder, "wordlisted.txt");
+        File file = new File(folder, getResources().getString(R.string.filename));
 
         // Save your stream, don't forget to flush() it before closing it.
         try {
@@ -461,6 +461,18 @@ public class ListOfWords extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.list_of_words_menu, menu);
         return true;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.back_to_contacts, R.anim.going_up);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 
     @Override

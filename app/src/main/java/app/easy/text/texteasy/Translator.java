@@ -47,6 +47,8 @@ public class Translator {
 
         boolean existing = false;
 
+        filename = context.getResources().getString(R.string.filename);
+
         SharedPreferences load = context.getSharedPreferences("FirstLoad", Context.MODE_PRIVATE);
         firsttime = load.getBoolean("FirstLoad", true);
         SharedPreferences load1 = PreferenceManager.getDefaultSharedPreferences(context);
@@ -64,7 +66,7 @@ public class Translator {
                 File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
                 File file;
                 String path =
-                        Environment.getExternalStorageDirectory() + File.separator + "TextEasy";
+                        Environment.getExternalStorageDirectory() + File.separator + context.getResources().getString(R.string.folder_name);
                 // Create the folder.
                 File folder = new File(path);
                 folder.mkdirs();

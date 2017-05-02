@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,57 +31,24 @@ import app.easy.text.texteasy.R;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> implements RecyclerViewFastScroller.BubbleTextGetter  {
     private ArrayList<ListOfWords.WordInfo> mDataset;
-
     ListOfWords in;
-
+    int lastPos = -1;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    /**
-     *
-     */
-    /**
-     *
-     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        /**
-         *
-         * @param v
-         */
         public TextView mTextView;
         public TextView mDateText;
 
-
-        /**
-         *
-         * @param v
-         */
         public ViewHolder(View v) {
             super(v);
-            /**
-             *
-             * @param myDataset
-             * @param in
-             */
             mTextView = (TextView) v.findViewById(R.id.textView);
             mDateText = (TextView) v.findViewById(R.id.dateOfText);
-
-
         }
     }
 
-    /**
-     *
-     * @param parent
-     * @param viewType
-     */
     // Provide a suitable constructor (depends on the kind of dataset)
-    /**
-     *
-     * @param myDataset
-     * @param in
-     */
     public WordAdapter(ArrayList<ListOfWords.WordInfo> myDataset, ListOfWords in) {
         mDataset = myDataset;
         this.in = in;
@@ -103,11 +72,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    /**
-     *
-     * @param holder
-     * @param position
-     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
@@ -120,15 +84,14 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
         }
 
         holder.mDateText.setVisibility(View.GONE);
-
-
+        //adding an onLongClick listener
         holder.mTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
+                //Vibrate so user knows they pressed it
                 Vibrator vibrator = (Vibrator) in.getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(50);
-
+                //Dialog it up!
                 new MaterialDialog.Builder(in)
                         .title("Details")
                         .items(R.array.word_details)
@@ -136,12 +99,16 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
                             @Override
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                 if(text.equals("Copy Text")) {
+                                    //is the option was Copy Text
                                     copyText(holder.mTextView.getText().toString());
                                 } else if(text.equals("Read Aloud")) {
+                                    //If the option was to Read Aloud
                                     readAloud(holder.mTextView.getText().toString());
                                 } else if(text.equals("Change Word")) {
+                                    //is the option was Change Word
                                     in.changeWord(mDataset.get(position).word,mDataset.get(position).meaning,position);
                                 } else if(text.equals("Delete Word")) {
+                                    //is the option was Delete Word
                                     in.deleteWord(position);
                                 }
                                 dialog.hide();
@@ -151,7 +118,8 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
                 return false;
             }
         });
-
+        //Animations!
+        setAnimation(holder.mTextView, position);
     }
 
     TextToSpeech tts;
@@ -171,7 +139,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
                 }
             }
         });
-
     }
 
     private void speak(String text){
@@ -186,9 +153,10 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
         ClipData clip = ClipData.newPlainText("simple text", text);
         // Set the clipboard's primary clip.
         clipboard.setPrimaryClip(clip);
+        //Vibrate
         Vibrator vibrator = (Vibrator) in.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(50);
-
+        //Show that the text was copied
         Toast.makeText(in, "Text Copied", Toast.LENGTH_SHORT).show();
     }
 
@@ -205,18 +173,11 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    /**
-     *
-     */
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
 
-    /**
-     *
-     * @param pos
-     */
     @Override
     public String getTextToShowInBubble(int pos) {
         if (pos < 0 || pos >= mDataset.size())
@@ -229,7 +190,16 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
         return mDataset.get(pos).word.substring(0, 1);
     }
 
+    private void setAnimation(View viewToAnimate, int position) {
+        //right is you
+        //left is friend
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPos) {
+            Animation animation;
+            animation = AnimationUtils.loadAnimation(in, R.anim.push_right_in);
+            viewToAnimate.startAnimation(animation);
+            lastPos = position;
+        }
+    }
+
 }
-
-
-

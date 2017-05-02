@@ -147,6 +147,9 @@
         <item>Delete Word</item>
     </string-array>
 
+    <string name="folder_name">TextEasy</string>
+    <string name="filename">wordlisted.txt</string>
+
     <string name="facebook_app_id">294900847607567</string>
     <string name="fb_login_protocol_scheme">fb294900847607567</string>
 

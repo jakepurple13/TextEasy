@@ -1,6 +1,7 @@
 package app.easy.text.texteasy.ContactList;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -638,7 +639,9 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
             case R.id.wordChange:
 
                 Intent callIntent = new Intent(this, ListOfWords.class);
-                startActivity(callIntent);
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(this, R.anim.back_to_contacts, R.anim.going_down).toBundle();
+                startActivity(callIntent, bndlanimation);
 
                 return true;
 
@@ -676,7 +679,6 @@ public class Contacts extends AppCompatActivity implements PopupMenu.OnMenuItemC
 
         }
     }
-
 
     /**
      *
