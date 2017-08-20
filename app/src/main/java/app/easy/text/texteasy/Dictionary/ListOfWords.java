@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,14 +25,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +46,9 @@ import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.mingle.sweetpick.BlurEffect;
+import com.mingle.sweetpick.CustomDelegate;
+import com.mingle.sweetpick.SweetSheet;
 import com.viethoa.RecyclerViewFastScroller;
 import com.viethoa.models.AlphabetItem;
 
@@ -79,6 +87,9 @@ public class ListOfWords extends AppCompatActivity {
     boolean firstTimeAddWord;
 
     private MaterialMenuDrawable materialMenu;
+
+    SweetSheet mSweetSheet;
+    View updateWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,31 +206,34 @@ public class ListOfWords extends AppCompatActivity {
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        //fab.setBackgroundTintList(getResources().getColorStateList(R.color.lavender_indigo));
-        //fab.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                changeWord("", "", -1);
-
-                /*if(firstTimeAddWord) {
-                    changeWord("", "", -1);
-                } else {
-                    //setTutorial("Add Your Own", "Add your own lingos", fab);
-                    SharedPreferences enter = getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = enter.edit();
-                    editor.putBoolean("add word", true);
-                    editor.apply();
-
-                    firstTimeAddWord = true;
-                }*/
-
-
+                if(!mSweetSheet.isShow()) {
+                    updateWordSet(-1, "", "");
+                }
             }
         });
 
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.listofwordslayout);
+        mSweetSheet = new SweetSheet(rl);
+        mSweetSheet.setMenuList(R.menu.list_of_words_menu);
+        CustomDelegate customDelegate = new CustomDelegate(true,
+                CustomDelegate.AnimationType.DuangLayoutAnimation);
+        updateWord = LayoutInflater.from(this).inflate(R.layout.update_word, null, false);
+        updateWord.setBackgroundColor(R.color.black);
+        customDelegate.setCustomView(updateWord);
+        mSweetSheet.setDelegate(customDelegate);
+        mSweetSheet.setBackgroundEffect(new BlurEffect(8));
+        //mSweetSheet.setBackgroundClickEnable(false);
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                fab.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
     }
 
     public void setTutorial(final String title, final String description, View v) {
@@ -308,7 +322,7 @@ public class ListOfWords extends AppCompatActivity {
 
     Dialog dialog;
 
-    public void changeWord(String word, final String meaning, final int location) {
+    public void changeWord(final String word, final String meaning, final int location) {
 
         dialog = new Dialog(this);
         /**
@@ -348,43 +362,82 @@ public class ListOfWords extends AppCompatActivity {
 
                 Log.i(origin.getText().toString(), "onClick: " + newWord.getText().toString());
 
-                if(location==-1) {
-                    al.add(new WordInfo(origin.getText().toString(), newWord.getText().toString()));
-                } else {
-                    WordInfo wi = al.get(location);
-                    wi.setWord(origin.getText().toString());
-                    wi.setMeaning(newWord.getText().toString());
-                    al.remove(location);
-                    al.add(wi);
-                }
-
-                Collections.sort(al, new InfoCompare());
-
-                mAdapter = new WordAdapter(al, ListOfWords.this);
-
-                mRecyclerView.setAdapter(mAdapter);
-
-                ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
-                List<String> strAlphabets = new ArrayList<>();
-                for (int i = 0; i < al.size(); i++) {
-                    String name = al.get(i).word;
-                    if (name == null || name.trim().isEmpty())
-                        continue;
-
-                    String word = name.substring(0, 1);
-                    if (!strAlphabets.contains(word)) {
-                        strAlphabets.add(word);
-                        mAlphabetItems.add(new AlphabetItem(i, word, false));
-                    }
-                }
-
-                fastScroller.setUpAlphabet(mAlphabetItems);
+                wordOptions(location, origin.getText().toString(), newWord.getText().toString());
 
                 dialog.dismiss();
             }
         });
 
         dialog.show();
+    }
+
+    public void updateWordSet(final int location, String word, String meaning) {
+
+        final EditText origin = (EditText) updateWord.findViewById(R.id.original);
+        final EditText newWord = (EditText) updateWord.findViewById(R.id.newMeaning);
+        origin.setText(word);
+        newWord.setText(meaning);
+
+        Button closeButton = (Button) updateWord.findViewById(R.id.cancel);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSweetSheet.dismiss();
+                fab.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button accept = (Button) updateWord.findViewById(R.id.okay);
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i(origin.getText().toString(), "onClick: " + newWord.getText().toString());
+
+                wordOptions(location, origin.getText().toString(), newWord.getText().toString());
+
+                mSweetSheet.dismiss();
+                fab.setVisibility(View.VISIBLE);
+            }
+        });
+        mSweetSheet.show();
+        fab.setVisibility(View.GONE);
+
+    }
+
+    public void wordOptions(int location, String origin, String newWord) {
+
+        if(location==-1) {
+            al.add(new WordInfo(origin, newWord));
+        } else {
+            WordInfo wi = al.get(location);
+            wi.setWord(origin);
+            wi.setMeaning(newWord);
+            al.remove(location);
+            al.add(wi);
+        }
+
+        Collections.sort(al, new InfoCompare());
+
+        mAdapter = new WordAdapter(al, ListOfWords.this);
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
+        List<String> strAlphabets = new ArrayList<>();
+        for (int i = 0; i < al.size(); i++) {
+            String name = al.get(i).word;
+            if (name == null || name.trim().isEmpty())
+                continue;
+
+            String word = name.substring(0, 1);
+            if (!strAlphabets.contains(word)) {
+                strAlphabets.add(word);
+                mAlphabetItems.add(new AlphabetItem(i, word, false));
+            }
+        }
+
+        fastScroller.setUpAlphabet(mAlphabetItems);
     }
 
     public void deleteWord(int location) {
@@ -471,8 +524,13 @@ public class ListOfWords extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        super.onBackPressed();
+        if(mSweetSheet.isShow()){
+            mSweetSheet.dismiss();
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            finish();
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -497,6 +555,14 @@ public class ListOfWords extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_STREAM, uri);
 
                 startActivity(Intent.createChooser(i, "Select Application"));
+
+                return true;
+
+            case R.id.addNewWord:
+
+                if(!mSweetSheet.isShow()) {
+                    updateWordSet(-1, "", "");
+                }
 
                 return true;
 

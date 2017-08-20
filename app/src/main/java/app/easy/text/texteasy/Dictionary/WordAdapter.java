@@ -106,7 +106,10 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> im
                                     readAloud(holder.mTextView.getText().toString());
                                 } else if(text.equals("Change Word")) {
                                     //is the option was Change Word
-                                    in.changeWord(mDataset.get(position).word,mDataset.get(position).meaning,position);
+                                    //in.changeWord(mDataset.get(position).word,mDataset.get(position).meaning,position);
+                                    if(!in.mSweetSheet.isShow()) {
+                                        in.updateWordSet(position, mDataset.get(position).word, mDataset.get(position).meaning);
+                                    }
                                 } else if(text.equals("Delete Word")) {
                                     //is the option was Delete Word
                                     in.deleteWord(position);

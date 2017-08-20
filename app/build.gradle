@@ -24,6 +24,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    compile 'com.github.zzz40500:AndroidSweetSheet:1.1.0'
+
     compile 'com.github.moove-it:fakeit:v0.2'
     compile 'com.github.d-max:spots-dialog:0.7'
     compile 'eu.long1:spacetablayout:1.0.4'
